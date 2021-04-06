@@ -128,8 +128,13 @@ uint8_t txbuffer[10];
 int16_t x_LRacket = 50-width_rackets/2;
 int16_t y_LRacket = 136-height_rackets/2;
 
-int16_t x_RRacket=479-50-width_rackets/2;
+int16_t x_RRacket = 479-50-width_rackets/2;
 int16_t y_RRacket = 136-height_rackets/2;
+
+uint16_t x_balle = 480;
+uint16_t y_balle = 136;
+
+uint8_t radius_balle = 8;
 
 uint8_t couleur=1;
 uint8_t perdu=0;
@@ -1466,24 +1471,20 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
-	uint8_t Message;
+	HAL_UART_Receive_IT(&huart7,rxbuffer,4);
 
-	//Capture du message transmis sur la liaison série
-	Message = rxbuffer[0];
+	x_RRacket = (rxbuffer[0] << 8) | rxbuffer[1];
+	y_RRacket = (rxbuffer[2] << 8) | rxbuffer[3];
 
-	if(rxbuffer[0]=='a') HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin,1);
+	x_RRacket += 480;
+	y_RRacket += 480;
 
-	if(rxbuffer[0]=='e') HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin,0);
-
-//	if((Message=='b') || (Message=='w')){
-//		xQueueSendFromISR(myQueueU2HHandle, &Message, 0);
-//		vTaskResume(BgChangerHandle);
-//	}
-
-	//Réinitialisation de la variable Message
-	Message = 0;
-
-	HAL_UART_Receive_IT(&huart1,rxbuffer,1);
+	char textx[100];
+	char texty[100];
+	sprintf(textx, "xR = %d", x_RRacket);
+	sprintf(texty, "yR = %d", y_RRacket);
+	BSP_LCD_DisplayStringAtLine(5, textx);
+	BSP_LCD_DisplayStringAtLine(6, texty);
 }
 
 /* USER CODE END 4 */
@@ -1627,12 +1628,9 @@ void StartBall(void const * argument)
   /* USER CODE BEGIN StartBall */
 	TickType_t xFrequency=10;
 	TickType_t xLastWakeTime=xTaskGetTickCount();
-	uint16_t x_balle = 480;
-	uint16_t y_balle = 136;
 	uint16_t x_balle_hold = 480;
 	uint16_t y_balle_hold = 136;
-	uint8_t radius_balle = 8;
-	int8_t x_sens = 1;
+	int8_t x_sens = -1;
 	int8_t y_sens = 1;
 
   /* Infinite loop */
@@ -1813,7 +1811,20 @@ void StartTransmit(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-      //Radius balle
+	  char textr[100];
+	  char textx2[100];
+	  char texty2[100];
+	  char textp[100];
+	  sprintf(textr, "r = %d", x_RRacket);
+	  sprintf(textx2, "xR = %d", x_RRacket);
+	  sprintf(texty2, "yR = %d", y_RRacket);
+	  sprintf(textp, "yR = %d", perdu);
+	  BSP_LCD_DisplayStringAtLine(8, textr);
+	  BSP_LCD_DisplayStringAtLine(9, textx2);
+	  BSP_LCD_DisplayStringAtLine(10, texty2);
+	  BSP_LCD_DisplayStringAtLine(11, textp);
+
+	  //Radius balle
 	  txbuffer[0] = radius_balle;
 	  //xballe
 	  txbuffer[1] = (x_balle & 0xFF00) >> 8;
@@ -1822,9 +1833,11 @@ void StartTransmit(void const * argument)
 	  txbuffer[3] = (y_balle & 0xFF00) >> 8;
 	  txbuffer[4] = (y_balle & 0x00FF);
 	  //perdu
+	  txbuffer[5] = perdu;
 
 
-	  osDelay(1);
+	  HAL_UART_Transmit_IT(&huart7,txbuffer,6);
+	  osDelay(10);
   }
   /* USER CODE END StartTransmit */
 }
