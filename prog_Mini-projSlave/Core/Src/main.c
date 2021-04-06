@@ -72,10 +72,10 @@ UART_HandleTypeDef huart6;
 SDRAM_HandleTypeDef hsdram1;
 
 osThreadId defaultTaskHandle;
-osThreadId horlogeHandle;
 osThreadId RRacketHandle;
-osThreadId DrawBallHandle;
+osThreadId BallDisplayHandle;
 osThreadId BgChangerHandle;
+osThreadId TransmitterHandle;
 osMessageQId myQueueU2HHandle;
 osMutexId myMutex_LCDHandle;
 /* USER CODE BEGIN PV */
@@ -104,10 +104,10 @@ static void MX_UART7_Init(void);
 static void MX_FMC_Init(void);
 static void MX_DMA2D_Init(void);
 void StartDefaultTask(void const * argument);
-void Starthorloge(void const * argument);
 void StartRRacket(void const * argument);
-void StartDrawBall(void const * argument);
+void StartBall(void const * argument);
 void StartBgChanger(void const * argument);
+void StartTransmitter(void const * argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -116,17 +116,16 @@ void StartBgChanger(void const * argument);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 uint8_t rxbuffer[10];
+uint8_t txbuffer[10];
 
 #define height_rackets 40
 #define width_rackets 8
 
 
 // Les rectangles sont définis depuis le coin supérieur gauche
-uint32_t x_LRacket = 50-width_rackets/2;
-int32_t y_LRacket = 136-height_rackets/2;
 
-uint32_t x_RRacket=479-50-width_rackets/2;
-int32_t y_RRacket = 136-height_rackets/2;
+int16_t x_RRacket=479-50-width_rackets/2;
+int16_t y_RRacket = 136-height_rackets/2;
 
 uint8_t couleur=1;
 
@@ -234,21 +233,21 @@ int main(void)
   osThreadDef(defaultTask, StartDefaultTask, osPriorityIdle, 0, 128);
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
-  /* definition and creation of horloge */
-  osThreadDef(horloge, Starthorloge, osPriorityBelowNormal, 0, 1024);
-  horlogeHandle = osThreadCreate(osThread(horloge), NULL);
-
   /* definition and creation of RRacket */
   osThreadDef(RRacket, StartRRacket, osPriorityAboveNormal, 0, 1024);
   RRacketHandle = osThreadCreate(osThread(RRacket), NULL);
 
-  /* definition and creation of Ball */
-  osThreadDef(DrawBall, StartDrawBall, osPriorityHigh, 0, 1024);
-  DrawBallHandle = osThreadCreate(osThread(DrawBall), NULL);
+  /* definition and creation of BallDisplay */
+  osThreadDef(BallDisplay, StartBall, osPriorityHigh, 0, 1024);
+  BallDisplayHandle = osThreadCreate(osThread(BallDisplay), NULL);
 
   /* definition and creation of BgChanger */
   osThreadDef(BgChanger, StartBgChanger, osPriorityBelowNormal, 0, 1024);
   BgChangerHandle = osThreadCreate(osThread(BgChanger), NULL);
+
+  /* definition and creation of Transmitter */
+  osThreadDef(Transmitter, StartTransmitter, osPriorityNormal, 0, 128);
+  TransmitterHandle = osThreadCreate(osThread(Transmitter), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
 	/* add threads, ... */
@@ -1458,24 +1457,17 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
-	uint8_t Message;
 
-	//Capture du message transmis sur la liaison série
-	Message = rxbuffer[0];
+	int16_t xballe=rxbuffer[1] << 8 | rxbuffer[2];
+	int16_t yballe=rxbuffer[3] << 8 | rxbuffer[4];
 
-	if(rxbuffer[0]=='a') HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin,1);
-
-	if(rxbuffer[0]=='e') HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin,0);
-
-//	if((Message=='b') || (Message=='w')){
-//		xQueueSendFromISR(myQueueU2HHandle, &Message, 0);
-//		vTaskResume(BgChangerHandle);
-//	}
-
-	//Réinitialisation de la variable Message
-	Message = 0;
-
-	HAL_UART_Receive_IT(&huart1,rxbuffer,1);
+	if(uxQueueMessagesWaiting(myQueueU2HHandle) == 0){
+		HAL_UART_Receive_IT(&huart1,rxbuffer,6);
+		xQueueSendFromISR(myQueueU2HHandle, &rxbuffer[0], 0);
+		xQueueSendFromISR(myQueueU2HHandle, &xballe, 0);
+		xQueueSendFromISR(myQueueU2HHandle, &yballe, 0);
+		xQueueSendFromISR(myQueueU2HHandle, &rxbuffer[5], 0);
+	}
 }
 
 /* USER CODE END 4 */
@@ -1497,37 +1489,6 @@ void StartDefaultTask(void const * argument)
   /* USER CODE END 5 */
 }
 
-/* USER CODE BEGIN Header_Starthorloge */
-/**
- * @brief Function implementing the horloge thread.
- * @param argument: Not used
- * @retval None
- */
-/* USER CODE END Header_Starthorloge */
-void Starthorloge(void const * argument)
-{
-  /* USER CODE BEGIN Starthorloge */
-	char text[50] = { };
-	RTC_TimeTypeDef time;
-	RTC_DateTypeDef date;
-	/* Infinite loop */
-	for (;;) {
-		HAL_RTC_GetTime(&hrtc, &time, RTC_FORMAT_BIN);
-		HAL_RTC_GetDate(&hrtc, &date, RTC_FORMAT_BIN);
-
-		sprintf(text, "%2u:%2u",
-				time.Minutes, time.Seconds);
-		// Accaparement de la ressource
-		xSemaphoreTake(myMutex_LCDHandle, portMAX_DELAY);
-		BSP_LCD_DisplayStringAtLine(1, (uint8_t*) text);
-		//Libération de la ressource
-		xSemaphoreGive(myMutex_LCDHandle);
-		osDelay(100);
-
-	}
-  /* USER CODE END Starthorloge */
-}
-
 /* USER CODE BEGIN Header_StartRRacket */
 /**
 * @brief Function implementing the RRacket thread.
@@ -1541,8 +1502,8 @@ void StartRRacket(void const * argument)
 	int32_t joystick_h, joystick_v;
 	joystick_h = 0;
 	joystick_v = 0;
-	int32_t x_RRacket_hold;
-	int32_t y_RRacket_hold;
+	int16_t x_RRacket_hold;
+	int16_t y_RRacket_hold;
 
 	ADC_ChannelConfTypeDef sConfig = { 0 };
 	sConfig.Rank = ADC_REGULAR_RANK_1;
@@ -1603,62 +1564,22 @@ void StartRRacket(void const * argument)
   /* USER CODE END StartRRacket */
 }
 
-/* USER CODE BEGIN Header_StartDrawBall */
+/* USER CODE BEGIN Header_StartBall */
 /**
-* @brief Function implementing the Ball thread.
+* @brief Function implementing the BallDisplay thread.
 * @param argument: Not used
 * @retval None
 */
-/* USER CODE END Header_StartDrawBall */
-void StartDrawBall(void const * argument)
+/* USER CODE END Header_StartBall */
+void StartBall(void const * argument)
 {
-  /* USER CODE BEGIN StartDrawBall */
-	TickType_t xFrequency=10;
-	TickType_t xLastWakeTime=xTaskGetTickCount();
-	uint32_t x_balle=0;
-	uint32_t y_balle=0;
-	uint32_t x_balle_hold=0;
-	uint32_t y_balle_hold=0;
-	uint8_t radius_balle = 8;
-
+  /* USER CODE BEGIN StartBall */
   /* Infinite loop */
   for(;;)
   {
-	  // Accaparement de la ressource
-	  xSemaphoreTake(myMutex_LCDHandle, portMAX_DELAY);
-
-	  if(x_balle_hold >=480){
-		  BSP_LCD_SetTextColor(couleur==0?LCD_COLOR_WHITE:LCD_COLOR_BLACK);
-		  BSP_LCD_FillCircle(x_balle_hold-480, y_balle_hold, radius_balle);
-	  }
-	  else{
-		  BSP_LCD_SetTextColor(couleur==0?LCD_COLOR_WHITE:LCD_COLOR_BLACK);
-		  Point Point1 = {6,y_balle_hold+3};
-		  Point Point2 = {0,y_balle_hold};
-		  Point Point3 = {6,y_balle_hold-3};
-
-		  Point Points[3] = {Point1, Point2, Point3};
-		  BSP_LCD_FillPolygon(Points,3);
-	  }
-
-	  if(x_balle <=479){
-		  BSP_LCD_SetTextColor(couleur==0?LCD_COLOR_BLACK:LCD_COLOR_WHITE);
-		  BSP_LCD_FillCircle(x_balle, y_balle, radius_balle);
-	  }
-	  else{
-		  BSP_LCD_SetTextColor(couleur==0?LCD_COLOR_BLACK:LCD_COLOR_WHITE);
-		  Point Point1 = {6,y_balle+3};
-		  Point Point2 = {0,y_balle};
-		  Point Point3 = {6,y_balle-3};
-
-		  Point Points[3] = {Point1, Point2, Point3};
-		  BSP_LCD_FillPolygon(Points,3);
-	  }
-	  //Libération de la ressource
-	  xSemaphoreGive(myMutex_LCDHandle);
-	  vTaskDelayUntil(&xLastWakeTime, xFrequency);
+    osDelay(1);
   }
-  /* USER CODE END StartDrawBall */
+  /* USER CODE END StartBall */
 }
 
 /* USER CODE BEGIN Header_StartBgChanger */
@@ -1722,6 +1643,31 @@ void StartBgChanger(void const * argument)
   osDelay(100);
   }
   /* USER CODE END StartBgChanger */
+}
+
+/* USER CODE BEGIN Header_StartTransmitter */
+/**
+* @brief Function implementing the Transmitter thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartTransmitter */
+void StartTransmitter(void const * argument)
+{
+  /* USER CODE BEGIN StartTransmitter */
+  /* Infinite loop */
+  for(;;)
+  {
+		txbuffer[0]=(x_RRacket & 0xFF00) >> 8;
+		txbuffer[1]= x_RRacket & 0x00FF;
+		txbuffer[2]=(y_RRacket & 0xFF00) >> 8;
+		txbuffer[3]=y_RRacket & 0x00FF;
+
+		HAL_UART_Transmit_IT(&huart1,txbuffer,4);
+
+    osDelay(10);
+  }
+  /* USER CODE END StartTransmitter */
 }
 
  /**
