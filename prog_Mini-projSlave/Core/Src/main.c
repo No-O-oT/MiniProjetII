@@ -126,6 +126,8 @@ uint8_t txbuffer[10];
 
 int16_t x_RRacket=479-50-width_rackets/2;
 int16_t y_RRacket = 136-height_rackets/2;
+int16_t x_balle=480, y_balle=136, r_balle=8;
+int8_t lost=0;
 
 uint8_t couleur=1;
 
@@ -246,7 +248,7 @@ int main(void)
   BgChangerHandle = osThreadCreate(osThread(BgChanger), NULL);
 
   /* definition and creation of Transmitter */
-  osThreadDef(Transmitter, StartTransmitter, osPriorityNormal, 0, 128);
+  osThreadDef(Transmitter, StartTransmitter, osPriorityHigh, 0, 128);
   TransmitterHandle = osThreadCreate(osThread(Transmitter), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
@@ -1457,17 +1459,13 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
+	HAL_UART_Receive_IT(&huart7, rxbuffer, 6);
+	x_balle=rxbuffer[1] << 8 | rxbuffer[2];
+	y_balle=rxbuffer[3] << 8 | rxbuffer[4];
+	lost=rxbuffer[5];
+	r_balle=rxbuffer[0];
 
-	int16_t xballe=rxbuffer[1] << 8 | rxbuffer[2];
-	int16_t yballe=rxbuffer[3] << 8 | rxbuffer[4];
 
-	if(uxQueueMessagesWaiting(myQueueU2HHandle) == 0){
-		HAL_UART_Receive_IT(&huart1,rxbuffer,6);
-		xQueueSendFromISR(myQueueU2HHandle, &rxbuffer[0], 0);
-		xQueueSendFromISR(myQueueU2HHandle, &xballe, 0);
-		xQueueSendFromISR(myQueueU2HHandle, &yballe, 0);
-		xQueueSendFromISR(myQueueU2HHandle, &rxbuffer[5], 0);
-	}
 }
 
 /* USER CODE END 4 */
@@ -1574,10 +1572,48 @@ void StartRRacket(void const * argument)
 void StartBall(void const * argument)
 {
   /* USER CODE BEGIN StartBall */
+	TickType_t xFrequency=10;
+	TickType_t xLastWakeTime=xTaskGetTickCount();
+	uint16_t x_balle_hold = 480;
+	uint16_t y_balle_hold = 136;
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+	  x_balle_hold=x_balle;
+	  y_balle_hold=y_balle;
+	  xSemaphoreTake(myMutex_LCDHandle, portMAX_DELAY);
+
+	 	  if(x_balle_hold <=479){
+	 		  BSP_LCD_SetTextColor(couleur==0?LCD_COLOR_WHITE:LCD_COLOR_BLACK);
+	 		  BSP_LCD_FillCircle(x_balle_hold - 480, y_balle_hold, r_balle);
+	 	  }
+	 	  else{
+	 		  BSP_LCD_SetTextColor(couleur==0?LCD_COLOR_WHITE:LCD_COLOR_BLACK);
+	 		  Point Point1 = {6,y_balle_hold+3};
+	 		  Point Point2 = {0,y_balle_hold};
+	 		  Point Point3 = {6,y_balle_hold-3};
+
+	 		  Point Points[3] = {Point1, Point2, Point3};
+	 		  BSP_LCD_FillPolygon(Points,3);
+	 	  }
+
+	 	  if(x_balle > 479){
+	 		  BSP_LCD_SetTextColor(couleur==0?LCD_COLOR_BLACK:LCD_COLOR_WHITE);
+	 		  BSP_LCD_FillCircle(x_balle - 480, y_balle, r_balle);
+	 	  }
+	 	  else{
+	 		  BSP_LCD_SetTextColor(couleur==0?LCD_COLOR_BLACK:LCD_COLOR_WHITE);
+	 		  Point Point1 = {6,y_balle+3};
+	 		  Point Point2 = {0,y_balle};
+	 		  Point Point3 = {6,y_balle-3};
+
+	 		  Point Points[3] = {Point1, Point2, Point3};
+	 		  BSP_LCD_FillPolygon(Points,3);
+	 	  }
+
+	 	  //Libération de la ressource
+	 	  xSemaphoreGive(myMutex_LCDHandle);
+	 	  vTaskDelayUntil(&xLastWakeTime, xFrequency);
   }
   /* USER CODE END StartBall */
 }
@@ -1663,7 +1699,7 @@ void StartTransmitter(void const * argument)
 		txbuffer[2]=(y_RRacket & 0xFF00) >> 8;
 		txbuffer[3]=y_RRacket & 0x00FF;
 
-		HAL_UART_Transmit_IT(&huart1,txbuffer,4);
+		HAL_UART_Transmit_IT(&huart7,txbuffer,4);
 
     osDelay(10);
   }
