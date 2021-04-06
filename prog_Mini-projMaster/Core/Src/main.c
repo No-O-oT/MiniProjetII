@@ -76,6 +76,7 @@ osThreadId horlogeHandle;
 osThreadId LRacketHandle;
 osThreadId BallHandle;
 osThreadId BgChangerHandle;
+osThreadId TransmitHandle;
 osMessageQId myQueueU2HHandle;
 osMutexId myMutex_LCDHandle;
 /* USER CODE BEGIN PV */
@@ -106,9 +107,9 @@ static void MX_DMA2D_Init(void);
 void StartDefaultTask(void const * argument);
 void Starthorloge(void const * argument);
 void StartLRacket(void const * argument);
-void StartRRacket(void const * argument);
 void StartBall(void const * argument);
 void StartBgChanger(void const * argument);
+void StartTransmit(void const * argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -117,19 +118,21 @@ void StartBgChanger(void const * argument);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 uint8_t rxbuffer[10];
+uint8_t txbuffer[10];
 
 #define height_rackets 40
 #define width_rackets 8
 
 
 // Les rectangles sont définis depuis le coin supérieur gauche
-uint32_t x_LRacket = 50-width_rackets/2;
-int32_t y_LRacket = 136-height_rackets/2;
+int16_t x_LRacket = 50-width_rackets/2;
+int16_t y_LRacket = 136-height_rackets/2;
 
-uint32_t x_RRacket=479-50-width_rackets/2;
-int32_t y_RRacket = 136-height_rackets/2;
+int16_t x_RRacket=479-50-width_rackets/2;
+int16_t y_RRacket = 136-height_rackets/2;
 
 uint8_t couleur=1;
+uint8_t perdu=0;
 
 uint8_t FlagBgChanger = 0;
 
@@ -250,6 +253,10 @@ int main(void)
   /* definition and creation of BgChanger */
   osThreadDef(BgChanger, StartBgChanger, osPriorityBelowNormal, 0, 1024);
   BgChangerHandle = osThreadCreate(osThread(BgChanger), NULL);
+
+  /* definition and creation of Transmit */
+  osThreadDef(Transmit, StartTransmit, osPriorityAboveNormal, 0, 128);
+  TransmitHandle = osThreadCreate(osThread(Transmit), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
 	/* add threads, ... */
@@ -1574,8 +1581,12 @@ void StartLRacket(void const * argument)
 		x_LRacket -= (joystick_h - 2080)/100;
 		y_LRacket -= (joystick_v - 2080)/150;
 
+//		char textx[100];
+//		sprintf(textx, "x = %d", x_LRacket);
+//		BSP_LCD_DisplayStringAtLine(9, textx);
+
 		// Cadrage des coordonnées LRacket
-		if (x_LRacket >= 239) x_LRacket = 239-width_rackets;
+		if (x_LRacket >= 239 - width_rackets) x_LRacket = 239-width_rackets;
 
 		if (x_LRacket <= 0) x_LRacket = 0;
 
@@ -1616,10 +1627,10 @@ void StartBall(void const * argument)
   /* USER CODE BEGIN StartBall */
 	TickType_t xFrequency=10;
 	TickType_t xLastWakeTime=xTaskGetTickCount();
-	uint32_t x_balle = 480;
-	uint32_t y_balle = 136;
-	uint32_t x_balle_hold = 480;
-	uint32_t y_balle_hold = 136;
+	uint16_t x_balle = 480;
+	uint16_t y_balle = 136;
+	uint16_t x_balle_hold = 480;
+	uint16_t y_balle_hold = 136;
 	uint8_t radius_balle = 8;
 	int8_t x_sens = 1;
 	int8_t y_sens = 1;
@@ -1653,6 +1664,7 @@ void StartBall(void const * argument)
 		  else if(x_balle==radius_balle)
 		  {
 			  //Perdu
+			  perdu = 1;
 			  // Accaparement de la ressource
 			  xSemaphoreTake(myMutex_LCDHandle, portMAX_DELAY);
 			  BSP_LCD_DisplayStringAtLine(2, (uint8_t*) "Perdu");
@@ -1676,6 +1688,7 @@ void StartBall(void const * argument)
 		  else if(x_balle==959-radius_balle)
 		  {
 			  //Perdu
+			  perdu = 1;
 			  // Accaparement de la ressource
 			  xSemaphoreTake(myMutex_LCDHandle, portMAX_DELAY);
 			  BSP_LCD_DisplayStringAtLine(2, (uint8_t*) "Perdu");
@@ -1785,6 +1798,35 @@ void StartBgChanger(void const * argument)
   osDelay(100);
   }
   /* USER CODE END StartBgChanger */
+}
+
+/* USER CODE BEGIN Header_StartTransmit */
+/**
+* @brief Function implementing the Transmit thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartTransmit */
+void StartTransmit(void const * argument)
+{
+  /* USER CODE BEGIN StartTransmit */
+  /* Infinite loop */
+  for(;;)
+  {
+      //Radius balle
+	  txbuffer[0] = radius_balle;
+	  //xballe
+	  txbuffer[1] = (x_balle & 0xFF00) >> 8;
+	  txbuffer[2] = (x_balle & 0x00FF);
+	  //yballe
+	  txbuffer[3] = (y_balle & 0xFF00) >> 8;
+	  txbuffer[4] = (y_balle & 0x00FF);
+	  //perdu
+
+
+	  osDelay(1);
+  }
+  /* USER CODE END StartTransmit */
 }
 
  /**

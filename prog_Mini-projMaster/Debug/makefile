@@ -58,8 +58,8 @@ all: main-build
 main-build: prog_Mini-projMaster.elf secondary-outputs
 
 # Tool invocations
-prog_Mini-projMaster.elf: $(OBJS) $(USER_OBJS) C:\Users\nicol\OneDrive\Desktop\UE442B-II\prog_Mini-projMaster\STM32F746NGHX_FLASH.ld
-	arm-none-eabi-gcc -o "prog_Mini-projMaster.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m7 -T"C:\Users\nicol\OneDrive\Desktop\UE442B-II\prog_Mini-projMaster\STM32F746NGHX_FLASH.ld" --specs=nosys.specs -Wl,-Map="prog_Mini-projMaster.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+prog_Mini-projMaster.elf: $(OBJS) $(USER_OBJS) C:\Users\nicol\OneDrive\Documents\GitHub\MiniProjetII\prog_Mini-projMaster\STM32F746NGHX_FLASH.ld
+	arm-none-eabi-gcc -o "prog_Mini-projMaster.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m7 -T"C:\Users\nicol\OneDrive\Documents\GitHub\MiniProjetII\prog_Mini-projMaster\STM32F746NGHX_FLASH.ld" --specs=nosys.specs -Wl,-Map="prog_Mini-projMaster.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
