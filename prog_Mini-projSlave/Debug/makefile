@@ -1,5 +1,6 @@
 ################################################################################
 # Automatically-generated file. Do not edit!
+# Toolchain: GNU Tools for STM32 (9-2020-q2-update)
 ################################################################################
 
 -include ../makefile.init
@@ -32,6 +33,12 @@ endif
 
 -include ../makefile.defs
 
+OPTIONAL_TOOL_DEPS := \
+$(wildcard ../makefile.defs) \
+$(wildcard ../makefile.init) \
+$(wildcard ../makefile.targets) \
+
+
 BUILD_ARTIFACT_NAME := prog_Mini-projSlave
 BUILD_ARTIFACT_EXTENSION := elf
 BUILD_ARTIFACT_PREFIX := 
@@ -58,22 +65,22 @@ all: main-build
 main-build: prog_Mini-projSlave.elf secondary-outputs
 
 # Tool invocations
-prog_Mini-projSlave.elf: $(OBJS) $(USER_OBJS) C:\Users\nicol\OneDrive\Desktop\UE442B-II\prog_Mini-projSlave\STM32F746NGHX_FLASH.ld
-	arm-none-eabi-gcc -o "prog_Mini-projSlave.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m7 -T"C:\Users\nicol\OneDrive\Desktop\UE442B-II\prog_Mini-projSlave\STM32F746NGHX_FLASH.ld" --specs=nosys.specs -Wl,-Map="prog_Mini-projSlave.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+prog_Mini-projSlave.elf: $(OBJS) $(USER_OBJS) C:\Users\skyz0\Documents\GitHub\MiniProjetII\prog_Mini-projSlave\STM32F746NGHX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "prog_Mini-projSlave.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m7 -T"C:\Users\skyz0\Documents\GitHub\MiniProjetII\prog_Mini-projSlave\STM32F746NGHX_FLASH.ld" --specs=nosys.specs -Wl,-Map="prog_Mini-projSlave.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
-default.size.stdout: $(EXECUTABLES)
+default.size.stdout: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	arm-none-eabi-size  $(EXECUTABLES)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-prog_Mini-projSlave.list: $(EXECUTABLES)
+prog_Mini-projSlave.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "prog_Mini-projSlave.list"
 	@echo 'Finished building: $@'
 	@echo ' '
 
-prog_Mini-projSlave.bin: $(EXECUTABLES)
+prog_Mini-projSlave.bin: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	arm-none-eabi-objcopy  -O binary $(EXECUTABLES) "prog_Mini-projSlave.bin"
 	@echo 'Finished building: $@'
 	@echo ' '
