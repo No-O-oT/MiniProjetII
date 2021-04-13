@@ -58,6 +58,7 @@
 /* External variables --------------------------------------------------------*/
 extern DAC_HandleTypeDef hdac;
 extern LTDC_HandleTypeDef hltdc;
+extern UART_HandleTypeDef huart7;
 extern UART_HandleTypeDef huart1;
 extern TIM_HandleTypeDef htim6;
 
@@ -192,6 +193,20 @@ void TIM6_DAC_IRQHandler(void)
   /* USER CODE BEGIN TIM6_DAC_IRQn 1 */
 
   /* USER CODE END TIM6_DAC_IRQn 1 */
+}
+
+/**
+  * @brief This function handles UART7 global interrupt.
+  */
+void UART7_IRQHandler(void)
+{
+  /* USER CODE BEGIN UART7_IRQn 0 */
+
+  /* USER CODE END UART7_IRQn 0 */
+  HAL_UART_IRQHandler(&huart7);
+  /* USER CODE BEGIN UART7_IRQn 1 */
+
+  /* USER CODE END UART7_IRQn 1 */
 }
 
 /**

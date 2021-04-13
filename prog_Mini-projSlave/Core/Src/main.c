@@ -85,7 +85,6 @@ osMutexId myMutex_LCDHandle;
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
-static void MX_ADC3_Init(void);
 static void MX_I2C1_Init(void);
 static void MX_I2C3_Init(void);
 static void MX_LTDC_Init(void);
@@ -103,6 +102,7 @@ static void MX_DAC_Init(void);
 static void MX_UART7_Init(void);
 static void MX_FMC_Init(void);
 static void MX_DMA2D_Init(void);
+static void MX_ADC3_Init(void);
 void StartDefaultTask(void const * argument);
 void StartRRacket(void const * argument);
 void StartBall(void const * argument);
@@ -170,7 +170,6 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_ADC3_Init();
   MX_I2C1_Init();
   MX_I2C3_Init();
   MX_LTDC_Init();
@@ -188,6 +187,7 @@ int main(void)
   MX_UART7_Init();
   MX_FMC_Init();
   MX_DMA2D_Init();
+  MX_ADC3_Init();
   /* USER CODE BEGIN 2 */
 	BSP_LCD_Init();
 	BSP_LCD_LayerDefaultInit(0, LCD_FB_START_ADDRESS);
@@ -471,7 +471,7 @@ static void MX_ADC3_Init(void)
   }
   /** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
   */
-  sConfig.Channel = ADC_CHANNEL_6;
+  sConfig.Channel = ADC_CHANNEL_8;
   sConfig.Rank = ADC_REGULAR_RANK_1;
   sConfig.SamplingTime = ADC_SAMPLETIME_3CYCLES;
   if (HAL_ADC_ConfigChannel(&hadc3, &sConfig) != HAL_OK)
@@ -1701,7 +1701,7 @@ void StartTransmitter(void const * argument)
 
 		HAL_UART_Transmit_IT(&huart7,txbuffer,4);
 
-    osDelay(10);
+    osDelay(100);
   }
   /* USER CODE END StartTransmitter */
 }
