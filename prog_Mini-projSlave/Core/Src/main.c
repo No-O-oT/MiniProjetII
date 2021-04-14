@@ -126,7 +126,7 @@ uint8_t txbuffer[10];
 
 int16_t x_RRacket=479-50-width_rackets/2;
 int16_t y_RRacket = 136-height_rackets/2;
-int16_t x_balle=480, y_balle=136, r_balle=8;
+int16_t x_balle=500, y_balle=136, r_balle=8;
 int8_t lost=0;
 
 uint8_t couleur=1;
@@ -201,7 +201,7 @@ int main(void)
 	BSP_LCD_SetBackColor(LCD_COLOR_BLACK);
 
 	BSP_TS_Init(BSP_LCD_GetXSize(), BSP_LCD_GetYSize());
-	HAL_UART_Receive_IT(&huart1,rxbuffer,1);
+	HAL_UART_Receive_IT(&huart7,rxbuffer,1);
   /* USER CODE END 2 */
 
   /* Create the mutex(es) */
@@ -1459,13 +1459,12 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
-	HAL_UART_Receive_IT(&huart7, rxbuffer, 6);
-	x_balle=rxbuffer[1] << 8 | rxbuffer[2];
+  	x_balle=rxbuffer[1] << 8 | rxbuffer[2];
 	y_balle=rxbuffer[3] << 8 | rxbuffer[4];
 	lost=rxbuffer[5];
 	r_balle=rxbuffer[0];
 
-
+	HAL_UART_Receive_IT(&huart7, rxbuffer, 6);
 }
 
 /* USER CODE END 4 */
@@ -1579,10 +1578,11 @@ void StartBall(void const * argument)
   /* Infinite loop */
   for(;;)
   {
+
 	  x_balle_hold=x_balle;
 	  y_balle_hold=y_balle;
-	  xSemaphoreTake(myMutex_LCDHandle, portMAX_DELAY);
 
+	  xSemaphoreTake(myMutex_LCDHandle, portMAX_DELAY);
 	 	  if(x_balle_hold <=479){
 	 		  BSP_LCD_SetTextColor(couleur==0?LCD_COLOR_WHITE:LCD_COLOR_BLACK);
 	 		  BSP_LCD_FillCircle(x_balle_hold - 480, y_balle_hold, r_balle);
@@ -1694,6 +1694,7 @@ void StartTransmitter(void const * argument)
   /* Infinite loop */
   for(;;)
   {
+
 		txbuffer[0]=(x_RRacket & 0xFF00) >> 8;
 		txbuffer[1]= x_RRacket & 0x00FF;
 		txbuffer[2]=(y_RRacket & 0xFF00) >> 8;
@@ -1701,7 +1702,7 @@ void StartTransmitter(void const * argument)
 
 		HAL_UART_Transmit_IT(&huart7,txbuffer,4);
 
-    osDelay(100);
+    osDelay(25);
   }
   /* USER CODE END StartTransmitter */
 }
