@@ -1127,7 +1127,7 @@ Discarded input sections
  .text.HAL_TIM_Base_MspDeInit
                 0x0000000000000000       0xa0 Core/Src/stm32f7xx_hal_msp.o
  .text.HAL_UART_MspDeInit
-                0x0000000000000000       0xa8 Core/Src/stm32f7xx_hal_msp.o
+                0x0000000000000000       0xa4 Core/Src/stm32f7xx_hal_msp.o
  .bss.FMC_DeInitialized
                 0x0000000000000000        0x4 Core/Src/stm32f7xx_hal_msp.o
  .text.HAL_FMC_MspDeInit
@@ -8223,181 +8223,181 @@ LOAD c:/st/stm32cubeide_1.5.1/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.exte
  .text.MX_GPIO_Init
                 0x00000000080018f0      0x3fc Core/Src/main.o
  .text.HAL_UART_RxCpltCallback
-                0x0000000008001cec       0x80 Core/Src/main.o
+                0x0000000008001cec       0x6c Core/Src/main.o
                 0x0000000008001cec                HAL_UART_RxCpltCallback
  .text.StartDefaultTask
-                0x0000000008001d6c       0x12 Core/Src/main.o
-                0x0000000008001d6c                StartDefaultTask
- *fill*         0x0000000008001d7e        0x2 
+                0x0000000008001d58       0x12 Core/Src/main.o
+                0x0000000008001d58                StartDefaultTask
+ *fill*         0x0000000008001d6a        0x2 
  .text.Starthorloge
-                0x0000000008001d80       0x80 Core/Src/main.o
-                0x0000000008001d80                Starthorloge
+                0x0000000008001d6c       0x80 Core/Src/main.o
+                0x0000000008001d6c                Starthorloge
  .text.StartLRacket
-                0x0000000008001e00      0x1c0 Core/Src/main.o
-                0x0000000008001e00                StartLRacket
+                0x0000000008001dec      0x1c0 Core/Src/main.o
+                0x0000000008001dec                StartLRacket
  .text.StartBall
-                0x0000000008001fc0      0x36c Core/Src/main.o
-                0x0000000008001fc0                StartBall
+                0x0000000008001fac      0x384 Core/Src/main.o
+                0x0000000008001fac                StartBall
  .text.StartBgChanger
-                0x000000000800232c       0xec Core/Src/main.o
-                0x000000000800232c                StartBgChanger
+                0x0000000008002330       0xec Core/Src/main.o
+                0x0000000008002330                StartBgChanger
  .text.StartTransmit
-                0x0000000008002418       0x74 Core/Src/main.o
-                0x0000000008002418                StartTransmit
+                0x000000000800241c       0x74 Core/Src/main.o
+                0x000000000800241c                StartTransmit
  .text.HAL_TIM_PeriodElapsedCallback
-                0x000000000800248c       0x24 Core/Src/main.o
-                0x000000000800248c                HAL_TIM_PeriodElapsedCallback
+                0x0000000008002490       0x24 Core/Src/main.o
+                0x0000000008002490                HAL_TIM_PeriodElapsedCallback
  .text.Error_Handler
-                0x00000000080024b0        0x8 Core/Src/main.o
-                0x00000000080024b0                Error_Handler
+                0x00000000080024b4        0x8 Core/Src/main.o
+                0x00000000080024b4                Error_Handler
  .text.I2Cx_MspInit
-                0x00000000080024b8      0x160 Core/Src/stm32746g_discovery.o
+                0x00000000080024bc      0x160 Core/Src/stm32746g_discovery.o
  .text.I2Cx_Init
-                0x0000000008002618       0x78 Core/Src/stm32746g_discovery.o
+                0x000000000800261c       0x78 Core/Src/stm32746g_discovery.o
  .text.I2Cx_ReadMultiple
-                0x0000000008002690       0x5a Core/Src/stm32746g_discovery.o
+                0x0000000008002694       0x5a Core/Src/stm32746g_discovery.o
  .text.I2Cx_WriteMultiple
-                0x00000000080026ea       0x5a Core/Src/stm32746g_discovery.o
+                0x00000000080026ee       0x5a Core/Src/stm32746g_discovery.o
  .text.I2Cx_Error
-                0x0000000008002744       0x20 Core/Src/stm32746g_discovery.o
+                0x0000000008002748       0x20 Core/Src/stm32746g_discovery.o
  .text.TS_IO_Init
-                0x0000000008002764       0x14 Core/Src/stm32746g_discovery.o
-                0x0000000008002764                TS_IO_Init
+                0x0000000008002768       0x14 Core/Src/stm32746g_discovery.o
+                0x0000000008002768                TS_IO_Init
  .text.TS_IO_Write
-                0x0000000008002778       0x34 Core/Src/stm32746g_discovery.o
-                0x0000000008002778                TS_IO_Write
+                0x000000000800277c       0x34 Core/Src/stm32746g_discovery.o
+                0x000000000800277c                TS_IO_Write
  .text.TS_IO_Read
-                0x00000000080027ac       0x3c Core/Src/stm32746g_discovery.o
-                0x00000000080027ac                TS_IO_Read
+                0x00000000080027b0       0x3c Core/Src/stm32746g_discovery.o
+                0x00000000080027b0                TS_IO_Read
  .text.TS_IO_Delay
-                0x00000000080027e8       0x16 Core/Src/stm32746g_discovery.o
-                0x00000000080027e8                TS_IO_Delay
- *fill*         0x00000000080027fe        0x2 
+                0x00000000080027ec       0x16 Core/Src/stm32746g_discovery.o
+                0x00000000080027ec                TS_IO_Delay
+ *fill*         0x0000000008002802        0x2 
  .text.BSP_LCD_Init
-                0x0000000008002800       0xe0 Core/Src/stm32746g_discovery_lcd.o
-                0x0000000008002800                BSP_LCD_Init
+                0x0000000008002804       0xe0 Core/Src/stm32746g_discovery_lcd.o
+                0x0000000008002804                BSP_LCD_Init
  .text.BSP_LCD_GetXSize
-                0x00000000080028e0       0x28 Core/Src/stm32746g_discovery_lcd.o
-                0x00000000080028e0                BSP_LCD_GetXSize
+                0x00000000080028e4       0x28 Core/Src/stm32746g_discovery_lcd.o
+                0x00000000080028e4                BSP_LCD_GetXSize
  .text.BSP_LCD_GetYSize
-                0x0000000008002908       0x28 Core/Src/stm32746g_discovery_lcd.o
-                0x0000000008002908                BSP_LCD_GetYSize
+                0x000000000800290c       0x28 Core/Src/stm32746g_discovery_lcd.o
+                0x000000000800290c                BSP_LCD_GetYSize
  .text.BSP_LCD_LayerDefaultInit
-                0x0000000008002930       0xc0 Core/Src/stm32746g_discovery_lcd.o
-                0x0000000008002930                BSP_LCD_LayerDefaultInit
+                0x0000000008002934       0xc0 Core/Src/stm32746g_discovery_lcd.o
+                0x0000000008002934                BSP_LCD_LayerDefaultInit
  .text.BSP_LCD_SelectLayer
-                0x00000000080029f0       0x20 Core/Src/stm32746g_discovery_lcd.o
-                0x00000000080029f0                BSP_LCD_SelectLayer
+                0x00000000080029f4       0x20 Core/Src/stm32746g_discovery_lcd.o
+                0x00000000080029f4                BSP_LCD_SelectLayer
  .text.BSP_LCD_SetTextColor
-                0x0000000008002a10       0x30 Core/Src/stm32746g_discovery_lcd.o
-                0x0000000008002a10                BSP_LCD_SetTextColor
+                0x0000000008002a14       0x30 Core/Src/stm32746g_discovery_lcd.o
+                0x0000000008002a14                BSP_LCD_SetTextColor
  .text.BSP_LCD_SetBackColor
-                0x0000000008002a40       0x34 Core/Src/stm32746g_discovery_lcd.o
-                0x0000000008002a40                BSP_LCD_SetBackColor
+                0x0000000008002a44       0x34 Core/Src/stm32746g_discovery_lcd.o
+                0x0000000008002a44                BSP_LCD_SetBackColor
  .text.BSP_LCD_SetFont
-                0x0000000008002a74       0x34 Core/Src/stm32746g_discovery_lcd.o
-                0x0000000008002a74                BSP_LCD_SetFont
+                0x0000000008002a78       0x34 Core/Src/stm32746g_discovery_lcd.o
+                0x0000000008002a78                BSP_LCD_SetFont
  .text.BSP_LCD_GetFont
-                0x0000000008002aa8       0x2c Core/Src/stm32746g_discovery_lcd.o
-                0x0000000008002aa8                BSP_LCD_GetFont
+                0x0000000008002aac       0x2c Core/Src/stm32746g_discovery_lcd.o
+                0x0000000008002aac                BSP_LCD_GetFont
  .text.BSP_LCD_Clear
-                0x0000000008002ad4       0x50 Core/Src/stm32746g_discovery_lcd.o
-                0x0000000008002ad4                BSP_LCD_Clear
+                0x0000000008002ad8       0x50 Core/Src/stm32746g_discovery_lcd.o
+                0x0000000008002ad8                BSP_LCD_Clear
  .text.BSP_LCD_DisplayChar
-                0x0000000008002b24       0x88 Core/Src/stm32746g_discovery_lcd.o
-                0x0000000008002b24                BSP_LCD_DisplayChar
+                0x0000000008002b28       0x88 Core/Src/stm32746g_discovery_lcd.o
+                0x0000000008002b28                BSP_LCD_DisplayChar
  .text.BSP_LCD_DisplayStringAt
-                0x0000000008002bac      0x188 Core/Src/stm32746g_discovery_lcd.o
-                0x0000000008002bac                BSP_LCD_DisplayStringAt
+                0x0000000008002bb0      0x188 Core/Src/stm32746g_discovery_lcd.o
+                0x0000000008002bb0                BSP_LCD_DisplayStringAt
  .text.BSP_LCD_DisplayStringAtLine
-                0x0000000008002d34       0x2e Core/Src/stm32746g_discovery_lcd.o
-                0x0000000008002d34                BSP_LCD_DisplayStringAtLine
- *fill*         0x0000000008002d62        0x2 
+                0x0000000008002d38       0x2e Core/Src/stm32746g_discovery_lcd.o
+                0x0000000008002d38                BSP_LCD_DisplayStringAtLine
+ *fill*         0x0000000008002d66        0x2 
  .text.BSP_LCD_DrawHLine
-                0x0000000008002d64       0xbc Core/Src/stm32746g_discovery_lcd.o
-                0x0000000008002d64                BSP_LCD_DrawHLine
+                0x0000000008002d68       0xbc Core/Src/stm32746g_discovery_lcd.o
+                0x0000000008002d68                BSP_LCD_DrawHLine
  .text.BSP_LCD_DrawLine
-                0x0000000008002e20      0x198 Core/Src/stm32746g_discovery_lcd.o
-                0x0000000008002e20                BSP_LCD_DrawLine
+                0x0000000008002e24      0x198 Core/Src/stm32746g_discovery_lcd.o
+                0x0000000008002e24                BSP_LCD_DrawLine
  .text.BSP_LCD_DrawCircle
-                0x0000000008002fb8      0x1e0 Core/Src/stm32746g_discovery_lcd.o
-                0x0000000008002fb8                BSP_LCD_DrawCircle
+                0x0000000008002fbc      0x1e0 Core/Src/stm32746g_discovery_lcd.o
+                0x0000000008002fbc                BSP_LCD_DrawCircle
  .text.BSP_LCD_DrawPixel
-                0x0000000008003198       0x90 Core/Src/stm32746g_discovery_lcd.o
-                0x0000000008003198                BSP_LCD_DrawPixel
+                0x000000000800319c       0x90 Core/Src/stm32746g_discovery_lcd.o
+                0x000000000800319c                BSP_LCD_DrawPixel
  .text.BSP_LCD_FillRect
-                0x0000000008003228       0xf4 Core/Src/stm32746g_discovery_lcd.o
-                0x0000000008003228                BSP_LCD_FillRect
+                0x000000000800322c       0xf4 Core/Src/stm32746g_discovery_lcd.o
+                0x000000000800322c                BSP_LCD_FillRect
  .text.BSP_LCD_FillCircle
-                0x000000000800331c      0x140 Core/Src/stm32746g_discovery_lcd.o
-                0x000000000800331c                BSP_LCD_FillCircle
+                0x0000000008003320      0x140 Core/Src/stm32746g_discovery_lcd.o
+                0x0000000008003320                BSP_LCD_FillCircle
  .text.BSP_LCD_FillPolygon
-                0x000000000800345c      0x1c8 Core/Src/stm32746g_discovery_lcd.o
-                0x000000000800345c                BSP_LCD_FillPolygon
+                0x0000000008003460      0x1c8 Core/Src/stm32746g_discovery_lcd.o
+                0x0000000008003460                BSP_LCD_FillPolygon
  .text.BSP_LCD_DisplayOn
-                0x0000000008003624       0x3c Core/Src/stm32746g_discovery_lcd.o
-                0x0000000008003624                BSP_LCD_DisplayOn
+                0x0000000008003628       0x3c Core/Src/stm32746g_discovery_lcd.o
+                0x0000000008003628                BSP_LCD_DisplayOn
  .text.BSP_LCD_MspInit
-                0x0000000008003660      0x1b4 Core/Src/stm32746g_discovery_lcd.o
-                0x0000000008003660                BSP_LCD_MspInit
+                0x0000000008003664      0x1b4 Core/Src/stm32746g_discovery_lcd.o
+                0x0000000008003664                BSP_LCD_MspInit
  .text.BSP_LCD_ClockConfig
-                0x0000000008003814       0x38 Core/Src/stm32746g_discovery_lcd.o
-                0x0000000008003814                BSP_LCD_ClockConfig
+                0x0000000008003818       0x38 Core/Src/stm32746g_discovery_lcd.o
+                0x0000000008003818                BSP_LCD_ClockConfig
  .text.DrawChar
-                0x000000000800384c      0x170 Core/Src/stm32746g_discovery_lcd.o
+                0x0000000008003850      0x170 Core/Src/stm32746g_discovery_lcd.o
  .text.FillTriangle
-                0x00000000080039bc      0x17e Core/Src/stm32746g_discovery_lcd.o
- *fill*         0x0000000008003b3a        0x2 
+                0x00000000080039c0      0x17e Core/Src/stm32746g_discovery_lcd.o
+ *fill*         0x0000000008003b3e        0x2 
  .text.LL_FillBuffer
-                0x0000000008003b3c       0x98 Core/Src/stm32746g_discovery_lcd.o
+                0x0000000008003b40       0x98 Core/Src/stm32746g_discovery_lcd.o
  .text.BSP_SDRAM_Init
-                0x0000000008003bd4       0xbc Core/Src/stm32746g_discovery_sdram.o
-                0x0000000008003bd4                BSP_SDRAM_Init
+                0x0000000008003bd8       0xbc Core/Src/stm32746g_discovery_sdram.o
+                0x0000000008003bd8                BSP_SDRAM_Init
  .text.BSP_SDRAM_Initialization_sequence
-                0x0000000008003c90       0xc0 Core/Src/stm32746g_discovery_sdram.o
-                0x0000000008003c90                BSP_SDRAM_Initialization_sequence
+                0x0000000008003c94       0xc0 Core/Src/stm32746g_discovery_sdram.o
+                0x0000000008003c94                BSP_SDRAM_Initialization_sequence
  .text.BSP_SDRAM_MspInit
-                0x0000000008003d50      0x1f0 Core/Src/stm32746g_discovery_sdram.o
-                0x0000000008003d50                BSP_SDRAM_MspInit
+                0x0000000008003d54      0x1f0 Core/Src/stm32746g_discovery_sdram.o
+                0x0000000008003d54                BSP_SDRAM_MspInit
  .text.BSP_TS_Init
-                0x0000000008003f40       0x80 Core/Src/stm32746g_discovery_ts.o
-                0x0000000008003f40                BSP_TS_Init
+                0x0000000008003f44       0x80 Core/Src/stm32746g_discovery_ts.o
+                0x0000000008003f44                BSP_TS_Init
  .text.HAL_MspInit
-                0x0000000008003fc0       0x50 Core/Src/stm32f7xx_hal_msp.o
-                0x0000000008003fc0                HAL_MspInit
+                0x0000000008003fc4       0x50 Core/Src/stm32f7xx_hal_msp.o
+                0x0000000008003fc4                HAL_MspInit
  .text.HAL_ADC_MspInit
-                0x0000000008004010       0xdc Core/Src/stm32f7xx_hal_msp.o
-                0x0000000008004010                HAL_ADC_MspInit
+                0x0000000008004014       0xdc Core/Src/stm32f7xx_hal_msp.o
+                0x0000000008004014                HAL_ADC_MspInit
  .text.HAL_DAC_MspInit
-                0x00000000080040ec       0x90 Core/Src/stm32f7xx_hal_msp.o
-                0x00000000080040ec                HAL_DAC_MspInit
+                0x00000000080040f0       0x90 Core/Src/stm32f7xx_hal_msp.o
+                0x00000000080040f0                HAL_DAC_MspInit
  .text.HAL_DMA2D_MspInit
-                0x000000000800417c       0x40 Core/Src/stm32f7xx_hal_msp.o
-                0x000000000800417c                HAL_DMA2D_MspInit
+                0x0000000008004180       0x40 Core/Src/stm32f7xx_hal_msp.o
+                0x0000000008004180                HAL_DMA2D_MspInit
  .text.HAL_I2C_MspInit
-                0x00000000080041bc       0xf0 Core/Src/stm32f7xx_hal_msp.o
-                0x00000000080041bc                HAL_I2C_MspInit
+                0x00000000080041c0       0xf0 Core/Src/stm32f7xx_hal_msp.o
+                0x00000000080041c0                HAL_I2C_MspInit
  .text.HAL_I2C_MspDeInit
-                0x00000000080042ac       0x78 Core/Src/stm32f7xx_hal_msp.o
-                0x00000000080042ac                HAL_I2C_MspDeInit
+                0x00000000080042b0       0x78 Core/Src/stm32f7xx_hal_msp.o
+                0x00000000080042b0                HAL_I2C_MspDeInit
  .text.HAL_LTDC_MspInit
-                0x0000000008004324      0x190 Core/Src/stm32f7xx_hal_msp.o
-                0x0000000008004324                HAL_LTDC_MspInit
+                0x0000000008004328      0x190 Core/Src/stm32f7xx_hal_msp.o
+                0x0000000008004328                HAL_LTDC_MspInit
  .text.HAL_RTC_MspInit
-                0x00000000080044b4       0x34 Core/Src/stm32f7xx_hal_msp.o
-                0x00000000080044b4                HAL_RTC_MspInit
+                0x00000000080044b8       0x34 Core/Src/stm32f7xx_hal_msp.o
+                0x00000000080044b8                HAL_RTC_MspInit
  .text.HAL_SPI_MspInit
-                0x00000000080044e8       0xe4 Core/Src/stm32f7xx_hal_msp.o
-                0x00000000080044e8                HAL_SPI_MspInit
+                0x00000000080044ec       0xe4 Core/Src/stm32f7xx_hal_msp.o
+                0x00000000080044ec                HAL_SPI_MspInit
  .text.HAL_TIM_Base_MspInit
-                0x00000000080045cc       0xdc Core/Src/stm32f7xx_hal_msp.o
-                0x00000000080045cc                HAL_TIM_Base_MspInit
+                0x00000000080045d0       0xdc Core/Src/stm32f7xx_hal_msp.o
+                0x00000000080045d0                HAL_TIM_Base_MspInit
  .text.HAL_TIM_MspPostInit
-                0x00000000080046a8       0x70 Core/Src/stm32f7xx_hal_msp.o
-                0x00000000080046a8                HAL_TIM_MspPostInit
+                0x00000000080046ac       0x70 Core/Src/stm32f7xx_hal_msp.o
+                0x00000000080046ac                HAL_TIM_MspPostInit
  .text.HAL_UART_MspInit
-                0x0000000008004718      0x1b0 Core/Src/stm32f7xx_hal_msp.o
-                0x0000000008004718                HAL_UART_MspInit
+                0x000000000800471c      0x1ac Core/Src/stm32f7xx_hal_msp.o
+                0x000000000800471c                HAL_UART_MspInit
  .text.HAL_FMC_MspInit
                 0x00000000080048c8      0x120 Core/Src/stm32f7xx_hal_msp.o
  .text.HAL_SDRAM_MspInit
@@ -9615,7 +9615,7 @@ LOAD c:/st/stm32cubeide_1.5.1/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.exte
                 0x0000000000000d70       0x22 c:/st/stm32cubeide_1.5.1/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.5.0.202011040924/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v7e-m/fpv4-sp/hard/crtn.o
 OUTPUT(prog_Mini-projMaster.elf elf32-littlearm)
 
-.debug_info     0x0000000000000000    0x2c99c
+.debug_info     0x0000000000000000    0x2c99e
  .debug_info    0x0000000000000000      0x3c1 Core/Src/freertos.o
  .debug_info    0x00000000000003c1      0x591 Core/Src/ft5336.o
  .debug_info    0x0000000000000952     0x413d Core/Src/main.o
@@ -9623,43 +9623,43 @@ OUTPUT(prog_Mini-projMaster.elf elf32-littlearm)
  .debug_info    0x000000000000644a     0x2264 Core/Src/stm32746g_discovery_lcd.o
  .debug_info    0x00000000000086ae      0xf1e Core/Src/stm32746g_discovery_sdram.o
  .debug_info    0x00000000000095cc      0x9dd Core/Src/stm32746g_discovery_ts.o
- .debug_info    0x0000000000009fa9     0x2aca Core/Src/stm32f7xx_hal_msp.o
- .debug_info    0x000000000000ca73      0xbe7 Core/Src/stm32f7xx_hal_timebase_tim.o
- .debug_info    0x000000000000d65a      0xefa Core/Src/stm32f7xx_it.o
- .debug_info    0x000000000000e554      0x985 Core/Src/sysmem.o
- .debug_info    0x000000000000eed9      0x73d Core/Src/system_stm32f7xx.o
- .debug_info    0x000000000000f616       0x22 Core/Startup/startup_stm32f746nghx.o
- .debug_info    0x000000000000f638      0x9d3 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal.o
- .debug_info    0x000000000001000b      0xc9d Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_adc.o
- .debug_info    0x0000000000010ca8     0x104a Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_cortex.o
- .debug_info    0x0000000000011cf2      0xa3a Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dac.o
- .debug_info    0x000000000001272c      0x7c0 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dac_ex.o
- .debug_info    0x0000000000012eec      0x968 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dma.o
- .debug_info    0x0000000000013854      0xee9 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dma2d.o
- .debug_info    0x000000000001473d      0x7dc Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.o
- .debug_info    0x0000000000014f19     0x1fb9 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_i2c.o
- .debug_info    0x0000000000016ed2      0x738 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_i2c_ex.o
- .debug_info    0x000000000001760a     0x1104 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_ltdc.o
- .debug_info    0x000000000001870e      0x9b4 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pwr.o
- .debug_info    0x00000000000190c2      0x96b Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pwr_ex.o
- .debug_info    0x0000000000019a2d      0x935 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rcc.o
- .debug_info    0x000000000001a362      0x7ad Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rcc_ex.o
- .debug_info    0x000000000001ab0f      0xc56 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rtc.o
- .debug_info    0x000000000001b765      0xff7 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rtc_ex.o
- .debug_info    0x000000000001c75c      0xca1 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_sdram.o
- .debug_info    0x000000000001d3fd     0x166a Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_spi.o
- .debug_info    0x000000000001ea67     0x25a2 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_tim.o
- .debug_info    0x0000000000021009     0x121c Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_tim_ex.o
- .debug_info    0x0000000000022225     0x16d1 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_uart.o
- .debug_info    0x00000000000238f6      0xccd Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_ll_fmc.o
- .debug_info    0x00000000000245c3     0x1eb8 Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.o
- .debug_info    0x000000000002647b      0xacb Middlewares/Third_Party/FreeRTOS/Source/list.o
- .debug_info    0x0000000000026f46     0x21ea Middlewares/Third_Party/FreeRTOS/Source/queue.o
- .debug_info    0x0000000000029130     0x2789 Middlewares/Third_Party/FreeRTOS/Source/tasks.o
- .debug_info    0x000000000002b8b9      0x4e4 Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM7/r0p1/port.o
- .debug_info    0x000000000002bd9d      0xbff Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.o
+ .debug_info    0x0000000000009fa9     0x2acc Core/Src/stm32f7xx_hal_msp.o
+ .debug_info    0x000000000000ca75      0xbe7 Core/Src/stm32f7xx_hal_timebase_tim.o
+ .debug_info    0x000000000000d65c      0xefa Core/Src/stm32f7xx_it.o
+ .debug_info    0x000000000000e556      0x985 Core/Src/sysmem.o
+ .debug_info    0x000000000000eedb      0x73d Core/Src/system_stm32f7xx.o
+ .debug_info    0x000000000000f618       0x22 Core/Startup/startup_stm32f746nghx.o
+ .debug_info    0x000000000000f63a      0x9d3 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal.o
+ .debug_info    0x000000000001000d      0xc9d Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_adc.o
+ .debug_info    0x0000000000010caa     0x104a Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_cortex.o
+ .debug_info    0x0000000000011cf4      0xa3a Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dac.o
+ .debug_info    0x000000000001272e      0x7c0 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dac_ex.o
+ .debug_info    0x0000000000012eee      0x968 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dma.o
+ .debug_info    0x0000000000013856      0xee9 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dma2d.o
+ .debug_info    0x000000000001473f      0x7dc Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.o
+ .debug_info    0x0000000000014f1b     0x1fb9 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_i2c.o
+ .debug_info    0x0000000000016ed4      0x738 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_i2c_ex.o
+ .debug_info    0x000000000001760c     0x1104 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_ltdc.o
+ .debug_info    0x0000000000018710      0x9b4 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pwr.o
+ .debug_info    0x00000000000190c4      0x96b Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pwr_ex.o
+ .debug_info    0x0000000000019a2f      0x935 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rcc.o
+ .debug_info    0x000000000001a364      0x7ad Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rcc_ex.o
+ .debug_info    0x000000000001ab11      0xc56 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rtc.o
+ .debug_info    0x000000000001b767      0xff7 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rtc_ex.o
+ .debug_info    0x000000000001c75e      0xca1 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_sdram.o
+ .debug_info    0x000000000001d3ff     0x166a Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_spi.o
+ .debug_info    0x000000000001ea69     0x25a2 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_tim.o
+ .debug_info    0x000000000002100b     0x121c Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_tim_ex.o
+ .debug_info    0x0000000000022227     0x16d1 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_uart.o
+ .debug_info    0x00000000000238f8      0xccd Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_ll_fmc.o
+ .debug_info    0x00000000000245c5     0x1eb8 Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.o
+ .debug_info    0x000000000002647d      0xacb Middlewares/Third_Party/FreeRTOS/Source/list.o
+ .debug_info    0x0000000000026f48     0x21ea Middlewares/Third_Party/FreeRTOS/Source/queue.o
+ .debug_info    0x0000000000029132     0x2789 Middlewares/Third_Party/FreeRTOS/Source/tasks.o
+ .debug_info    0x000000000002b8bb      0x4e4 Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM7/r0p1/port.o
+ .debug_info    0x000000000002bd9f      0xbff Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.o
 
-.debug_abbrev   0x0000000000000000     0x554d
+.debug_abbrev   0x0000000000000000     0x5533
  .debug_abbrev  0x0000000000000000      0x12a Core/Src/freertos.o
  .debug_abbrev  0x000000000000012a      0x1ea Core/Src/ft5336.o
  .debug_abbrev  0x0000000000000314      0x2dc Core/Src/main.o
@@ -9667,41 +9667,41 @@ OUTPUT(prog_Mini-projMaster.elf elf32-littlearm)
  .debug_abbrev  0x0000000000000877      0x298 Core/Src/stm32746g_discovery_lcd.o
  .debug_abbrev  0x0000000000000b0f      0x218 Core/Src/stm32746g_discovery_sdram.o
  .debug_abbrev  0x0000000000000d27      0x22b Core/Src/stm32746g_discovery_ts.o
- .debug_abbrev  0x0000000000000f52      0x267 Core/Src/stm32f7xx_hal_msp.o
- .debug_abbrev  0x00000000000011b9      0x19d Core/Src/stm32f7xx_hal_timebase_tim.o
- .debug_abbrev  0x0000000000001356      0x169 Core/Src/stm32f7xx_it.o
- .debug_abbrev  0x00000000000014bf      0x19b Core/Src/sysmem.o
- .debug_abbrev  0x000000000000165a      0x147 Core/Src/system_stm32f7xx.o
- .debug_abbrev  0x00000000000017a1       0x12 Core/Startup/startup_stm32f746nghx.o
- .debug_abbrev  0x00000000000017b3      0x1c7 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal.o
- .debug_abbrev  0x000000000000197a      0x205 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_adc.o
- .debug_abbrev  0x0000000000001b7f      0x2fa Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_cortex.o
- .debug_abbrev  0x0000000000001e79      0x1e4 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dac.o
- .debug_abbrev  0x000000000000205d      0x1e8 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dac_ex.o
- .debug_abbrev  0x0000000000002245      0x229 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dma.o
- .debug_abbrev  0x000000000000246e      0x211 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dma2d.o
- .debug_abbrev  0x000000000000267f      0x1c9 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.o
- .debug_abbrev  0x0000000000002848      0x22a Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_i2c.o
- .debug_abbrev  0x0000000000002a72      0x178 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_i2c_ex.o
- .debug_abbrev  0x0000000000002bea      0x209 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_ltdc.o
- .debug_abbrev  0x0000000000002df3      0x1b6 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pwr.o
- .debug_abbrev  0x0000000000002fa9      0x1b8 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pwr_ex.o
- .debug_abbrev  0x0000000000003161      0x21a Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rcc.o
- .debug_abbrev  0x000000000000337b      0x1ad Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rcc_ex.o
- .debug_abbrev  0x0000000000003528      0x1be Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rtc.o
- .debug_abbrev  0x00000000000036e6      0x1e9 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rtc_ex.o
- .debug_abbrev  0x00000000000038cf      0x1f7 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_sdram.o
- .debug_abbrev  0x0000000000003ac6      0x228 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_spi.o
- .debug_abbrev  0x0000000000003cee      0x230 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_tim.o
- .debug_abbrev  0x0000000000003f1e      0x21e Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_tim_ex.o
- .debug_abbrev  0x000000000000413c      0x205 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_uart.o
- .debug_abbrev  0x0000000000004341      0x170 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_ll_fmc.o
- .debug_abbrev  0x00000000000044b1      0x379 Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.o
- .debug_abbrev  0x000000000000482a      0x1cf Middlewares/Third_Party/FreeRTOS/Source/list.o
- .debug_abbrev  0x00000000000049f9      0x336 Middlewares/Third_Party/FreeRTOS/Source/queue.o
- .debug_abbrev  0x0000000000004d2f      0x349 Middlewares/Third_Party/FreeRTOS/Source/tasks.o
- .debug_abbrev  0x0000000000005078      0x21b Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM7/r0p1/port.o
- .debug_abbrev  0x0000000000005293      0x2ba Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.o
+ .debug_abbrev  0x0000000000000f52      0x24d Core/Src/stm32f7xx_hal_msp.o
+ .debug_abbrev  0x000000000000119f      0x19d Core/Src/stm32f7xx_hal_timebase_tim.o
+ .debug_abbrev  0x000000000000133c      0x169 Core/Src/stm32f7xx_it.o
+ .debug_abbrev  0x00000000000014a5      0x19b Core/Src/sysmem.o
+ .debug_abbrev  0x0000000000001640      0x147 Core/Src/system_stm32f7xx.o
+ .debug_abbrev  0x0000000000001787       0x12 Core/Startup/startup_stm32f746nghx.o
+ .debug_abbrev  0x0000000000001799      0x1c7 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal.o
+ .debug_abbrev  0x0000000000001960      0x205 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_adc.o
+ .debug_abbrev  0x0000000000001b65      0x2fa Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_cortex.o
+ .debug_abbrev  0x0000000000001e5f      0x1e4 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dac.o
+ .debug_abbrev  0x0000000000002043      0x1e8 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dac_ex.o
+ .debug_abbrev  0x000000000000222b      0x229 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dma.o
+ .debug_abbrev  0x0000000000002454      0x211 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dma2d.o
+ .debug_abbrev  0x0000000000002665      0x1c9 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.o
+ .debug_abbrev  0x000000000000282e      0x22a Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_i2c.o
+ .debug_abbrev  0x0000000000002a58      0x178 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_i2c_ex.o
+ .debug_abbrev  0x0000000000002bd0      0x209 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_ltdc.o
+ .debug_abbrev  0x0000000000002dd9      0x1b6 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pwr.o
+ .debug_abbrev  0x0000000000002f8f      0x1b8 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pwr_ex.o
+ .debug_abbrev  0x0000000000003147      0x21a Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rcc.o
+ .debug_abbrev  0x0000000000003361      0x1ad Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rcc_ex.o
+ .debug_abbrev  0x000000000000350e      0x1be Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rtc.o
+ .debug_abbrev  0x00000000000036cc      0x1e9 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rtc_ex.o
+ .debug_abbrev  0x00000000000038b5      0x1f7 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_sdram.o
+ .debug_abbrev  0x0000000000003aac      0x228 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_spi.o
+ .debug_abbrev  0x0000000000003cd4      0x230 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_tim.o
+ .debug_abbrev  0x0000000000003f04      0x21e Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_tim_ex.o
+ .debug_abbrev  0x0000000000004122      0x205 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_uart.o
+ .debug_abbrev  0x0000000000004327      0x170 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_ll_fmc.o
+ .debug_abbrev  0x0000000000004497      0x379 Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.o
+ .debug_abbrev  0x0000000000004810      0x1cf Middlewares/Third_Party/FreeRTOS/Source/list.o
+ .debug_abbrev  0x00000000000049df      0x336 Middlewares/Third_Party/FreeRTOS/Source/queue.o
+ .debug_abbrev  0x0000000000004d15      0x349 Middlewares/Third_Party/FreeRTOS/Source/tasks.o
+ .debug_abbrev  0x000000000000505e      0x21b Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM7/r0p1/port.o
+ .debug_abbrev  0x0000000000005279      0x2ba Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.o
 
 .debug_aranges  0x0000000000000000     0x2600
  .debug_aranges
@@ -9991,49 +9991,49 @@ OUTPUT(prog_Mini-projMaster.elf elf32-littlearm)
  .debug_macro   0x000000000002dede      0x184 Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM7/r0p1/port.o
  .debug_macro   0x000000000002e062      0x1a1 Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.o
 
-.debug_line     0x0000000000000000    0x1f5aa
+.debug_line     0x0000000000000000    0x1f59e
  .debug_line    0x0000000000000000      0x961 Core/Src/freertos.o
  .debug_line    0x0000000000000961      0x549 Core/Src/ft5336.o
- .debug_line    0x0000000000000eaa     0x1282 Core/Src/main.o
- .debug_line    0x000000000000212c      0xb3a Core/Src/stm32746g_discovery.o
- .debug_line    0x0000000000002c66      0xfa2 Core/Src/stm32746g_discovery_lcd.o
- .debug_line    0x0000000000003c08      0x951 Core/Src/stm32746g_discovery_sdram.o
- .debug_line    0x0000000000004559      0x9b1 Core/Src/stm32746g_discovery_ts.o
- .debug_line    0x0000000000004f0a      0xb2a Core/Src/stm32f7xx_hal_msp.o
- .debug_line    0x0000000000005a34      0x85f Core/Src/stm32f7xx_hal_timebase_tim.o
- .debug_line    0x0000000000006293      0x8e8 Core/Src/stm32f7xx_it.o
- .debug_line    0x0000000000006b7b      0x4c7 Core/Src/sysmem.o
- .debug_line    0x0000000000007042      0x844 Core/Src/system_stm32f7xx.o
- .debug_line    0x0000000000007886       0x85 Core/Startup/startup_stm32f746nghx.o
- .debug_line    0x000000000000790b      0xa53 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal.o
- .debug_line    0x000000000000835e      0xc7c Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_adc.o
- .debug_line    0x0000000000008fda      0xb54 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_cortex.o
- .debug_line    0x0000000000009b2e      0xa84 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dac.o
- .debug_line    0x000000000000a5b2      0x947 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dac_ex.o
- .debug_line    0x000000000000aef9      0xaff Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dma.o
- .debug_line    0x000000000000b9f8      0xd8c Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dma2d.o
- .debug_line    0x000000000000c784      0xa38 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.o
- .debug_line    0x000000000000d1bc     0x1baf Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_i2c.o
- .debug_line    0x000000000000ed6b      0x8c3 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_i2c_ex.o
- .debug_line    0x000000000000f62e     0x1102 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_ltdc.o
- .debug_line    0x0000000000010730      0x998 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pwr.o
- .debug_line    0x00000000000110c8      0x974 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pwr_ex.o
- .debug_line    0x0000000000011a3c      0xac9 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rcc.o
- .debug_line    0x0000000000012505      0xa3b Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rcc_ex.o
- .debug_line    0x0000000000012f40      0xbbb Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rtc.o
- .debug_line    0x0000000000013afb      0xf6b Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rtc_ex.o
- .debug_line    0x0000000000014a66      0xb87 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_sdram.o
- .debug_line    0x00000000000155ed     0x12a6 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_spi.o
- .debug_line    0x0000000000016893     0x1b70 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_tim.o
- .debug_line    0x0000000000018403      0xedb Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_tim_ex.o
- .debug_line    0x00000000000192de     0x13da Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_uart.o
- .debug_line    0x000000000001a6b8      0xadb Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_ll_fmc.o
- .debug_line    0x000000000001b193      0xce9 Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.o
- .debug_line    0x000000000001be7c      0x670 Middlewares/Third_Party/FreeRTOS/Source/list.o
- .debug_line    0x000000000001c4ec     0x105a Middlewares/Third_Party/FreeRTOS/Source/queue.o
- .debug_line    0x000000000001d546     0x128f Middlewares/Third_Party/FreeRTOS/Source/tasks.o
- .debug_line    0x000000000001e7d5      0x67d Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM7/r0p1/port.o
- .debug_line    0x000000000001ee52      0x758 Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.o
+ .debug_line    0x0000000000000eaa     0x1276 Core/Src/main.o
+ .debug_line    0x0000000000002120      0xb3a Core/Src/stm32746g_discovery.o
+ .debug_line    0x0000000000002c5a      0xfa2 Core/Src/stm32746g_discovery_lcd.o
+ .debug_line    0x0000000000003bfc      0x951 Core/Src/stm32746g_discovery_sdram.o
+ .debug_line    0x000000000000454d      0x9b1 Core/Src/stm32746g_discovery_ts.o
+ .debug_line    0x0000000000004efe      0xb2a Core/Src/stm32f7xx_hal_msp.o
+ .debug_line    0x0000000000005a28      0x85f Core/Src/stm32f7xx_hal_timebase_tim.o
+ .debug_line    0x0000000000006287      0x8e8 Core/Src/stm32f7xx_it.o
+ .debug_line    0x0000000000006b6f      0x4c7 Core/Src/sysmem.o
+ .debug_line    0x0000000000007036      0x844 Core/Src/system_stm32f7xx.o
+ .debug_line    0x000000000000787a       0x85 Core/Startup/startup_stm32f746nghx.o
+ .debug_line    0x00000000000078ff      0xa53 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal.o
+ .debug_line    0x0000000000008352      0xc7c Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_adc.o
+ .debug_line    0x0000000000008fce      0xb54 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_cortex.o
+ .debug_line    0x0000000000009b22      0xa84 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dac.o
+ .debug_line    0x000000000000a5a6      0x947 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dac_ex.o
+ .debug_line    0x000000000000aeed      0xaff Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dma.o
+ .debug_line    0x000000000000b9ec      0xd8c Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dma2d.o
+ .debug_line    0x000000000000c778      0xa38 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.o
+ .debug_line    0x000000000000d1b0     0x1baf Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_i2c.o
+ .debug_line    0x000000000000ed5f      0x8c3 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_i2c_ex.o
+ .debug_line    0x000000000000f622     0x1102 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_ltdc.o
+ .debug_line    0x0000000000010724      0x998 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pwr.o
+ .debug_line    0x00000000000110bc      0x974 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pwr_ex.o
+ .debug_line    0x0000000000011a30      0xac9 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rcc.o
+ .debug_line    0x00000000000124f9      0xa3b Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rcc_ex.o
+ .debug_line    0x0000000000012f34      0xbbb Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rtc.o
+ .debug_line    0x0000000000013aef      0xf6b Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rtc_ex.o
+ .debug_line    0x0000000000014a5a      0xb87 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_sdram.o
+ .debug_line    0x00000000000155e1     0x12a6 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_spi.o
+ .debug_line    0x0000000000016887     0x1b70 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_tim.o
+ .debug_line    0x00000000000183f7      0xedb Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_tim_ex.o
+ .debug_line    0x00000000000192d2     0x13da Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_uart.o
+ .debug_line    0x000000000001a6ac      0xadb Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_ll_fmc.o
+ .debug_line    0x000000000001b187      0xce9 Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.o
+ .debug_line    0x000000000001be70      0x670 Middlewares/Third_Party/FreeRTOS/Source/list.o
+ .debug_line    0x000000000001c4e0     0x105a Middlewares/Third_Party/FreeRTOS/Source/queue.o
+ .debug_line    0x000000000001d53a     0x128f Middlewares/Third_Party/FreeRTOS/Source/tasks.o
+ .debug_line    0x000000000001e7c9      0x67d Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM7/r0p1/port.o
+ .debug_line    0x000000000001ee46      0x758 Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.o
 
 .debug_str      0x0000000000000000   0x114b81
  .debug_str     0x0000000000000000    0xfe569 Core/Src/freertos.o

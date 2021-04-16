@@ -201,7 +201,7 @@ int main(void)
 	BSP_LCD_SetBackColor(LCD_COLOR_BLACK);
 
 	BSP_TS_Init(BSP_LCD_GetXSize(), BSP_LCD_GetYSize());
-	HAL_UART_Receive_IT(&huart7,rxbuffer,1);
+	HAL_UART_Receive_IT(&huart7,rxbuffer,6);
   /* USER CODE END 2 */
 
   /* Create the mutex(es) */
@@ -1459,12 +1459,16 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
-  	x_balle=rxbuffer[1] << 8 | rxbuffer[2];
-	y_balle=rxbuffer[3] << 8 | rxbuffer[4];
-	lost=rxbuffer[5];
-	r_balle=rxbuffer[0];
 
+	//Réception du rayon de la balle, des coordonnées de la balle, du drapeau de perte
+	r_balle = rxbuffer[0];
+	x_balle = ((rxbuffer[1] << 8) | rxbuffer[2]) - 480;
+	y_balle = (rxbuffer[3] << 8) | rxbuffer[4];
+	lost = rxbuffer[5];
+
+	//Attente d'une nouvelle réception sur interruption
 	HAL_UART_Receive_IT(&huart7, rxbuffer, 6);
+
 }
 
 /* USER CODE END 4 */
@@ -1496,66 +1500,66 @@ void StartDefaultTask(void const * argument)
 void StartRRacket(void const * argument)
 {
   /* USER CODE BEGIN StartRRacket */
+
+	//Initialisation des variables pour le joystick
 	int32_t joystick_h, joystick_v;
 	joystick_h = 0;
 	joystick_v = 0;
+
+	//Initialisation du stockage des coordonnées de la raquette droite
 	int16_t x_RRacket_hold;
 	int16_t y_RRacket_hold;
 
+	//Initialisation du CAN du joystick (ADC_CHANNEL_8)
 	ADC_ChannelConfTypeDef sConfig = { 0 };
 	sConfig.Rank = ADC_REGULAR_RANK_1;
 	sConfig.SamplingTime = ADC_SAMPLETIME_3CYCLES;
-
-
 	HAL_ADC_ConfigChannel(&hadc3, &sConfig);
+
 	/* Infinite loop */
-	for (;;) {
-		x_RRacket_hold = x_RRacket;
-		y_RRacket_hold = y_RRacket;
-
-
-		//Capture des valeurs des joysticks
+	for(;;){
+		//Capture des valeurs des joysticks sur ADC_CHANNEL_8
 		sConfig.Channel = ADC_CHANNEL_8;
 		HAL_ADC_ConfigChannel(&hadc3, &sConfig);
 		HAL_ADC_Start(&hadc3);
 		while (HAL_ADC_PollForConversion(&hadc3, 100) != HAL_OK)
 			;
 		joystick_v = HAL_ADC_GetValue(&hadc3);
-
 		HAL_ADC_Start(&hadc1);
 		while (HAL_ADC_PollForConversion(&hadc1, 100) != HAL_OK)
 			;
 		joystick_h = HAL_ADC_GetValue(&hadc1);
 
-		//Actualisation des coordonnées
-		x_RRacket -= (joystick_h - 2080)/100;
+		//Actualisation des coordonnées de la raquette droite, le joystick
+		//horizontal nécessite une corrcetion pour ne pas dériver
+		x_RRacket -= (joystick_h - 2018)/100;
 		y_RRacket -= (joystick_v - 2080)/150;
 
 		// Cadrage des coordonnées RRacket
-		if (x_RRacket <= 479+241) x_RRacket = 479+241;
-
-		if (x_RRacket >= 959 - width_rackets) x_RRacket = 959 - width_rackets;
-
+		if (x_RRacket <= 240) x_RRacket = 240;
+		if (x_RRacket >= 479 - width_rackets) x_RRacket = 479 - width_rackets;
 		if (y_RRacket <= 0) y_RRacket = 0;
-
-		if (y_RRacket + height_rackets > 271) y_RRacket = 271 - height_rackets;
+		if (y_RRacket + height_rackets >= 272) y_RRacket = 272 - height_rackets;
 
 		//Tracé de RRacket
-		// Accaparement de la ressource
+		//Accaparement de la ressource
 		xSemaphoreTake(myMutex_LCDHandle, portMAX_DELAY);
 
-		// Effaçage du précedent rectangle
+		//Effaçage du précedent rectangle
 		BSP_LCD_SetTextColor(couleur==0?LCD_COLOR_WHITE:LCD_COLOR_BLACK);
 		BSP_LCD_FillRect(x_RRacket_hold, y_RRacket_hold, width_rackets,
 				height_rackets);
 
-		// Création du nouveau rectangle
+		//Création du nouveau rectangle
 		BSP_LCD_SetTextColor(couleur==0?LCD_COLOR_BLACK:LCD_COLOR_WHITE);
 		BSP_LCD_FillRect(x_RRacket, y_RRacket, width_rackets, height_rackets);
 
 		//Libération de la ressource
 		xSemaphoreGive(myMutex_LCDHandle);
 
+		//Stockage des dernières coordonnées de la raquette droite
+		x_RRacket_hold = x_RRacket;
+		y_RRacket_hold = y_RRacket;
 		osDelay(40);
 	}
   /* USER CODE END StartRRacket */
@@ -1571,49 +1575,80 @@ void StartRRacket(void const * argument)
 void StartBall(void const * argument)
 {
   /* USER CODE BEGIN StartBall */
+
+	//Initialisation de la régularité de lancement de la tache
 	TickType_t xFrequency=10;
 	TickType_t xLastWakeTime=xTaskGetTickCount();
-	uint16_t x_balle_hold = 480;
-	uint16_t y_balle_hold = 136;
+
+	//Initialisation des anciennes coordonnées de la balle
+	int16_t x_balle_hold = 0;
+	int16_t y_balle_hold = 136;
   /* Infinite loop */
   for(;;)
   {
 
-	  x_balle_hold=x_balle;
-	  y_balle_hold=y_balle;
+	  if(lost == 1){
+		  //Si la balle touche le bord gauche de l'écran, on a perdu
+		  //Capture de la ressource
+		  xSemaphoreTake(myMutex_LCDHandle, portMAX_DELAY);
 
+		  //Affichage du message de perte sous le chronomètre
+		  BSP_LCD_DisplayStringAtLine(2, (uint8_t*) "Perdu");
+
+		  //Libération de la ressource
+		  xSemaphoreGive(myMutex_LCDHandle);
+
+		  //Mise en pause du déplacement de la balle
+		  vTaskSuspend(BallDisplayHandle);
+	  }
+
+
+
+	  //Capture de la ressource
 	  xSemaphoreTake(myMutex_LCDHandle, portMAX_DELAY);
-	 	  if(x_balle_hold <=479){
-	 		  BSP_LCD_SetTextColor(couleur==0?LCD_COLOR_WHITE:LCD_COLOR_BLACK);
-	 		  BSP_LCD_FillCircle(x_balle_hold - 480, y_balle_hold, r_balle);
-	 	  }
-	 	  else{
-	 		  BSP_LCD_SetTextColor(couleur==0?LCD_COLOR_WHITE:LCD_COLOR_BLACK);
-	 		  Point Point1 = {6,y_balle_hold+3};
-	 		  Point Point2 = {0,y_balle_hold};
-	 		  Point Point3 = {6,y_balle_hold-3};
 
-	 		  Point Points[3] = {Point1, Point2, Point3};
-	 		  BSP_LCD_FillPolygon(Points,3);
-	 	  }
+	  //Effaçage des anciens dessins
+	  if(x_balle_hold >= 0){
+		  //Effaçage de l'ancienne balle
+		  BSP_LCD_SetTextColor(couleur==0?LCD_COLOR_WHITE:LCD_COLOR_BLACK);
+		  BSP_LCD_FillCircle(x_balle_hold, y_balle_hold, r_balle);
+	  }
+	  else{
+		  //Effaçage de l'ancien triangle
+		  BSP_LCD_SetTextColor(couleur==0?LCD_COLOR_WHITE:LCD_COLOR_BLACK);
+		  Point Point1 = {6,y_balle_hold+3};
+		  Point Point2 = {0,y_balle_hold};
+		  Point Point3 = {6,y_balle_hold-3};
 
-	 	  if(x_balle > 479){
-	 		  BSP_LCD_SetTextColor(couleur==0?LCD_COLOR_BLACK:LCD_COLOR_WHITE);
-	 		  BSP_LCD_FillCircle(x_balle - 480, y_balle, r_balle);
-	 	  }
-	 	  else{
-	 		  BSP_LCD_SetTextColor(couleur==0?LCD_COLOR_BLACK:LCD_COLOR_WHITE);
-	 		  Point Point1 = {6,y_balle+3};
-	 		  Point Point2 = {0,y_balle};
-	 		  Point Point3 = {6,y_balle-3};
+		  Point Points[3] = {Point1, Point2, Point3};
+		  BSP_LCD_FillPolygon(Points,3);
+	  }
 
-	 		  Point Points[3] = {Point1, Point2, Point3};
-	 		  BSP_LCD_FillPolygon(Points,3);
-	 	  }
+	  //Affichage des nouveaux dessins
+	  if(x_balle >= 0){
+		  //Affichage de la nouvelle balle
+		  BSP_LCD_SetTextColor(couleur==0?LCD_COLOR_BLACK:LCD_COLOR_WHITE);
+		  BSP_LCD_FillCircle(x_balle, y_balle, r_balle);
+	  }
+	  else{
+		  //Affichage du nouveau triangle
+		  BSP_LCD_SetTextColor(couleur==0?LCD_COLOR_BLACK:LCD_COLOR_WHITE);
+		  Point Point1 = {6,y_balle+3};
+		  Point Point2 = {0,y_balle};
+		  Point Point3 = {6,y_balle-3};
 
-	 	  //Libération de la ressource
-	 	  xSemaphoreGive(myMutex_LCDHandle);
-	 	  vTaskDelayUntil(&xLastWakeTime, xFrequency);
+		  Point Points[3] = {Point1, Point2, Point3};
+		  BSP_LCD_FillPolygon(Points,3);
+	  }
+
+	  //Libération de la ressource
+	 xSemaphoreGive(myMutex_LCDHandle);
+
+	 //Stockage du dernier emplacement de dessin
+	 x_balle_hold=x_balle;
+	 y_balle_hold=y_balle;
+
+	 vTaskDelayUntil(&xLastWakeTime, xFrequency);
   }
   /* USER CODE END StartBall */
 }
@@ -1628,54 +1663,57 @@ void StartBall(void const * argument)
 void StartBgChanger(void const * argument)
 {
   /* USER CODE BEGIN StartBgChanger */
-//	uint8_t Message;
+	//Initialisation de l'état de BP1 et de l'état
 	uint8_t BP1=1;
 	uint8_t state=0;
   /* Infinite loop */
   for(;;)
   {
-//	  xQueueReceive(myQueueU2HHandle, &Message, portMAX_DELAY);
+	  //Lecture de l'état du BP1
 	  BP1 = HAL_GPIO_ReadPin(BP1_GPIO_Port, BP1_Pin);
+
+	  //Machine à états
 	  switch(state){
-	  case 0:
-		  if(!BP1) state = 1;
-		  break;
-	  case 1:
-		  couleur = !couleur;
-		  if(couleur==0){
-			  xSemaphoreTake(myMutex_LCDHandle, portMAX_DELAY);
-			  BSP_LCD_Clear(LCD_COLOR_WHITE);
-			  BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-			  BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
-			  xSemaphoreGive(myMutex_LCDHandle);
-		  }
-		  else{
-			  xSemaphoreTake(myMutex_LCDHandle, portMAX_DELAY);
-			  BSP_LCD_Clear(LCD_COLOR_BLACK);
-			  BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-			  BSP_LCD_SetBackColor(LCD_COLOR_BLACK);
-			  xSemaphoreGive(myMutex_LCDHandle);
-		  }
-		  state = 2;
-		  break;
-	  case 2:
-		  if(BP1) state = 0;
-		  break;
+		  case 0:
+			  //Attente d'un changement d'état (d'un appui sur BP1)
+			  if(!BP1) state = 1;
+			  break;
+		  case 1:
+			  //Changement de la couleur
+			  couleur = !couleur;
+			  if(couleur==0){
+				  //Capture de la ressource
+				  xSemaphoreTake(myMutex_LCDHandle, portMAX_DELAY);
+
+				  //Nettoyage et recoloration du LCD en noir sur fond blanc
+				  BSP_LCD_Clear(LCD_COLOR_WHITE);
+				  BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+				  BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
+
+				  //Libération de la ressource
+				  xSemaphoreGive(myMutex_LCDHandle);
+			  }
+			  else{
+				  //Capture de la ressource
+				  xSemaphoreTake(myMutex_LCDHandle, portMAX_DELAY);
+
+				  //Nettoyage et recoloration du LCD en blanc sur fond noir
+				  BSP_LCD_Clear(LCD_COLOR_BLACK);
+				  BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+				  BSP_LCD_SetBackColor(LCD_COLOR_BLACK);
+
+				  //Libération de la ressource
+				  xSemaphoreGive(myMutex_LCDHandle);
+			  }
+
+			  //Changement d'état
+			  state = 2;
+			  break;
+		  case 2:
+			  //Attente d'un changement d'état (relachement du bouton BP1)
+			  if(BP1) state = 0;
+			  break;
 	  }
-//	  xSemaphoreTake(myMutex_LCDHandle, portMAX_DELAY);
-//	  couleur = Message;
-//	  if(couleur=='w'){
-//		  BSP_LCD_Clear(LCD_COLOR_WHITE);
-//		  BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-//		  BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
-//	  }
-//	  else{
-//		  BSP_LCD_Clear(LCD_COLOR_BLACK);
-//		  BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-//		  BSP_LCD_SetBackColor(LCD_COLOR_BLACK);
-//	  }
-//	  xSemaphoreGive(myMutex_LCDHandle);
-//	  FlagBgChanger = 1;
   osDelay(100);
   }
   /* USER CODE END StartBgChanger */
@@ -1694,15 +1732,14 @@ void StartTransmitter(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-
+	  	//Transmission des coordonnées de la raquette droite
 		txbuffer[0]=(x_RRacket & 0xFF00) >> 8;
 		txbuffer[1]= x_RRacket & 0x00FF;
 		txbuffer[2]=(y_RRacket & 0xFF00) >> 8;
 		txbuffer[3]=y_RRacket & 0x00FF;
 
 		HAL_UART_Transmit_IT(&huart7,txbuffer,4);
-
-    osDelay(25);
+		osDelay(50);
   }
   /* USER CODE END StartTransmitter */
 }
