@@ -122,10 +122,8 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* hadc)
     __HAL_RCC_GPIOF_CLK_ENABLE();
     /**ADC3 GPIO Configuration
     PF10     ------> ADC3_IN8
-    PF9     ------> ADC3_IN7
-    PF8     ------> ADC3_IN6
     */
-    GPIO_InitStruct.Pin = GPIO_PIN_10|GPIO_PIN_9|GPIO_PIN_8;
+    GPIO_InitStruct.Pin = GPIO_PIN_10;
     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
@@ -172,10 +170,8 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* hadc)
 
     /**ADC3 GPIO Configuration
     PF10     ------> ADC3_IN8
-    PF9     ------> ADC3_IN7
-    PF8     ------> ADC3_IN6
     */
-    HAL_GPIO_DeInit(GPIOF, GPIO_PIN_10|GPIO_PIN_9|GPIO_PIN_8);
+    HAL_GPIO_DeInit(GPIOF, GPIO_PIN_10);
 
   /* USER CODE BEGIN ADC3_MspDeInit 1 */
 
@@ -892,6 +888,9 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
     GPIO_InitStruct.Alternate = GPIO_AF8_UART7;
     HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
 
+    /* UART7 interrupt Init */
+    HAL_NVIC_SetPriority(UART7_IRQn, 5, 0);
+    HAL_NVIC_EnableIRQ(UART7_IRQn);
   /* USER CODE BEGIN UART7_MspInit 1 */
 
   /* USER CODE END UART7_MspInit 1 */
@@ -980,6 +979,8 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* huart)
     */
     HAL_GPIO_DeInit(GPIOF, GPIO_PIN_7|GPIO_PIN_6);
 
+    /* UART7 interrupt DeInit */
+    HAL_NVIC_DisableIRQ(UART7_IRQn);
   /* USER CODE BEGIN UART7_MspDeInit 1 */
 
   /* USER CODE END UART7_MspDeInit 1 */
