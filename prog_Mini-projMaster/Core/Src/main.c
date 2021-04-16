@@ -128,7 +128,7 @@ uint8_t txbuffer[10];
 int16_t x_LRacket = 50-width_rackets/2;
 int16_t y_LRacket = 136-height_rackets/2;
 
-int16_t x_RRacket = 479-50-width_rackets/2;
+int16_t x_RRacket = 959-50-width_rackets/2;
 int16_t y_RRacket = 136-height_rackets/2;
 
 uint16_t x_balle = 480;
@@ -209,7 +209,7 @@ int main(void)
 	BSP_LCD_SetBackColor(LCD_COLOR_BLACK);
 
 	BSP_TS_Init(BSP_LCD_GetXSize(), BSP_LCD_GetYSize());
-	HAL_UART_Receive_IT(&huart1,rxbuffer,1);
+	HAL_UART_Receive_IT(&huart7,rxbuffer,1);
   /* USER CODE END 2 */
 
   /* Create the mutex(es) */
@@ -483,7 +483,7 @@ static void MX_ADC3_Init(void)
   }
   /** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
   */
-  sConfig.Channel = ADC_CHANNEL_6;
+  sConfig.Channel = ADC_CHANNEL_8;
   sConfig.Rank = ADC_REGULAR_RANK_1;
   sConfig.SamplingTime = ADC_SAMPLETIME_3CYCLES;
   if (HAL_ADC_ConfigChannel(&hadc3, &sConfig) != HAL_OK)
@@ -1471,20 +1471,20 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
-	HAL_UART_Receive_IT(&huart7,rxbuffer,4);
-
 	x_RRacket = (rxbuffer[0] << 8) | rxbuffer[1];
 	y_RRacket = (rxbuffer[2] << 8) | rxbuffer[3];
 
 	x_RRacket += 480;
 	y_RRacket += 480;
 
-	char textx[100];
-	char texty[100];
-	sprintf(textx, "xR = %d", x_RRacket);
-	sprintf(texty, "yR = %d", y_RRacket);
-	BSP_LCD_DisplayStringAtLine(5, textx);
-	BSP_LCD_DisplayStringAtLine(6, texty);
+//	char textx[12];
+//	char texty[12];
+//	sprintf(textx, "xR = %d", x_RRacket);
+//	sprintf(texty, "yR = %d", y_RRacket);
+//	BSP_LCD_DisplayStringAtLine(5, textx);
+//	BSP_LCD_DisplayStringAtLine(6, texty);
+
+	HAL_UART_Receive_IT(&huart7,rxbuffer,4);
 }
 
 /* USER CODE END 4 */
@@ -1650,16 +1650,16 @@ void StartBall(void const * argument)
 	  }
 	  if(x_sens==-1){
 		  //Cadrage rebond sur LRacket
-		  if((x_balle - radius_balle <= x_LRacket + width_rackets) && (x_balle - radius_balle >= x_LRacket))
+		  if(((x_balle - radius_balle) <= (x_LRacket + width_rackets)) && ((x_balle - radius_balle) >= x_LRacket))
 		  {
 			  //Abscisse critique
-			  if((y_balle >= y_LRacket) && (y_balle <= y_LRacket + height_rackets))
+			  if((y_balle >= y_LRacket) && (y_balle <= (y_LRacket + height_rackets)))
 			  {
 				  //Rebond
 				  x_sens = 1;
 			  }
 		  }
-		  else if(x_balle==radius_balle)
+		  else if(x_balle<=radius_balle)
 		  {
 			  //Perdu
 			  perdu = 1;
@@ -1674,16 +1674,16 @@ void StartBall(void const * argument)
 	  else if(x_sens==1)
 	  {
 		  //Cadrage rebond sur RRacket
-		  if((x_balle + radius_balle >= x_RRacket) && (x_balle + radius_balle <= x_RRacket + width_rackets))
+		  if(((x_balle + radius_balle) >= x_RRacket) && ((x_balle + radius_balle) <= (x_RRacket + width_rackets)))
 		  {
 			  //Abscisse critique
-			  if((y_balle >= y_RRacket) && (y_balle <= y_RRacket + height_rackets))
+			  if((y_balle >= y_RRacket) && (y_balle <= (y_RRacket + height_rackets)))
 			  {
 				  //Rebond
 				  x_sens = -1;
 			  }
 		  }
-		  else if(x_balle==959-radius_balle)
+		  else if(x_balle>=(959-radius_balle))
 		  {
 			  //Perdu
 			  perdu = 1;
@@ -1811,18 +1811,18 @@ void StartTransmit(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-	  char textr[100];
-	  char textx2[100];
-	  char texty2[100];
-	  char textp[100];
-	  sprintf(textr, "r = %d", x_RRacket);
-	  sprintf(textx2, "xR = %d", x_RRacket);
-	  sprintf(texty2, "yR = %d", y_RRacket);
-	  sprintf(textp, "yR = %d", perdu);
-	  BSP_LCD_DisplayStringAtLine(8, textr);
-	  BSP_LCD_DisplayStringAtLine(9, textx2);
-	  BSP_LCD_DisplayStringAtLine(10, texty2);
-	  BSP_LCD_DisplayStringAtLine(11, textp);
+//	  char textr[100];
+//	  char textx2[100];
+//	  char texty2[100];
+//	  char textp[100];
+//	  sprintf(textr, "r = %d", x_RRacket);
+//	  sprintf(textx2, "xR = %d", x_RRacket);
+//	  sprintf(texty2, "yR = %d", y_RRacket);
+//	  sprintf(textp, "yR = %d", perdu);
+//	  BSP_LCD_DisplayStringAtLine(8, textr);
+//	  BSP_LCD_DisplayStringAtLine(9, textx2);
+//	  BSP_LCD_DisplayStringAtLine(10, texty2);
+//	  BSP_LCD_DisplayStringAtLine(11, textp);
 
 	  //Radius balle
 	  txbuffer[0] = radius_balle;
@@ -1837,7 +1837,7 @@ void StartTransmit(void const * argument)
 
 
 	  HAL_UART_Transmit_IT(&huart7,txbuffer,6);
-	  osDelay(10);
+	  osDelay(50);
   }
   /* USER CODE END StartTransmit */
 }
