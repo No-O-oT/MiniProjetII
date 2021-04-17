@@ -26,5 +26,5 @@ main.c:1550:6:StartLRacket	48	static
 main.c:1626:6:StartBall	80	static
 main.c:1771:6:StartBgChanger	24	static
 main.c:1837:6:StartTransmit	16	static
-main.c:1879:6:HAL_TIM_PeriodElapsedCallback	16	static
-main.c:1896:6:Error_Handler	4	static,ignoring_inline_asm
+main.c:1866:6:HAL_TIM_PeriodElapsedCallback	16	static
+main.c:1883:6:Error_Handler	4	static,ignoring_inline_asm

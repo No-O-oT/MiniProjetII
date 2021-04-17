@@ -9991,49 +9991,49 @@ OUTPUT(prog_Mini-projMaster.elf elf32-littlearm)
  .debug_macro   0x000000000002dede      0x184 Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM7/r0p1/port.o
  .debug_macro   0x000000000002e062      0x1a1 Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.o
 
-.debug_line     0x0000000000000000    0x1f59e
+.debug_line     0x0000000000000000    0x1f59c
  .debug_line    0x0000000000000000      0x961 Core/Src/freertos.o
  .debug_line    0x0000000000000961      0x549 Core/Src/ft5336.o
- .debug_line    0x0000000000000eaa     0x1276 Core/Src/main.o
- .debug_line    0x0000000000002120      0xb3a Core/Src/stm32746g_discovery.o
- .debug_line    0x0000000000002c5a      0xfa2 Core/Src/stm32746g_discovery_lcd.o
- .debug_line    0x0000000000003bfc      0x951 Core/Src/stm32746g_discovery_sdram.o
- .debug_line    0x000000000000454d      0x9b1 Core/Src/stm32746g_discovery_ts.o
- .debug_line    0x0000000000004efe      0xb2a Core/Src/stm32f7xx_hal_msp.o
- .debug_line    0x0000000000005a28      0x85f Core/Src/stm32f7xx_hal_timebase_tim.o
- .debug_line    0x0000000000006287      0x8e8 Core/Src/stm32f7xx_it.o
- .debug_line    0x0000000000006b6f      0x4c7 Core/Src/sysmem.o
- .debug_line    0x0000000000007036      0x844 Core/Src/system_stm32f7xx.o
- .debug_line    0x000000000000787a       0x85 Core/Startup/startup_stm32f746nghx.o
- .debug_line    0x00000000000078ff      0xa53 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal.o
- .debug_line    0x0000000000008352      0xc7c Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_adc.o
- .debug_line    0x0000000000008fce      0xb54 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_cortex.o
- .debug_line    0x0000000000009b22      0xa84 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dac.o
- .debug_line    0x000000000000a5a6      0x947 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dac_ex.o
- .debug_line    0x000000000000aeed      0xaff Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dma.o
- .debug_line    0x000000000000b9ec      0xd8c Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dma2d.o
- .debug_line    0x000000000000c778      0xa38 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.o
- .debug_line    0x000000000000d1b0     0x1baf Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_i2c.o
- .debug_line    0x000000000000ed5f      0x8c3 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_i2c_ex.o
- .debug_line    0x000000000000f622     0x1102 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_ltdc.o
- .debug_line    0x0000000000010724      0x998 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pwr.o
- .debug_line    0x00000000000110bc      0x974 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pwr_ex.o
- .debug_line    0x0000000000011a30      0xac9 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rcc.o
- .debug_line    0x00000000000124f9      0xa3b Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rcc_ex.o
- .debug_line    0x0000000000012f34      0xbbb Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rtc.o
- .debug_line    0x0000000000013aef      0xf6b Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rtc_ex.o
- .debug_line    0x0000000000014a5a      0xb87 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_sdram.o
- .debug_line    0x00000000000155e1     0x12a6 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_spi.o
- .debug_line    0x0000000000016887     0x1b70 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_tim.o
- .debug_line    0x00000000000183f7      0xedb Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_tim_ex.o
- .debug_line    0x00000000000192d2     0x13da Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_uart.o
- .debug_line    0x000000000001a6ac      0xadb Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_ll_fmc.o
- .debug_line    0x000000000001b187      0xce9 Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.o
- .debug_line    0x000000000001be70      0x670 Middlewares/Third_Party/FreeRTOS/Source/list.o
- .debug_line    0x000000000001c4e0     0x105a Middlewares/Third_Party/FreeRTOS/Source/queue.o
- .debug_line    0x000000000001d53a     0x128f Middlewares/Third_Party/FreeRTOS/Source/tasks.o
- .debug_line    0x000000000001e7c9      0x67d Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM7/r0p1/port.o
- .debug_line    0x000000000001ee46      0x758 Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.o
+ .debug_line    0x0000000000000eaa     0x1274 Core/Src/main.o
+ .debug_line    0x000000000000211e      0xb3a Core/Src/stm32746g_discovery.o
+ .debug_line    0x0000000000002c58      0xfa2 Core/Src/stm32746g_discovery_lcd.o
+ .debug_line    0x0000000000003bfa      0x951 Core/Src/stm32746g_discovery_sdram.o
+ .debug_line    0x000000000000454b      0x9b1 Core/Src/stm32746g_discovery_ts.o
+ .debug_line    0x0000000000004efc      0xb2a Core/Src/stm32f7xx_hal_msp.o
+ .debug_line    0x0000000000005a26      0x85f Core/Src/stm32f7xx_hal_timebase_tim.o
+ .debug_line    0x0000000000006285      0x8e8 Core/Src/stm32f7xx_it.o
+ .debug_line    0x0000000000006b6d      0x4c7 Core/Src/sysmem.o
+ .debug_line    0x0000000000007034      0x844 Core/Src/system_stm32f7xx.o
+ .debug_line    0x0000000000007878       0x85 Core/Startup/startup_stm32f746nghx.o
+ .debug_line    0x00000000000078fd      0xa53 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal.o
+ .debug_line    0x0000000000008350      0xc7c Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_adc.o
+ .debug_line    0x0000000000008fcc      0xb54 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_cortex.o
+ .debug_line    0x0000000000009b20      0xa84 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dac.o
+ .debug_line    0x000000000000a5a4      0x947 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dac_ex.o
+ .debug_line    0x000000000000aeeb      0xaff Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dma.o
+ .debug_line    0x000000000000b9ea      0xd8c Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dma2d.o
+ .debug_line    0x000000000000c776      0xa38 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_gpio.o
+ .debug_line    0x000000000000d1ae     0x1baf Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_i2c.o
+ .debug_line    0x000000000000ed5d      0x8c3 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_i2c_ex.o
+ .debug_line    0x000000000000f620     0x1102 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_ltdc.o
+ .debug_line    0x0000000000010722      0x998 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pwr.o
+ .debug_line    0x00000000000110ba      0x974 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_pwr_ex.o
+ .debug_line    0x0000000000011a2e      0xac9 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rcc.o
+ .debug_line    0x00000000000124f7      0xa3b Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rcc_ex.o
+ .debug_line    0x0000000000012f32      0xbbb Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rtc.o
+ .debug_line    0x0000000000013aed      0xf6b Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_rtc_ex.o
+ .debug_line    0x0000000000014a58      0xb87 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_sdram.o
+ .debug_line    0x00000000000155df     0x12a6 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_spi.o
+ .debug_line    0x0000000000016885     0x1b70 Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_tim.o
+ .debug_line    0x00000000000183f5      0xedb Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_tim_ex.o
+ .debug_line    0x00000000000192d0     0x13da Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_uart.o
+ .debug_line    0x000000000001a6aa      0xadb Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_ll_fmc.o
+ .debug_line    0x000000000001b185      0xce9 Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.o
+ .debug_line    0x000000000001be6e      0x670 Middlewares/Third_Party/FreeRTOS/Source/list.o
+ .debug_line    0x000000000001c4de     0x105a Middlewares/Third_Party/FreeRTOS/Source/queue.o
+ .debug_line    0x000000000001d538     0x128f Middlewares/Third_Party/FreeRTOS/Source/tasks.o
+ .debug_line    0x000000000001e7c7      0x67d Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM7/r0p1/port.o
+ .debug_line    0x000000000001ee44      0x758 Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.o
 
 .debug_str      0x0000000000000000   0x114b81
  .debug_str     0x0000000000000000    0xfe569 Core/Src/freertos.o

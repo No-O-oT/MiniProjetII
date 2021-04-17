@@ -126,7 +126,7 @@ uint8_t txbuffer[10];
 
 int16_t x_RRacket=479-50-width_rackets/2;
 int16_t y_RRacket = 136-height_rackets/2;
-int16_t x_balle=500, y_balle=136, r_balle=8;
+int16_t x_balle=8, y_balle=136, r_balle=8;
 int8_t lost=0;
 
 uint8_t couleur=1;
@@ -248,7 +248,7 @@ int main(void)
   BgChangerHandle = osThreadCreate(osThread(BgChanger), NULL);
 
   /* definition and creation of Transmitter */
-  osThreadDef(Transmitter, StartTransmitter, osPriorityHigh, 0, 128);
+  osThreadDef(Transmitter, StartTransmitter, osPriorityAboveNormal, 0, 128);
   TransmitterHandle = osThreadCreate(osThread(Transmitter), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
@@ -1459,12 +1459,14 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
-
 	//Réception du rayon de la balle, des coordonnées de la balle, du drapeau de perte
 	r_balle = rxbuffer[0];
-	x_balle = ((rxbuffer[1] << 8) | rxbuffer[2]) - 480;
-	y_balle = (rxbuffer[3] << 8) | rxbuffer[4];
+	x_balle = ((rxbuffer[1] << 8) | rxbuffer[2]);
+	y_balle = ((rxbuffer[3] << 8) | rxbuffer[4]);
 	lost = rxbuffer[5];
+
+	//Offset des coordonées de la raquette droite
+	x_balle -= 480;
 
 	//Attente d'une nouvelle réception sur interruption
 	HAL_UART_Receive_IT(&huart7, rxbuffer, 6);
@@ -1581,7 +1583,7 @@ void StartBall(void const * argument)
 	TickType_t xLastWakeTime=xTaskGetTickCount();
 
 	//Initialisation des anciennes coordonnées de la balle
-	int16_t x_balle_hold = 0;
+	int16_t x_balle_hold = 8;
 	int16_t y_balle_hold = 136;
   /* Infinite loop */
   for(;;)

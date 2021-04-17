@@ -37,13 +37,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
  16 .debug_macro  0002e203  00000000  00000000  00066930  2**0
                   CONTENTS, READONLY, DEBUGGING
- 17 .debug_line   0001f59e  00000000  00000000  00094b33  2**0
+ 17 .debug_line   0001f59c  00000000  00000000  00094b33  2**0
                   CONTENTS, READONLY, DEBUGGING
- 18 .debug_str    00114b81  00000000  00000000  000b40d1  2**0
+ 18 .debug_str    00114b81  00000000  00000000  000b40cf  2**0
                   CONTENTS, READONLY, DEBUGGING
- 19 .comment      0000007b  00000000  00000000  001c8c52  2**0
+ 19 .comment      0000007b  00000000  00000000  001c8c50  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  0000a3bc  00000000  00000000  001c8cd0  2**2
+ 20 .debug_frame  0000a3bc  00000000  00000000  001c8ccc  2**2
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -5569,9 +5569,9 @@ void StartTransmit(void const * argument)
  800241e:	b082      	sub	sp, #8
  8002420:	af00      	add	r7, sp, #0
  8002422:	6078      	str	r0, [r7, #4]
-//	  BSP_LCD_DisplayStringAtLine(9, textx2);
-//	  BSP_LCD_DisplayStringAtLine(10, texty2);
-//	  BSP_LCD_DisplayStringAtLine(11, textp);
+  /* Infinite loop */
+  for(;;)
+  {
 
 	  //Transmission du rayon de la balle et des coordonnées de la balle et du drapeau de perte
 	  txbuffer[0] = radius_balle;

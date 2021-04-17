@@ -1840,19 +1840,6 @@ void StartTransmit(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-	  //Affichages de debug
-//	  char textr[100];
-//	  char textx2[100];
-//	  char texty2[100];
-//	  char textp[100];
-//	  sprintf(textr, "r = %d", x_RRacket);
-//	  sprintf(textx2, "xR = %d", x_RRacket);
-//	  sprintf(texty2, "yR = %d", y_RRacket);
-//	  sprintf(textp, "yR = %d", perdu);
-//	  BSP_LCD_DisplayStringAtLine(8, textr);
-//	  BSP_LCD_DisplayStringAtLine(9, textx2);
-//	  BSP_LCD_DisplayStringAtLine(10, texty2);
-//	  BSP_LCD_DisplayStringAtLine(11, textp);
 
 	  //Transmission du rayon de la balle et des coordonnées de la balle et du drapeau de perte
 	  txbuffer[0] = radius_balle;
