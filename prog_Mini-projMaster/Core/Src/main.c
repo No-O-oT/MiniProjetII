@@ -1611,7 +1611,7 @@ void StartLRacket(void const * argument)
 		x_LRacket_hold = x_LRacket;
 		y_LRacket_hold = y_LRacket;
 
-		osDelay(40);
+		osDelay(100);
 	}
   /* USER CODE END StartLRacket */
 }
@@ -1822,7 +1822,7 @@ void StartBgChanger(void const * argument)
 				  if(BP1) state = 0;
 				  break;
 		  }
-	  osDelay(100);
+	  osDelay(400);
 	  }
 	  /* USER CODE END StartBgChanger */
 }
@@ -1850,7 +1850,7 @@ void StartTransmit(void const * argument)
 	  txbuffer[5] = perdu;
 
 	  HAL_UART_Transmit_IT(&huart7,txbuffer,6);
-	  osDelay(50);
+	  osDelay(100);
   }
   /* USER CODE END StartTransmit */
 }

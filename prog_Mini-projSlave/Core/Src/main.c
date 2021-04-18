@@ -75,7 +75,6 @@ osThreadId defaultTaskHandle;
 osThreadId RRacketHandle;
 osThreadId BallDisplayHandle;
 osThreadId BgChangerHandle;
-osThreadId TransmitterHandle;
 osMessageQId myQueueU2HHandle;
 osMutexId myMutex_LCDHandle;
 /* USER CODE BEGIN PV */
@@ -107,7 +106,6 @@ void StartDefaultTask(void const * argument);
 void StartRRacket(void const * argument);
 void StartBall(void const * argument);
 void StartBgChanger(void const * argument);
-void StartTransmitter(void const * argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -246,10 +244,6 @@ int main(void)
   /* definition and creation of BgChanger */
   osThreadDef(BgChanger, StartBgChanger, osPriorityBelowNormal, 0, 1024);
   BgChangerHandle = osThreadCreate(osThread(BgChanger), NULL);
-
-  /* definition and creation of Transmitter */
-  osThreadDef(Transmitter, StartTransmitter, osPriorityAboveNormal, 0, 128);
-  TransmitterHandle = osThreadCreate(osThread(Transmitter), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
 	/* add threads, ... */
@@ -1559,10 +1553,21 @@ void StartRRacket(void const * argument)
 		//Libération de la ressource
 		xSemaphoreGive(myMutex_LCDHandle);
 
+		if(x_RRacket!=x_RRacket_hold){
+			//Si la raquette a bougé, on envoie les nouvelles coordonnées par liaison série
+			txbuffer[0]=(x_RRacket & 0xFF00) >> 8;
+			txbuffer[1]= x_RRacket & 0x00FF;
+			txbuffer[2]=(y_RRacket & 0xFF00) >> 8;
+			txbuffer[3]=y_RRacket & 0x00FF;
+
+			HAL_UART_Transmit_IT(&huart7,txbuffer,4);
+		}
+
+
 		//Stockage des dernières coordonnées de la raquette droite
 		x_RRacket_hold = x_RRacket;
 		y_RRacket_hold = y_RRacket;
-		osDelay(40);
+		osDelay(100);
 	}
   /* USER CODE END StartRRacket */
 }
@@ -1716,34 +1721,9 @@ void StartBgChanger(void const * argument)
 			  if(BP1) state = 0;
 			  break;
 	  }
-  osDelay(100);
+  osDelay(400);
   }
   /* USER CODE END StartBgChanger */
-}
-
-/* USER CODE BEGIN Header_StartTransmitter */
-/**
-* @brief Function implementing the Transmitter thread.
-* @param argument: Not used
-* @retval None
-*/
-/* USER CODE END Header_StartTransmitter */
-void StartTransmitter(void const * argument)
-{
-  /* USER CODE BEGIN StartTransmitter */
-  /* Infinite loop */
-  for(;;)
-  {
-	  	//Transmission des coordonnées de la raquette droite
-		txbuffer[0]=(x_RRacket & 0xFF00) >> 8;
-		txbuffer[1]= x_RRacket & 0x00FF;
-		txbuffer[2]=(y_RRacket & 0xFF00) >> 8;
-		txbuffer[3]=y_RRacket & 0x00FF;
-
-		HAL_UART_Transmit_IT(&huart7,txbuffer,4);
-		osDelay(50);
-  }
-  /* USER CODE END StartTransmitter */
 }
 
  /**
