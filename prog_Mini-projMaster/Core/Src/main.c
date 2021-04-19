@@ -209,7 +209,7 @@ int main(void)
 	BSP_LCD_SetBackColor(LCD_COLOR_BLACK);
 
 	BSP_TS_Init(BSP_LCD_GetXSize(), BSP_LCD_GetYSize());
-	HAL_UART_Receive_IT(&huart7,rxbuffer,1);
+	HAL_UART_Receive_IT(&huart7,rxbuffer,4);
   /* USER CODE END 2 */
 
   /* Create the mutex(es) */

@@ -122,9 +122,10 @@ uint8_t txbuffer[10];
 
 // Les rectangles sont définis depuis le coin supérieur gauche
 
-int16_t x_RRacket=479-50-width_rackets/2;
-int16_t y_RRacket = 136-height_rackets/2;
-int16_t x_balle=8, y_balle=136, r_balle=8;
+uint16_t x_RRacket=479-50-width_rackets/2;
+uint16_t y_RRacket = 136-height_rackets/2;
+int16_t x_balle=8;
+uint16_t y_balle=136, r_balle=8;
 int8_t lost=0;
 
 uint8_t couleur=1;
@@ -1453,14 +1454,15 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
+	uint16_t x_ballemaster;
 	//Réception du rayon de la balle, des coordonnées de la balle, du drapeau de perte
 	r_balle = rxbuffer[1];
-	x_balle = ((rxbuffer[2] << 8) | rxbuffer[3]);
-	y_balle = ((rxbuffer[4] << 8) | rxbuffer[5]);
-	lost = rxbuffer[6];
+	x_ballemaster = (((uint16_t)rxbuffer[2] << 8) | rxbuffer[3]);
+	y_balle = (((uint16_t)rxbuffer[4] << 8) | rxbuffer[5]);
+	lost = 0;//rxbuffer[6];
 
 	//Offset et cadrage des coordonées de la raquette droite
-	x_balle -= 480;
+	x_balle = x_ballemaster-480;
 	r_balle = 8; //Forçage temporaire
 	if(x_balle > 479 - r_balle) x_balle = 479 - r_balle;
 	if(y_balle < r_balle) y_balle=r_balle;
