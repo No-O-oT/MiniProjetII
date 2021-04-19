@@ -1628,7 +1628,7 @@ void StartBall(void const * argument)
   /* USER CODE BEGIN StartBall */
 
 	//Initialisation de la régularité de lancement de la tache
-	TickType_t xFrequency=10;
+	TickType_t xFrequency=20;
 	TickType_t xLastWakeTime=xTaskGetTickCount();
 
 	//Initialisation des anciennes coordonnées de la balle

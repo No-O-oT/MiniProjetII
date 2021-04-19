@@ -1454,13 +1454,17 @@ static void MX_GPIO_Init(void)
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
 	//Réception du rayon de la balle, des coordonnées de la balle, du drapeau de perte
-	r_balle = rxbuffer[0];
-	x_balle = ((rxbuffer[1] << 8) | rxbuffer[2]);
-	y_balle = ((rxbuffer[3] << 8) | rxbuffer[4]);
-	lost = rxbuffer[5];
+	r_balle = rxbuffer[1];
+	x_balle = ((rxbuffer[2] << 8) | rxbuffer[3]);
+	y_balle = ((rxbuffer[4] << 8) | rxbuffer[5]);
+	lost = rxbuffer[6];
 
-	//Offset des coordonées de la raquette droite
+	//Offset et cadrage des coordonées de la raquette droite
 	x_balle -= 480;
+	r_balle = 8; //Forçage temporaire
+	if(x_balle > 479 - r_balle) x_balle = 479 - r_balle;
+	if(y_balle < r_balle) y_balle=r_balle;
+	if(y_balle > 272 - r_balle) y_balle = 272 - r_balle;
 
 	//Attente d'une nouvelle réception sur interruption
 	HAL_UART_Receive_IT(&huart7, rxbuffer, 6);
@@ -1481,7 +1485,7 @@ void StartDefaultTask(void const * argument)
   /* USER CODE BEGIN 5 */
 	/* Infinite loop */
 	for (;;) {
-		osDelay(1000);
+		osDelay(200);
 	}
   /* USER CODE END 5 */
 }
@@ -1503,8 +1507,8 @@ void StartRRacket(void const * argument)
 	joystick_v = 0;
 
 	//Initialisation du stockage des coordonnées de la raquette droite
-	int16_t x_RRacket_hold;
-	int16_t y_RRacket_hold;
+	int16_t x_RRacket_hold =479-50-width_rackets/2;
+	int16_t y_RRacket_hold = 136-height_rackets/2;
 
 	//Initialisation du CAN du joystick (ADC_CHANNEL_8)
 	ADC_ChannelConfTypeDef sConfig = { 0 };
@@ -1553,7 +1557,7 @@ void StartRRacket(void const * argument)
 		//Libération de la ressource
 		xSemaphoreGive(myMutex_LCDHandle);
 
-		if(x_RRacket!=x_RRacket_hold){
+		if((x_RRacket!=x_RRacket_hold) || (y_RRacket!=y_RRacket_hold)){
 			//Si la raquette a bougé, on envoie les nouvelles coordonnées par liaison série
 			txbuffer[0]=(x_RRacket & 0xFF00) >> 8;
 			txbuffer[1]= x_RRacket & 0x00FF;
@@ -1584,7 +1588,7 @@ void StartBall(void const * argument)
   /* USER CODE BEGIN StartBall */
 
 	//Initialisation de la régularité de lancement de la tache
-	TickType_t xFrequency=10;
+	TickType_t xFrequency=15;
 	TickType_t xLastWakeTime=xTaskGetTickCount();
 
 	//Initialisation des anciennes coordonnées de la balle
