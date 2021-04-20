@@ -26,6 +26,7 @@
 #include "stm32746g_discovery_lcd.h"
 #include "stm32746g_discovery_ts.h"
 #include "stdio.h"
+#include "math.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -117,6 +118,8 @@ void StartTransmit(void const * argument);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+#define MATH_PI 3.14159
+
 uint8_t rxbuffer[10];
 uint8_t txbuffer[10];
 
@@ -132,8 +135,8 @@ int16_t y_LRacket = 136-height_rackets/2;
 int16_t x_RRacket = 959-50-width_rackets/2;
 int16_t y_RRacket = 136-height_rackets/2;
 
-uint16_t x_balle = 480;
-uint16_t y_balle = 136;
+float x_balle_f = 480;
+float y_balle_f = 136;
 
 uint8_t radius_balle = 8;
 
@@ -1636,36 +1639,44 @@ void StartBall(void const * argument)
 	TickType_t xFrequency=20;
 	TickType_t xLastWakeTime=xTaskGetTickCount();
 
+	// Initialisation des coordonnées entières de la balle
+
+	uint16_t x_balle = x_balle_f;
+	uint16_t y_balle = y_balle_f;
+
+
 	//Initialisation des anciennes coordonnées de la balle
 	uint16_t x_balle_hold = 480;
 	uint16_t y_balle_hold = 136;
 
 	//Initialisation du sens de déplacement de la balle
-	int8_t x_sens = -1; //On pourrait rajouter de l'aléatoire
-	int8_t y_sens = 1; //On pourrait rajouter de l'aléatoire
+	int8_t angle=90;
 
   /* Infinite loop */
   for(;;)
   {
 	  //Mouvement de la balle
-	  x_balle += vitesse*x_sens;
-	  y_balle += vitesse*y_sens;
+	  x_balle_f += vitesse*sin(angle*MATH_PI*1.0/180);
+	  y_balle_f += vitesse*cos(angle*MATH_PI*1.0/180);
+
+	  x_balle=x_balle_f;
+	  y_balle=y_balle_f;
 
 	  //Gestion des rebonds sur les bords horizontaux : cadrage vertical des coordonnées de la balle
 	  if((y_balle-radius_balle <= 0) || (y_balle+radius_balle >= 271)){
-		  y_sens = -y_sens;
+		  angle=angle>0?180-angle:-180-angle;
 	  }
 
 	  //Gestion des rebonds sur les raquettes ou de la perte de la balle : cadrage horizontal des coordonnées de la balle
-	  if(x_sens==-1){
+	  if(angle < 0){
 		  //Dans le sens droite vers gauche, le rebond doit avoir lieu, s'il existe, sur LRacket
 		  if(((x_balle - radius_balle) <= (x_LRacket + width_rackets)) && ((x_balle - radius_balle) >= x_LRacket))
 		  {
 			  //Si l'on est horizontalement "dans" la raquette
 			  if((y_balle >= y_LRacket) && (y_balle <= (y_LRacket + height_rackets)))
 			  {
-				  //Et verticallement "dans" la raquette, il y a rebond, donc le sens horizontal passe à 1
-				  x_sens = 1;
+				  //Et verticalement "dans" la raquette, il y a rebond, donc le sens horizontal passe à 1
+				  angle= (y_balle-y_LRacket)/height_rackets * 120 + 30;
 			  }
 		  }
 		  else if(x_balle<=radius_balle)
@@ -1683,15 +1694,15 @@ void StartBall(void const * argument)
 			  while(1);
 		  }
 	  }
-	  else if(x_sens==1){
+	  else if(angle > 0){
 		  //Dans le sens gauche vers droite, le rebond doit avoir lieu, s'il existe, sur RRacket
 		  if(((x_balle + radius_balle) >= x_RRacket) && ((x_balle + radius_balle) <= (x_RRacket + width_rackets)))
 		  {
 			  //Si l'on est horizontalement "dans" la raquette
 			  if((y_balle >= y_RRacket) && (y_balle <= (y_RRacket + height_rackets)))
 			  {
-				  //Et verticallement "dans" la raquette, il y a rebond, donc le sens horizontal passe à -1
-				  x_sens = -1;
+				  //Et verticalement "dans" la raquette, il y a rebond, donc le sens horizontal passe à -1
+				  angle= -((y_balle-y_RRacket)/height_rackets * 120 + 30);
 			  }
 		  }
 		  else if(x_balle>=(959-radius_balle))
@@ -1836,10 +1847,14 @@ void StartBgChanger(void const * argument)
 void StartTransmit(void const * argument)
 {
   /* USER CODE BEGIN StartTransmit */
+	uint16_t x_balle = x_balle_f;
+	uint16_t y_balle = y_balle_f;
   /* Infinite loop */
   for(;;)
   {
 
+		x_balle= x_balle_f;
+		y_balle = y_balle_f;
 	  //Transmission du rayon de la balle et des coordonnées de la balle et du drapeau de perte
 	  txbuffer[0] = radius_balle;
 	  txbuffer[1] = (x_balle & 0xFF00) >> 8;
