@@ -5,6 +5,8 @@ Ce projet a été réalisé par Timothé Corre et Nicolas Trosino, deux élèves
 
 **_Le projet (et cette présentation) ne sont pas finis et seront rendus complets après les examens_**
 
+*Les fonctionnalités prévues par la suite sont dans l'onglets _Issues_*
+
 
 Le but est de prendre en main l'utilisation d'un système d'exploitation temps réel (FreeRTOS) sur un microcontrôleur 32 bits (STM32).
 
@@ -38,6 +40,8 @@ Son écran affiche la partie gauche du terrain de jeu.
 #### Ball
 
 * Met à jour la position de la balle périodiquement
+* Affiche la nouvelle position et détruit la dernière
+* Si la balle est sur l'autre écran, affichage d'une flèche
 * Gère les collisions, les rebonds
 * Lecture du blackboard
 * Gère le game over
@@ -78,6 +82,7 @@ Son écran affiche la partie droite du terrain de jeu
 
 * Affiche la nouvelle position de la balle et détruit l'ancienne périodiquement
 * Lecture du blackboard
+* Si la balle est sur l'autre écran, affichage d'une flèche
 
 #### BgChanger
 
