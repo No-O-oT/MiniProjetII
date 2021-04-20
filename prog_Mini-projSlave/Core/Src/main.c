@@ -1456,10 +1456,10 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
 	uint16_t x_ballemaster;
 	//Réception du rayon de la balle, des coordonnées de la balle, du drapeau de perte
-	r_balle = rxbuffer[1];
-	x_ballemaster = (((uint16_t)rxbuffer[2] << 8) | rxbuffer[3]);
-	y_balle = (((uint16_t)rxbuffer[4] << 8) | rxbuffer[5]);
-	lost = 0;//rxbuffer[6];
+	r_balle = rxbuffer[0];
+	x_ballemaster = (((uint16_t)rxbuffer[1] << 8) | rxbuffer[2]);
+	y_balle = (((uint16_t)rxbuffer[3] << 8) | rxbuffer[4]);
+	lost = 0;//rxbuffer[5];
 
 	//Offset et cadrage des coordonées de la raquette droite
 	x_balle = x_ballemaster-480;
