@@ -27,14 +27,34 @@ Son écran affiche la partie gauche du terrain de jeu.
 * Ball 
 * BgChanger
 * Transmit
+* HAL_UART_RxCpltCallback
 
 #### LRacket
 
+* Lit les valeurs renvoyées par le joystick et prévoit le mouvement de la raquette gauche
+* Lecture du blackboard
+* Affiche la nouvelle position de la raquette et détruit l'ancienne (Mutex pour l'écran)
+
 #### Ball
+
+* Met à jour la position de la balle périodiquement
+* Gère les collisions, les rebonds
+* Lecture du blackboard
+* Gère le game over
 
 #### BgChanger
 
+* Attend une impulsion sur le bouton pour changer la couleur
+
 #### Transmit
+
+* Envoie périodiquement les informations sur le jeu en UART/Bluetooth
+  * Coordonnées de la balle, rayon de la balle
+  * Etat du jeu
+
+#### HAL_UART_RxCpltCallback
+
+* Reçoit par interruption les valeurs reçues par l'UART7 et modifie le blackboard en conséquence
 
 ## Programme Slave
 
@@ -46,12 +66,24 @@ Son écran affiche la partie droite du terrain de jeu
 * RRacket
 * BallDisplay
 * BgChanger
-* Transmit
+* HAL_UART_RxCpltCallback
 
 #### RRacket
 
+* Lit les valeurs renvoyées par le joystick et prévoit le mouvement de la raquette gauche
+* Lecture du blackboard
+* Envoie les informations sur la position de la raquette droite par UART à chaque déplacement de la raquette
+
 #### BallDisplay
+
+* Affiche la nouvelle position de la balle et détruit l'ancienne périodiquement
+* Lecture du blackboard
 
 #### BgChanger
 
-#### Transmit
+* Attend une impulsion sur le bouton pour changer la couleur 
+
+
+#### HAL_UART_RxCpltCallback
+
+* Reçoit par interruption les valeurs reçues par l'UART7 et modifie le blackboard en conséquence
