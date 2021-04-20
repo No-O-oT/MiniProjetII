@@ -122,6 +122,7 @@ uint8_t txbuffer[10];
 
 #define height_rackets 40
 #define width_rackets 8
+#define vitesse 1
 
 
 // Les rectangles sont définis depuis le coin supérieur gauche
@@ -210,6 +211,10 @@ int main(void)
 
 	BSP_TS_Init(BSP_LCD_GetXSize(), BSP_LCD_GetYSize());
 	HAL_UART_Receive_IT(&huart7,rxbuffer,4);
+	BSP_LCD_DisplayStringAtLine(9, (uint8_t*) "Appuyez sur BP2 pour commencer");
+	while(HAL_GPIO_ReadPin(BP2_GPIO_Port, BP2_Pin));
+	BSP_LCD_Clear(LCD_COLOR_BLACK);
+
   /* USER CODE END 2 */
 
   /* Create the mutex(es) */
@@ -1643,8 +1648,8 @@ void StartBall(void const * argument)
   for(;;)
   {
 	  //Mouvement de la balle
-	  x_balle += x_sens;
-	  y_balle += y_sens;
+	  x_balle += vitesse*x_sens;
+	  y_balle += vitesse*y_sens;
 
 	  //Gestion des rebonds sur les bords horizontaux : cadrage vertical des coordonnées de la balle
 	  if((y_balle-radius_balle <= 0) || (y_balle+radius_balle >= 271)){
@@ -1672,13 +1677,10 @@ void StartBall(void const * argument)
 			  xSemaphoreTake(myMutex_LCDHandle, portMAX_DELAY);
 
 			  //Affichage du message de perte sous le chronomètre
-			  BSP_LCD_DisplayStringAtLine(2, (uint8_t*) "Perdu");
-
-			  //Libération de la ressource
-			  xSemaphoreGive(myMutex_LCDHandle);
-
-			  //Mise en pause du déplacement de la balle
-			  vTaskSuspend(BallHandle);
+			  BSP_LCD_Clear(couleur==0?LCD_COLOR_BLACK:LCD_COLOR_WHITE);
+			  BSP_LCD_SetTextColor(couleur==0?LCD_COLOR_WHITE:LCD_COLOR_BLACK);
+			  BSP_LCD_DisplayStringAtLine(12, (uint8_t*) "Perdu ! Appuyez sur reset pour rejouer");
+			  while(1);
 		  }
 	  }
 	  else if(x_sens==1){
@@ -1701,13 +1703,10 @@ void StartBall(void const * argument)
 			  xSemaphoreTake(myMutex_LCDHandle, portMAX_DELAY);
 
 			  //Affichage du message de perte sous le chronomètre
-			  BSP_LCD_DisplayStringAtLine(2, (uint8_t*) "Perdu");
-
-			  //Libération de la ressource
-			  xSemaphoreGive(myMutex_LCDHandle);
-
-			  //Mise en pause de déplacement de la balle
-			  vTaskSuspend(BallHandle);
+			  BSP_LCD_Clear(couleur==0?LCD_COLOR_BLACK:LCD_COLOR_WHITE);
+			  BSP_LCD_SetTextColor(couleur==0?LCD_COLOR_WHITE:LCD_COLOR_BLACK);
+			  BSP_LCD_DisplayStringAtLine(12, (uint8_t*) "Perdu ! Appuyez sur reset pour rejouer");
+			  while(1);
 		  }
 	  }
 
@@ -1850,7 +1849,7 @@ void StartTransmit(void const * argument)
 	  txbuffer[5] = perdu;
 
 	  HAL_UART_Transmit_IT(&huart7,txbuffer,6);
-	  osDelay(100);
+	  osDelay(67);
   }
   /* USER CODE END StartTransmit */
 }
