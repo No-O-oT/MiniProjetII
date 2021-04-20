@@ -1676,7 +1676,7 @@ void StartBall(void const * argument)
 			  if((y_balle >= y_LRacket) && (y_balle <= (y_LRacket + height_rackets)))
 			  {
 				  //Et verticalement "dans" la raquette, il y a rebond, donc le sens horizontal passe à 1
-				  angle= (y_balle-y_LRacket)/height_rackets * 120 + 30;
+				  angle= (y_balle-y_LRacket)*1.0/height_rackets * 120 + 30;
 			  }
 		  }
 		  else if(x_balle<=radius_balle)
@@ -1702,7 +1702,7 @@ void StartBall(void const * argument)
 			  if((y_balle >= y_RRacket) && (y_balle <= (y_RRacket + height_rackets)))
 			  {
 				  //Et verticalement "dans" la raquette, il y a rebond, donc le sens horizontal passe à -1
-				  angle= -((y_balle-y_RRacket)/height_rackets * 120 + 30);
+				  angle= -((y_balle-y_RRacket)*1.0/height_rackets * 120 + 30);
 			  }
 		  }
 		  else if(x_balle>=(959-radius_balle))
