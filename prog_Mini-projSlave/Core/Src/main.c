@@ -116,17 +116,18 @@ void StartBgChanger(void const * argument);
 uint8_t rxbuffer[10];
 uint8_t txbuffer[10];
 
+// Attention à garder des dimensions de raquette cohérentes entre master/slave
 #define height_rackets 40
 #define width_rackets 8
 
 
 // Les rectangles sont définis depuis le coin supérieur gauche
 
-uint16_t x_RRacket=479-50-width_rackets/2;
-uint16_t y_RRacket = 136-height_rackets/2;
+int16_t x_RRacket=479-50-width_rackets/2;
+int16_t y_RRacket = 136-height_rackets/2;
 int16_t x_balle=8;
 uint16_t y_balle=136, r_balle=8;
-int8_t lost=0;
+int8_t lost=0; // Partie perdue ?
 
 uint8_t couleur=1;
 
@@ -1727,7 +1728,7 @@ void StartBgChanger(void const * argument)
 			  if(BP1) state = 0;
 			  break;
 	  }
-  osDelay(400);
+  osDelay(50);
   }
   /* USER CODE END StartBgChanger */
 }
