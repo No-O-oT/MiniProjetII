@@ -8455,8 +8455,9 @@ LOAD c:/st/stm32cubeide_1.5.1/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.exte
                 0x000000000800272c       0x88 Core/Src/main.o
                 0x000000000800272c                Starthorloge
  .text.StartLRacket
-                0x00000000080027b4      0x1bc Core/Src/main.o
+                0x00000000080027b4      0x1b8 Core/Src/main.o
                 0x00000000080027b4                StartLRacket
+ *fill*         0x000000000800296c        0x4 
  .text.StartBall
                 0x0000000008002970      0x68c Core/Src/main.o
                 0x0000000008002970                StartBall

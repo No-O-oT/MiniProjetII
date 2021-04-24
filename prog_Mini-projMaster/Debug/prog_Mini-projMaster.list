@@ -5579,12 +5579,12 @@ void StartLRacket(void const * argument)
  8002834:	61fb      	str	r3, [r7, #28]
 
 		//Actualisation des coordonnées de la raquette gauche
-		x_LRacket -= (joystick_h - 2080)/100;
+		x_LRacket -= (joystick_h - 2080)/250;
  8002836:	69fb      	ldr	r3, [r7, #28]
  8002838:	f5a3 6302 	sub.w	r3, r3, #2080	; 0x820
  800283c:	4a46      	ldr	r2, [pc, #280]	; (8002958 <StartLRacket+0x1a4>)
  800283e:	fb82 1203 	smull	r1, r2, r2, r3
- 8002842:	1152      	asrs	r2, r2, #5
+ 8002842:	1112      	asrs	r2, r2, #4
  8002844:	17db      	asrs	r3, r3, #31
  8002846:	1a9b      	subs	r3, r3, r2
  8002848:	b29a      	uxth	r2, r3
@@ -5596,22 +5596,22 @@ void StartLRacket(void const * argument)
  8002856:	b21a      	sxth	r2, r3
  8002858:	4b40      	ldr	r3, [pc, #256]	; (800295c <StartLRacket+0x1a8>)
  800285a:	801a      	strh	r2, [r3, #0]
-		y_LRacket -= (joystick_v - 2080)/150;
+		y_LRacket -= (joystick_v - 2080)/250;
  800285c:	69bb      	ldr	r3, [r7, #24]
  800285e:	f5a3 6302 	sub.w	r3, r3, #2080	; 0x820
- 8002862:	4a3f      	ldr	r2, [pc, #252]	; (8002960 <StartLRacket+0x1ac>)
+ 8002862:	4a3d      	ldr	r2, [pc, #244]	; (8002958 <StartLRacket+0x1a4>)
  8002864:	fb82 1203 	smull	r1, r2, r2, r3
  8002868:	1112      	asrs	r2, r2, #4
  800286a:	17db      	asrs	r3, r3, #31
  800286c:	1a9b      	subs	r3, r3, r2
  800286e:	b29a      	uxth	r2, r3
- 8002870:	4b3c      	ldr	r3, [pc, #240]	; (8002964 <StartLRacket+0x1b0>)
+ 8002870:	4b3b      	ldr	r3, [pc, #236]	; (8002960 <StartLRacket+0x1ac>)
  8002872:	f9b3 3000 	ldrsh.w	r3, [r3]
  8002876:	b29b      	uxth	r3, r3
  8002878:	4413      	add	r3, r2
  800287a:	b29b      	uxth	r3, r3
  800287c:	b21a      	sxth	r2, r3
- 800287e:	4b39      	ldr	r3, [pc, #228]	; (8002964 <StartLRacket+0x1b0>)
+ 800287e:	4b38      	ldr	r3, [pc, #224]	; (8002960 <StartLRacket+0x1ac>)
  8002880:	801a      	strh	r2, [r3, #0]
 
 		// Cadrage des coordonnées LRacket
@@ -5632,26 +5632,26 @@ void StartLRacket(void const * argument)
  800289e:	2200      	movs	r2, #0
  80028a0:	801a      	strh	r2, [r3, #0]
 		if (y_LRacket <= 0) y_LRacket = 0;
- 80028a2:	4b30      	ldr	r3, [pc, #192]	; (8002964 <StartLRacket+0x1b0>)
+ 80028a2:	4b2f      	ldr	r3, [pc, #188]	; (8002960 <StartLRacket+0x1ac>)
  80028a4:	f9b3 3000 	ldrsh.w	r3, [r3]
  80028a8:	2b00      	cmp	r3, #0
  80028aa:	dc02      	bgt.n	80028b2 <StartLRacket+0xfe>
- 80028ac:	4b2d      	ldr	r3, [pc, #180]	; (8002964 <StartLRacket+0x1b0>)
+ 80028ac:	4b2c      	ldr	r3, [pc, #176]	; (8002960 <StartLRacket+0x1ac>)
  80028ae:	2200      	movs	r2, #0
  80028b0:	801a      	strh	r2, [r3, #0]
 		if (y_LRacket + height_rackets >= 272) y_LRacket = 272 - height_rackets;
- 80028b2:	4b2c      	ldr	r3, [pc, #176]	; (8002964 <StartLRacket+0x1b0>)
+ 80028b2:	4b2b      	ldr	r3, [pc, #172]	; (8002960 <StartLRacket+0x1ac>)
  80028b4:	f9b3 3000 	ldrsh.w	r3, [r3]
  80028b8:	2bdd      	cmp	r3, #221	; 0xdd
  80028ba:	dd02      	ble.n	80028c2 <StartLRacket+0x10e>
- 80028bc:	4b29      	ldr	r3, [pc, #164]	; (8002964 <StartLRacket+0x1b0>)
+ 80028bc:	4b28      	ldr	r3, [pc, #160]	; (8002960 <StartLRacket+0x1ac>)
  80028be:	22de      	movs	r2, #222	; 0xde
  80028c0:	801a      	strh	r2, [r3, #0]
 
 		//Tracé de LRacket
 		//Accaparement de la ressource
 		xSemaphoreTake(myMutex_LCDHandle, portMAX_DELAY);
- 80028c2:	4b29      	ldr	r3, [pc, #164]	; (8002968 <StartLRacket+0x1b4>)
+ 80028c2:	4b28      	ldr	r3, [pc, #160]	; (8002964 <StartLRacket+0x1b0>)
  80028c4:	681b      	ldr	r3, [r3, #0]
  80028c6:	f04f 31ff 	mov.w	r1, #4294967295
  80028ca:	4618      	mov	r0, r3
@@ -5659,7 +5659,7 @@ void StartLRacket(void const * argument)
 
 		//Effaçage du précedent rectangle
 		BSP_LCD_SetTextColor(couleur==0?LCD_COLOR_WHITE:LCD_COLOR_BLACK);
- 80028d0:	4b26      	ldr	r3, [pc, #152]	; (800296c <StartLRacket+0x1b8>)
+ 80028d0:	4b25      	ldr	r3, [pc, #148]	; (8002968 <StartLRacket+0x1b4>)
  80028d2:	781b      	ldrb	r3, [r3, #0]
  80028d4:	2b00      	cmp	r3, #0
  80028d6:	d102      	bne.n	80028de <StartLRacket+0x12a>
@@ -5680,7 +5680,7 @@ void StartLRacket(void const * argument)
 
 		//Création du nouveau rectangle
 		BSP_LCD_SetTextColor(couleur==0?LCD_COLOR_BLACK:LCD_COLOR_WHITE);
- 80028f8:	4b1c      	ldr	r3, [pc, #112]	; (800296c <StartLRacket+0x1b8>)
+ 80028f8:	4b1b      	ldr	r3, [pc, #108]	; (8002968 <StartLRacket+0x1b4>)
  80028fa:	781b      	ldrb	r3, [r3, #0]
  80028fc:	2b00      	cmp	r3, #0
  80028fe:	d102      	bne.n	8002906 <StartLRacket+0x152>
@@ -5693,7 +5693,7 @@ void StartLRacket(void const * argument)
  8002910:	4b12      	ldr	r3, [pc, #72]	; (800295c <StartLRacket+0x1a8>)
  8002912:	f9b3 3000 	ldrsh.w	r3, [r3]
  8002916:	b298      	uxth	r0, r3
- 8002918:	4b12      	ldr	r3, [pc, #72]	; (8002964 <StartLRacket+0x1b0>)
+ 8002918:	4b11      	ldr	r3, [pc, #68]	; (8002960 <StartLRacket+0x1ac>)
  800291a:	f9b3 3000 	ldrsh.w	r3, [r3]
  800291e:	b299      	uxth	r1, r3
  8002920:	2332      	movs	r3, #50	; 0x32
@@ -5702,7 +5702,7 @@ void StartLRacket(void const * argument)
 
 		//Libération de la ressource
 		xSemaphoreGive(myMutex_LCDHandle);
- 8002928:	4b0f      	ldr	r3, [pc, #60]	; (8002968 <StartLRacket+0x1b4>)
+ 8002928:	4b0e      	ldr	r3, [pc, #56]	; (8002964 <StartLRacket+0x1b0>)
  800292a:	6818      	ldr	r0, [r3, #0]
  800292c:	2300      	movs	r3, #0
  800292e:	2200      	movs	r2, #0
@@ -5715,24 +5715,24 @@ void StartLRacket(void const * argument)
  8002938:	f9b3 3000 	ldrsh.w	r3, [r3]
  800293c:	627b      	str	r3, [r7, #36]	; 0x24
 		y_LRacket_hold = y_LRacket;
- 800293e:	4b09      	ldr	r3, [pc, #36]	; (8002964 <StartLRacket+0x1b0>)
+ 800293e:	4b08      	ldr	r3, [pc, #32]	; (8002960 <StartLRacket+0x1ac>)
  8002940:	f9b3 3000 	ldrsh.w	r3, [r3]
  8002944:	623b      	str	r3, [r7, #32]
 
-		osDelay(100);
- 8002946:	2064      	movs	r0, #100	; 0x64
+		osDelay(40);
+ 8002946:	2028      	movs	r0, #40	; 0x28
  8002948:	f009 ffa7 	bl	800c89a <osDelay>
 		sConfig.Channel = ADC_CHANNEL_8;
  800294c:	e74b      	b.n	80027e6 <StartLRacket+0x32>
  800294e:	bf00      	nop
  8002950:	20008998 	.word	0x20008998
  8002954:	2000894c 	.word	0x2000894c
- 8002958:	51eb851f 	.word	0x51eb851f
+ 8002958:	10624dd3 	.word	0x10624dd3
  800295c:	20000028 	.word	0x20000028
- 8002960:	1b4e81b5 	.word	0x1b4e81b5
- 8002964:	2000002a 	.word	0x2000002a
- 8002968:	20008c4c 	.word	0x20008c4c
- 800296c:	20000039 	.word	0x20000039
+ 8002960:	2000002a 	.word	0x2000002a
+ 8002964:	20008c4c 	.word	0x20008c4c
+ 8002968:	20000039 	.word	0x20000039
+ 800296c:	00000000 	.word	0x00000000
 
 08002970 <StartBall>:
 * @param argument: Not used
@@ -5748,8 +5748,8 @@ void StartBall(void const * argument)
   /* USER CODE BEGIN StartBall */
 
 	//Initialisation de la régularité de lancement de la tache
-	TickType_t xFrequency=20;
- 800297a:	2314      	movs	r3, #20
+	TickType_t xFrequency=10;
+ 800297a:	230a      	movs	r3, #10
  800297c:	647b      	str	r3, [r7, #68]	; 0x44
 	TickType_t xLastWakeTime=xTaskGetTickCount();
  800297e:	f00b f8bb 	bl	800daf8 <xTaskGetTickCount>
@@ -6689,49 +6689,49 @@ void StartTransmit(void const * argument)
   for(;;)
   {
 
-		x_balle= x_balle_f;
+	x_balle= x_balle_f;
  8003118:	4b1a      	ldr	r3, [pc, #104]	; (8003184 <StartTransmit+0x94>)
  800311a:	edd3 7a00 	vldr	s15, [r3]
  800311e:	eefc 7ae7 	vcvt.u32.f32	s15, s15
  8003122:	ee17 3a90 	vmov	r3, s15
  8003126:	81fb      	strh	r3, [r7, #14]
-		y_balle = y_balle_f;
+	y_balle = y_balle_f;
  8003128:	4b17      	ldr	r3, [pc, #92]	; (8003188 <StartTransmit+0x98>)
  800312a:	edd3 7a00 	vldr	s15, [r3]
  800312e:	eefc 7ae7 	vcvt.u32.f32	s15, s15
  8003132:	ee17 3a90 	vmov	r3, s15
  8003136:	81bb      	strh	r3, [r7, #12]
-	  //Transmission du rayon de la balle et des coordonnées de la balle et du drapeau de perte
-	  txbuffer[0] = radius_balle;
+	//Transmission du rayon de la balle et des coordonnées de la balle et du drapeau de perte
+	txbuffer[0] = radius_balle;
  8003138:	4b14      	ldr	r3, [pc, #80]	; (800318c <StartTransmit+0x9c>)
  800313a:	781a      	ldrb	r2, [r3, #0]
  800313c:	4b14      	ldr	r3, [pc, #80]	; (8003190 <StartTransmit+0xa0>)
  800313e:	701a      	strb	r2, [r3, #0]
-	  txbuffer[1] = (x_balle & 0xFF00) >> 8;
+	txbuffer[1] = (x_balle & 0xFF00) >> 8;
  8003140:	89fb      	ldrh	r3, [r7, #14]
  8003142:	0a1b      	lsrs	r3, r3, #8
  8003144:	b29b      	uxth	r3, r3
  8003146:	b2da      	uxtb	r2, r3
  8003148:	4b11      	ldr	r3, [pc, #68]	; (8003190 <StartTransmit+0xa0>)
  800314a:	705a      	strb	r2, [r3, #1]
-	  txbuffer[2] = (x_balle & 0x00FF);
+	txbuffer[2] = (x_balle & 0x00FF);
  800314c:	89fb      	ldrh	r3, [r7, #14]
  800314e:	b2da      	uxtb	r2, r3
  8003150:	4b0f      	ldr	r3, [pc, #60]	; (8003190 <StartTransmit+0xa0>)
  8003152:	709a      	strb	r2, [r3, #2]
-	  txbuffer[3] = (y_balle & 0xFF00) >> 8;
+	txbuffer[3] = (y_balle & 0xFF00) >> 8;
  8003154:	89bb      	ldrh	r3, [r7, #12]
  8003156:	0a1b      	lsrs	r3, r3, #8
  8003158:	b29b      	uxth	r3, r3
  800315a:	b2da      	uxtb	r2, r3
  800315c:	4b0c      	ldr	r3, [pc, #48]	; (8003190 <StartTransmit+0xa0>)
  800315e:	70da      	strb	r2, [r3, #3]
-	  txbuffer[4] = (y_balle & 0x00FF);
+	txbuffer[4] = (y_balle & 0x00FF);
  8003160:	89bb      	ldrh	r3, [r7, #12]
  8003162:	b2da      	uxtb	r2, r3
  8003164:	4b0a      	ldr	r3, [pc, #40]	; (8003190 <StartTransmit+0xa0>)
  8003166:	711a      	strb	r2, [r3, #4]
-	  txbuffer[5] = perdu;
+	txbuffer[5] = perdu;
  8003168:	4b0a      	ldr	r3, [pc, #40]	; (8003194 <StartTransmit+0xa4>)
  800316a:	781a      	ldrb	r2, [r3, #0]
  800316c:	4b08      	ldr	r3, [pc, #32]	; (8003190 <StartTransmit+0xa0>)
@@ -6742,10 +6742,10 @@ void StartTransmit(void const * argument)
  8003172:	4907      	ldr	r1, [pc, #28]	; (8003190 <StartTransmit+0xa0>)
  8003174:	4808      	ldr	r0, [pc, #32]	; (8003198 <StartTransmit+0xa8>)
  8003176:	f008 fa59 	bl	800b62c <HAL_UART_Transmit_IT>
-	  osDelay(67);
- 800317a:	2043      	movs	r0, #67	; 0x43
+	  osDelay(30);
+ 800317a:	201e      	movs	r0, #30
  800317c:	f009 fb8d 	bl	800c89a <osDelay>
-		x_balle= x_balle_f;
+	x_balle= x_balle_f;
  8003180:	e7ca      	b.n	8003118 <StartTransmit+0x28>
  8003182:	bf00      	nop
  8003184:	20000030 	.word	0x20000030

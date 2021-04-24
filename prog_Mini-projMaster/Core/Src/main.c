@@ -1590,8 +1590,8 @@ void StartLRacket(void const * argument)
 		joystick_h = HAL_ADC_GetValue(&hadc1);
 
 		//Actualisation des coordonnées de la raquette gauche
-		x_LRacket -= (joystick_h - 2080)/100;
-		y_LRacket -= (joystick_v - 2080)/150;
+		x_LRacket -= (joystick_h - 2080)/250;
+		y_LRacket -= (joystick_v - 2080)/250;
 
 		// Cadrage des coordonnées LRacket
 		if (x_LRacket >= 239 - width_rackets) x_LRacket = 239-width_rackets;
@@ -1619,7 +1619,7 @@ void StartLRacket(void const * argument)
 		x_LRacket_hold = x_LRacket;
 		y_LRacket_hold = y_LRacket;
 
-		osDelay(100);
+		osDelay(40);
 	}
   /* USER CODE END StartLRacket */
 }
@@ -1636,7 +1636,7 @@ void StartBall(void const * argument)
   /* USER CODE BEGIN StartBall */
 
 	//Initialisation de la régularité de lancement de la tache
-	TickType_t xFrequency=20;
+	TickType_t xFrequency=10;
 	TickType_t xLastWakeTime=xTaskGetTickCount();
 
 	// Initialisation des coordonnées entières de la balle
@@ -1872,18 +1872,18 @@ void StartTransmit(void const * argument)
   for(;;)
   {
 
-		x_balle= x_balle_f;
-		y_balle = y_balle_f;
-	  //Transmission du rayon de la balle et des coordonnées de la balle et du drapeau de perte
-	  txbuffer[0] = radius_balle;
-	  txbuffer[1] = (x_balle & 0xFF00) >> 8;
-	  txbuffer[2] = (x_balle & 0x00FF);
-	  txbuffer[3] = (y_balle & 0xFF00) >> 8;
-	  txbuffer[4] = (y_balle & 0x00FF);
-	  txbuffer[5] = perdu;
+	x_balle= x_balle_f;
+	y_balle = y_balle_f;
+	//Transmission du rayon de la balle et des coordonnées de la balle et du drapeau de perte
+	txbuffer[0] = radius_balle;
+	txbuffer[1] = (x_balle & 0xFF00) >> 8;
+	txbuffer[2] = (x_balle & 0x00FF);
+	txbuffer[3] = (y_balle & 0xFF00) >> 8;
+	txbuffer[4] = (y_balle & 0x00FF);
+	txbuffer[5] = perdu;
 
 	  HAL_UART_Transmit_IT(&huart7,txbuffer,6);
-	  osDelay(67);
+	  osDelay(30);
   }
   /* USER CODE END StartTransmit */
 }

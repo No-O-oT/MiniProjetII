@@ -1533,7 +1533,7 @@ void StartRRacket(void const * argument)
 		//Actualisation des coordonnées de la raquette droite, le joystick
 		//horizontal nécessite une corrcetion pour ne pas dériver
 		x_RRacket -= (joystick_h - 2018)/250;
-		y_RRacket -= (joystick_v - 2080)/375;
+		y_RRacket -= (joystick_v - 2080)/250;
 
 		// Cadrage des coordonnées RRacket
 		if (x_RRacket <= 240) x_RRacket = 240;
