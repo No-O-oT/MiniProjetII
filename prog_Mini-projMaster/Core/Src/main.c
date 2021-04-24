@@ -132,6 +132,9 @@ uint8_t txbuffer[10];
 int16_t x_LRacket = 50-width_rackets/2;
 int16_t y_LRacket = 136-height_rackets/2;
 
+RTC_TimeTypeDef time;
+RTC_TimeTypeDef date;
+
 int16_t x_RRacket = 959-50-width_rackets/2;
 int16_t y_RRacket = 136-height_rackets/2;
 
@@ -1522,9 +1525,6 @@ void Starthorloge(void const * argument)
 	//Initialisation du texte d'affichage
 	char text[50] = { };
 
-	//Initialisation des grandeurs à récupérer par le moduler RTC
-	RTC_TimeTypeDef time;
-	RTC_DateTypeDef date;
 	/* Infinite loop */
 	for (;;) {
 		//Récupération des grandeurs temps et date (même si la date ne nous sert pas)
@@ -1650,7 +1650,19 @@ void StartBall(void const * argument)
 	uint16_t y_balle_hold = 136;
 
 	//Initialisation du sens de déplacement de la balle
-	int8_t angle=90;
+	int16_t angle;
+
+	// Récupération des grandeurs temps et date pour générer un départ aléatoire (à la pression du bouton)
+	HAL_RTC_GetTime(&hrtc, &time, RTC_FORMAT_BIN);
+
+	uint16_t time2 = time.SubSeconds;
+	uint16_t timeFraction = time.SecondFraction;
+
+	// Nombre pseudo aléatoire entre 30 et 150
+	angle = time2*1.0/timeFraction*120+30;
+
+	if(time2%2) // Une chance sur 2 de partir dans chaque sens
+		angle=-angle;
 
   /* Infinite loop */
   for(;;)
@@ -1663,7 +1675,14 @@ void StartBall(void const * argument)
 	  y_balle=y_balle_f;
 
 	  //Gestion des rebonds sur les bords horizontaux : cadrage vertical des coordonnées de la balle
-	  if((y_balle-radius_balle <= 0) || (y_balle+radius_balle >= 271)){
+	  if(y_balle<= radius_balle){
+		  y_balle_f=radius_balle;
+		  y_balle=y_balle_f;
+		  angle=angle>0?180-angle:-180-angle;
+	  }
+	  else if(y_balle>= 271-radius_balle){
+		  y_balle_f=271-radius_balle;
+		  y_balle=y_balle_f;
 		  angle=angle>0?180-angle:-180-angle;
 	  }
 
