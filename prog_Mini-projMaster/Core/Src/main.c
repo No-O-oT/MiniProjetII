@@ -1705,9 +1705,9 @@ void StartBall(void const * argument)
 			  xSemaphoreTake(myMutex_LCDHandle, portMAX_DELAY);
 
 			  //Affichage du message de perte sous le chronomètre
-			  BSP_LCD_Clear(couleur==0?LCD_COLOR_BLACK:LCD_COLOR_WHITE);
-			  BSP_LCD_SetTextColor(couleur==0?LCD_COLOR_WHITE:LCD_COLOR_BLACK);
-
+			  BSP_LCD_Clear(couleur==0?LCD_COLOR_WHITE:LCD_COLOR_BLACK);
+			  BSP_LCD_SetBackColor(couleur==0?LCD_COLOR_WHITE:LCD_COLOR_BLACK);
+			  BSP_LCD_SetTextColor(couleur==0?LCD_COLOR_BLACK:LCD_COLOR_WHITE);
 			  BSP_LCD_DisplayStringAtLine(12, (uint8_t*) "Perdu ! Appuyez sur reset pour rejouer");
 			  while(1);
 		  }
@@ -1732,8 +1732,9 @@ void StartBall(void const * argument)
 			  xSemaphoreTake(myMutex_LCDHandle, portMAX_DELAY);
 
 			  //Affichage du message de perte sous le chronomètre
-			  BSP_LCD_Clear(couleur==0?LCD_COLOR_BLACK:LCD_COLOR_WHITE);
-			  BSP_LCD_SetTextColor(couleur==0?LCD_COLOR_WHITE:LCD_COLOR_BLACK);
+			  BSP_LCD_Clear(couleur==0?LCD_COLOR_WHITE:LCD_COLOR_BLACK);
+			  BSP_LCD_SetBackColor(couleur==0?LCD_COLOR_WHITE:LCD_COLOR_BLACK);
+			  BSP_LCD_SetTextColor(couleur==0?LCD_COLOR_BLACK:LCD_COLOR_WHITE);
 			  BSP_LCD_DisplayStringAtLine(12, (uint8_t*) "Perdu ! Appuyez sur reset pour rejouer");
 			  while(1);
 		  }
