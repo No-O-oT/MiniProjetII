@@ -117,7 +117,7 @@ uint8_t rxbuffer[10];
 uint8_t txbuffer[10];
 
 // Attention à garder des dimensions de raquette cohérentes entre master/slave
-#define height_rackets 40
+#define height_rackets 50
 #define width_rackets 8
 
 

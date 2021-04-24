@@ -123,9 +123,9 @@ void StartTransmit(void const * argument);
 uint8_t rxbuffer[10];
 uint8_t txbuffer[10];
 
-#define height_rackets 40
+#define height_rackets 50
 #define width_rackets 8
-#define vitesse 1
+#define vitesse 3
 
 
 // Les rectangles sont définis depuis le coin supérieur gauche
@@ -1657,7 +1657,7 @@ void StartBall(void const * argument)
   {
 	  //Mouvement de la balle
 	  x_balle_f += vitesse*sin(angle*MATH_PI*1.0/180);
-	  y_balle_f += vitesse*cos(angle*MATH_PI*1.0/180);
+	  y_balle_f -= vitesse*cos(angle*MATH_PI*1.0/180);
 
 	  x_balle=x_balle_f;
 	  y_balle=y_balle_f;

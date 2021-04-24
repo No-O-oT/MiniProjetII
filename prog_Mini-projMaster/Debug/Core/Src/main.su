@@ -23,7 +23,7 @@ main.c:1480:6:HAL_UART_RxCpltCallback	16	static
 main.c:1502:6:StartDefaultTask	16	static
 main.c:1519:6:Starthorloge	96	static
 main.c:1558:6:StartLRacket	48	static
-main.c:1634:6:StartBall	96	static
+main.c:1634:6:StartBall	104	static
 main.c:1781:6:StartBgChanger	24	static
 main.c:1847:6:StartTransmit	24	static
 main.c:1880:6:HAL_TIM_PeriodElapsedCallback	16	static

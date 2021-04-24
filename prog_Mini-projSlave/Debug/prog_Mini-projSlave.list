@@ -4551,7 +4551,7 @@ void StartRRacket(void const * argument)
  8001ce8:	f240 13a9 	movw	r3, #425	; 0x1a9
  8001cec:	84fb      	strh	r3, [r7, #38]	; 0x26
 	int16_t y_RRacket_hold = 136-height_rackets/2;
- 8001cee:	2374      	movs	r3, #116	; 0x74
+ 8001cee:	236f      	movs	r3, #111	; 0x6f
  8001cf0:	84bb      	strh	r3, [r7, #36]	; 0x24
 
 	//Initialisation du CAN du joystick (ADC_CHANNEL_8)
@@ -4685,10 +4685,10 @@ void StartRRacket(void const * argument)
 		if (y_RRacket + height_rackets >= 272) y_RRacket = 272 - height_rackets;
  8001de4:	4b40      	ldr	r3, [pc, #256]	; (8001ee8 <StartRRacket+0x210>)
  8001de6:	f9b3 3000 	ldrsh.w	r3, [r3]
- 8001dea:	2be7      	cmp	r3, #231	; 0xe7
+ 8001dea:	2bdd      	cmp	r3, #221	; 0xdd
  8001dec:	dd02      	ble.n	8001df4 <StartRRacket+0x11c>
  8001dee:	4b3e      	ldr	r3, [pc, #248]	; (8001ee8 <StartRRacket+0x210>)
- 8001df0:	22e8      	movs	r2, #232	; 0xe8
+ 8001df0:	22de      	movs	r2, #222	; 0xde
  8001df2:	801a      	strh	r2, [r3, #0]
 
 		//Tracé de RRacket
@@ -4714,7 +4714,7 @@ void StartRRacket(void const * argument)
 		BSP_LCD_FillRect(x_RRacket_hold, y_RRacket_hold, width_rackets,
  8001e1a:	8cf8      	ldrh	r0, [r7, #38]	; 0x26
  8001e1c:	8cb9      	ldrh	r1, [r7, #36]	; 0x24
- 8001e1e:	2328      	movs	r3, #40	; 0x28
+ 8001e1e:	2332      	movs	r3, #50	; 0x32
  8001e20:	2208      	movs	r2, #8
  8001e22:	f001 f89d 	bl	8002f60 <BSP_LCD_FillRect>
 				height_rackets);
@@ -4737,7 +4737,7 @@ void StartRRacket(void const * argument)
  8001e46:	4b28      	ldr	r3, [pc, #160]	; (8001ee8 <StartRRacket+0x210>)
  8001e48:	f9b3 3000 	ldrsh.w	r3, [r3]
  8001e4c:	b299      	uxth	r1, r3
- 8001e4e:	2328      	movs	r3, #40	; 0x28
+ 8001e4e:	2332      	movs	r3, #50	; 0x32
  8001e50:	2208      	movs	r2, #8
  8001e52:	f001 f885 	bl	8002f60 <BSP_LCD_FillRect>
 
