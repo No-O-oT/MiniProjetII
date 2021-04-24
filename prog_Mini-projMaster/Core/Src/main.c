@@ -132,6 +132,10 @@ int16_t y_LRacket = 136-height_rackets/2;
 int16_t x_RRacket = 959-50-width_rackets/2;
 int16_t y_RRacket = 136-height_rackets/2;
 
+//Initialisation des grandeurs à récupérer par le module RTC
+RTC_TimeTypeDef time;
+RTC_DateTypeDef date;
+
 uint16_t x_balle = 480;
 uint16_t y_balle = 136;
 
@@ -1519,9 +1523,7 @@ void Starthorloge(void const * argument)
 	//Initialisation du texte d'affichage
 	char text[50] = { };
 
-	//Initialisation des grandeurs à récupérer par le moduler RTC
-	RTC_TimeTypeDef time;
-	RTC_DateTypeDef date;
+
 	/* Infinite loop */
 	for (;;) {
 		//Récupération des grandeurs temps et date (même si la date ne nous sert pas)
@@ -1640,9 +1642,35 @@ void StartBall(void const * argument)
 	uint16_t x_balle_hold = 480;
 	uint16_t y_balle_hold = 136;
 
-	//Initialisation du sens de déplacement de la balle
-	int8_t x_sens = -1; //On pourrait rajouter de l'aléatoire
-	int8_t y_sens = 1; //On pourrait rajouter de l'aléatoire
+	//Initialisation des sens de déplacement
+	int8_t x_sens;
+	int8_t y_sens;
+
+	//Récupération des grandeurs temps et date pour générer un départ aléatoire
+	HAL_RTC_GetTime(&hrtc, &time, RTC_FORMAT_BIN);
+	HAL_RTC_GetDate(&hrtc, &date, RTC_FORMAT_BIN);
+
+	uint8_t time2 = time.SubSeconds;
+
+	if(time2%2==1){
+		//Si le temps depuis le démarrage est impair, on part à gauche
+		x_sens = -1;
+	}
+	else if(time2%2==0){
+		//Si le temps depuis le démarrage est pair, on part à droite
+		x_sens = 1;
+	}
+	if((time2*time2)%2==1){
+		//Si le temps au carré depuis le démarrage est impair, on part en haut
+		y_sens = -1;
+	}
+	else if((time2*time2)%2==0){
+		//Si le temps au carré depuis le démarrage est pair, on part en bas
+		y_sens = 1;
+	}
+
+	x_balle = 480 - 128 + (time2 & 0xFF);
+	y_balle = 136 - 32 + (time2 & 0x3F);
 
   /* Infinite loop */
   for(;;)
@@ -1677,8 +1705,9 @@ void StartBall(void const * argument)
 			  xSemaphoreTake(myMutex_LCDHandle, portMAX_DELAY);
 
 			  //Affichage du message de perte sous le chronomètre
-			  BSP_LCD_Clear(couleur==0?LCD_COLOR_BLACK:LCD_COLOR_WHITE);
-			  BSP_LCD_SetTextColor(couleur==0?LCD_COLOR_WHITE:LCD_COLOR_BLACK);
+			  BSP_LCD_Clear(couleur==0?LCD_COLOR_WHITE:LCD_COLOR_BLACK);
+			  BSP_LCD_SetBackColor(couleur==0?LCD_COLOR_WHITE:LCD_COLOR_BLACK);
+			  BSP_LCD_SetTextColor(couleur==0?LCD_COLOR_BLACK:LCD_COLOR_WHITE);
 			  BSP_LCD_DisplayStringAtLine(12, (uint8_t*) "Perdu ! Appuyez sur reset pour rejouer");
 			  while(1);
 		  }
@@ -1703,8 +1732,9 @@ void StartBall(void const * argument)
 			  xSemaphoreTake(myMutex_LCDHandle, portMAX_DELAY);
 
 			  //Affichage du message de perte sous le chronomètre
-			  BSP_LCD_Clear(couleur==0?LCD_COLOR_BLACK:LCD_COLOR_WHITE);
-			  BSP_LCD_SetTextColor(couleur==0?LCD_COLOR_WHITE:LCD_COLOR_BLACK);
+			  BSP_LCD_Clear(couleur==0?LCD_COLOR_WHITE:LCD_COLOR_BLACK);
+			  BSP_LCD_SetBackColor(couleur==0?LCD_COLOR_WHITE:LCD_COLOR_BLACK);
+			  BSP_LCD_SetTextColor(couleur==0?LCD_COLOR_BLACK:LCD_COLOR_WHITE);
 			  BSP_LCD_DisplayStringAtLine(12, (uint8_t*) "Perdu ! Appuyez sur reset pour rejouer");
 			  while(1);
 		  }
