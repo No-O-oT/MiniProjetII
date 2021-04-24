@@ -1460,14 +1460,11 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	r_balle = rxbuffer[0];
 	x_ballemaster = (((uint16_t)rxbuffer[1] << 8) | rxbuffer[2]);
 	y_balle = (((uint16_t)rxbuffer[3] << 8) | rxbuffer[4]);
-	lost = 0;//rxbuffer[5];
+	lost = rxbuffer[5];
 
 	//Offset et cadrage des coordonées de la raquette droite
 	x_balle = x_ballemaster-480;
 	r_balle = 8; //Forçage temporaire
-	if(x_balle > 479 - r_balle) x_balle = 479 - r_balle;
-	if(y_balle < r_balle) y_balle=r_balle;
-	if(y_balle > 272 - r_balle) y_balle = 272 - r_balle;
 
 	//Attente d'une nouvelle réception sur interruption
 	HAL_UART_Receive_IT(&huart7, rxbuffer, 6);
@@ -1535,8 +1532,8 @@ void StartRRacket(void const * argument)
 
 		//Actualisation des coordonnées de la raquette droite, le joystick
 		//horizontal nécessite une corrcetion pour ne pas dériver
-		x_RRacket -= (joystick_h - 2018)/100;
-		y_RRacket -= (joystick_v - 2080)/150;
+		x_RRacket -= (joystick_h - 2018)/250;
+		y_RRacket -= (joystick_v - 2080)/375;
 
 		// Cadrage des coordonnées RRacket
 		if (x_RRacket <= 240) x_RRacket = 240;
@@ -1574,7 +1571,7 @@ void StartRRacket(void const * argument)
 		//Stockage des dernières coordonnées de la raquette droite
 		x_RRacket_hold = x_RRacket;
 		y_RRacket_hold = y_RRacket;
-		osDelay(100);
+		osDelay(40);
 	}
   /* USER CODE END StartRRacket */
 }
@@ -1600,7 +1597,6 @@ void StartBall(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-
 	  if(lost == 1){
 		  //Si la balle touche le bord gauche de l'écran, on a perdu
 		  //Capture de la ressource
@@ -1615,8 +1611,6 @@ void StartBall(void const * argument)
 		  //Mise en pause du déplacement de la balle
 		  vTaskSuspend(BallDisplayHandle);
 	  }
-
-
 
 	  //Capture de la ressource
 	  xSemaphoreTake(myMutex_LCDHandle, portMAX_DELAY);
@@ -1661,6 +1655,7 @@ void StartBall(void const * argument)
 	 //Stockage du dernier emplacement de dessin
 	 x_balle_hold=x_balle;
 	 y_balle_hold=y_balle;
+
 
 	 vTaskDelayUntil(&xLastWakeTime, xFrequency);
   }
