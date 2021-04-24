@@ -125,8 +125,8 @@ uint8_t txbuffer[10];
 
 #define height_rackets 50
 #define width_rackets 8
-#define vitesse 3
-
+#define vitesse 2 // Vitesse générale
+uint8_t multiplicateur=1; // Multiplicateur de vitesse variable
 
 // Les rectangles sont définis depuis le coin supérieur gauche
 int16_t x_LRacket = 50-width_rackets/2;
@@ -1591,7 +1591,7 @@ void StartLRacket(void const * argument)
 
 		//Actualisation des coordonnées de la raquette gauche
 		x_LRacket -= (joystick_h - 2080)/250;
-		y_LRacket -= (joystick_v - 2080)/250;
+		y_LRacket -= (joystick_v - 2080)/150;
 
 		// Cadrage des coordonnées LRacket
 		if (x_LRacket >= 239 - width_rackets) x_LRacket = 239-width_rackets;
@@ -1668,8 +1668,8 @@ void StartBall(void const * argument)
   for(;;)
   {
 	  //Mouvement de la balle
-	  x_balle_f += vitesse*sin(angle*MATH_PI*1.0/180);
-	  y_balle_f -= vitesse*cos(angle*MATH_PI*1.0/180);
+	  x_balle_f += vitesse*sin(angle*MATH_PI*1.0/180)*(1+multiplicateur*1.0/10);
+	  y_balle_f -= vitesse*cos(angle*MATH_PI*1.0/180)*(1+multiplicateur*1.0/10);
 
 	  x_balle=x_balle_f;
 	  y_balle=y_balle_f;
@@ -1694,8 +1694,9 @@ void StartBall(void const * argument)
 			  //Si l'on est horizontalement "dans" la raquette
 			  if((y_balle >= y_LRacket) && (y_balle <= (y_LRacket + height_rackets)))
 			  {
-				  //Et verticalement "dans" la raquette, il y a rebond, donc le sens horizontal passe à 1
+				  //Et verticalement "dans" la raquette, il y a rebond, l'angle est calculé selon la position relative de la balle et de la raquette
 				  angle= (y_balle-y_LRacket)*1.0/height_rackets * 120 + 30;
+				  multiplicateur++; // Augmentation de la vitesse à chaque rebond
 			  }
 		  }
 		  else if(x_balle<=radius_balle)
@@ -1720,8 +1721,9 @@ void StartBall(void const * argument)
 			  //Si l'on est horizontalement "dans" la raquette
 			  if((y_balle >= y_RRacket) && (y_balle <= (y_RRacket + height_rackets)))
 			  {
-				  //Et verticalement "dans" la raquette, il y a rebond, donc le sens horizontal passe à -1
+				  //Et verticalement "dans" la raquette, il y a rebond, l'angle est calculé selon la position relative de la balle et de la raquette
 				  angle= -((y_balle-y_RRacket)*1.0/height_rackets * 120 + 30);
+				  multiplicateur++; // Augmentation de la vitesse à chaque rebond
 			  }
 		  }
 		  else if(x_balle>=(959-radius_balle))
