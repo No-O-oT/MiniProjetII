@@ -5,8 +5,9 @@ Ce projet a été réalisé par Timothé Corre et Nicolas Trosino, deux élèves
 
 **_Le projet (et cette présentation) ne sont pas finis et seront rendus complets après les examens_**
 
-*Les fonctionnalités prévues par la suite sont dans l'onglets _Issues_*
+*Les fonctionnalités prévues par la suite et celles effectivement implémentées sont dans l'onglets _Issues_*
 
+*Par soucis de compatibilité, le projet entier est sur le dépôt et pas seulement les sources, ce qui permet de le faire fonctionner directement avec copier-coller*
 
 Le but est de prendre en main l'utilisation d'un système d'exploitation temps réel (FreeRTOS) sur un microcontrôleur 32 bits (STM32).
 
