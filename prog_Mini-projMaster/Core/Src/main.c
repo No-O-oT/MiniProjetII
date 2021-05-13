@@ -1493,15 +1493,17 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	x_RRacket += 480;
 	*/
 
+	if(huart==&huart7)
+		HAL_UART_Transmit_IT(&huart1,rxbuffer,1);
+	if(huart==&huart1)
+		HAL_UART_Transmit_IT(&huart7,rxbuffer2,1);
 
 	//Attente d'une nouvelle réception sur interruption
 	HAL_UART_Receive_IT(&huart1,rxbuffer2,1);
 	HAL_UART_Receive_IT(&huart7,rxbuffer,1);
 
-	if(huart==&huart7)
-		HAL_UART_Transmit_IT(&huart1,rxbuffer,1);
-	if(huart==&huart1)
-		HAL_UART_Transmit_IT(&huart7,rxbuffer2,1);
+
+
 }
 
 /* USER CODE END 4 */

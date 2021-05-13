@@ -5166,51 +5166,55 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
  80024fe:	b082      	sub	sp, #8
  8002500:	af00      	add	r7, sp, #0
  8002502:	6078      	str	r0, [r7, #4]
+
+	//Offset des coordonées de la raquette droite
 	x_RRacket += 480;
 	*/
 
+	if(huart==&huart7)
+ 8002504:	687b      	ldr	r3, [r7, #4]
+ 8002506:	4a0f      	ldr	r2, [pc, #60]	; (8002544 <HAL_UART_RxCpltCallback+0x48>)
+ 8002508:	4293      	cmp	r3, r2
+ 800250a:	d104      	bne.n	8002516 <HAL_UART_RxCpltCallback+0x1a>
+		HAL_UART_Transmit_IT(&huart1,rxbuffer,1);
+ 800250c:	2201      	movs	r2, #1
+ 800250e:	490e      	ldr	r1, [pc, #56]	; (8002548 <HAL_UART_RxCpltCallback+0x4c>)
+ 8002510:	480e      	ldr	r0, [pc, #56]	; (800254c <HAL_UART_RxCpltCallback+0x50>)
+ 8002512:	f008 ff41 	bl	800b398 <HAL_UART_Transmit_IT>
+	if(huart==&huart1)
+ 8002516:	687b      	ldr	r3, [r7, #4]
+ 8002518:	4a0c      	ldr	r2, [pc, #48]	; (800254c <HAL_UART_RxCpltCallback+0x50>)
+ 800251a:	4293      	cmp	r3, r2
+ 800251c:	d104      	bne.n	8002528 <HAL_UART_RxCpltCallback+0x2c>
+		HAL_UART_Transmit_IT(&huart7,rxbuffer2,1);
+ 800251e:	2201      	movs	r2, #1
+ 8002520:	490b      	ldr	r1, [pc, #44]	; (8002550 <HAL_UART_RxCpltCallback+0x54>)
+ 8002522:	4808      	ldr	r0, [pc, #32]	; (8002544 <HAL_UART_RxCpltCallback+0x48>)
+ 8002524:	f008 ff38 	bl	800b398 <HAL_UART_Transmit_IT>
 
 	//Attente d'une nouvelle réception sur interruption
 	HAL_UART_Receive_IT(&huart1,rxbuffer2,1);
- 8002504:	2201      	movs	r2, #1
- 8002506:	490f      	ldr	r1, [pc, #60]	; (8002544 <HAL_UART_RxCpltCallback+0x48>)
- 8002508:	480f      	ldr	r0, [pc, #60]	; (8002548 <HAL_UART_RxCpltCallback+0x4c>)
- 800250a:	f008 ffa1 	bl	800b450 <HAL_UART_Receive_IT>
+ 8002528:	2201      	movs	r2, #1
+ 800252a:	4909      	ldr	r1, [pc, #36]	; (8002550 <HAL_UART_RxCpltCallback+0x54>)
+ 800252c:	4807      	ldr	r0, [pc, #28]	; (800254c <HAL_UART_RxCpltCallback+0x50>)
+ 800252e:	f008 ff8f 	bl	800b450 <HAL_UART_Receive_IT>
 	HAL_UART_Receive_IT(&huart7,rxbuffer,1);
- 800250e:	2201      	movs	r2, #1
- 8002510:	490e      	ldr	r1, [pc, #56]	; (800254c <HAL_UART_RxCpltCallback+0x50>)
- 8002512:	480f      	ldr	r0, [pc, #60]	; (8002550 <HAL_UART_RxCpltCallback+0x54>)
- 8002514:	f008 ff9c 	bl	800b450 <HAL_UART_Receive_IT>
-
-	if(huart==&huart7)
- 8002518:	687b      	ldr	r3, [r7, #4]
- 800251a:	4a0d      	ldr	r2, [pc, #52]	; (8002550 <HAL_UART_RxCpltCallback+0x54>)
- 800251c:	4293      	cmp	r3, r2
- 800251e:	d104      	bne.n	800252a <HAL_UART_RxCpltCallback+0x2e>
-		HAL_UART_Transmit_IT(&huart1,rxbuffer,1);
- 8002520:	2201      	movs	r2, #1
- 8002522:	490a      	ldr	r1, [pc, #40]	; (800254c <HAL_UART_RxCpltCallback+0x50>)
- 8002524:	4808      	ldr	r0, [pc, #32]	; (8002548 <HAL_UART_RxCpltCallback+0x4c>)
- 8002526:	f008 ff37 	bl	800b398 <HAL_UART_Transmit_IT>
-	if(huart==&huart1)
- 800252a:	687b      	ldr	r3, [r7, #4]
- 800252c:	4a06      	ldr	r2, [pc, #24]	; (8002548 <HAL_UART_RxCpltCallback+0x4c>)
- 800252e:	4293      	cmp	r3, r2
- 8002530:	d104      	bne.n	800253c <HAL_UART_RxCpltCallback+0x40>
-		HAL_UART_Transmit_IT(&huart7,rxbuffer2,1);
  8002532:	2201      	movs	r2, #1
- 8002534:	4903      	ldr	r1, [pc, #12]	; (8002544 <HAL_UART_RxCpltCallback+0x48>)
- 8002536:	4806      	ldr	r0, [pc, #24]	; (8002550 <HAL_UART_RxCpltCallback+0x54>)
- 8002538:	f008 ff2e 	bl	800b398 <HAL_UART_Transmit_IT>
+ 8002534:	4904      	ldr	r1, [pc, #16]	; (8002548 <HAL_UART_RxCpltCallback+0x4c>)
+ 8002536:	4803      	ldr	r0, [pc, #12]	; (8002544 <HAL_UART_RxCpltCallback+0x48>)
+ 8002538:	f008 ff8a 	bl	800b450 <HAL_UART_Receive_IT>
+
+
+
 }
  800253c:	bf00      	nop
  800253e:	3708      	adds	r7, #8
  8002540:	46bd      	mov	sp, r7
  8002542:	bd80      	pop	{r7, pc}
- 8002544:	20008950 	.word	0x20008950
- 8002548:	20008a50 	.word	0x20008a50
- 800254c:	20008d10 	.word	0x20008d10
- 8002550:	2000871c 	.word	0x2000871c
+ 8002544:	2000871c 	.word	0x2000871c
+ 8002548:	20008d10 	.word	0x20008d10
+ 800254c:	20008a50 	.word	0x20008a50
+ 8002550:	20008950 	.word	0x20008950
 
 08002554 <StartDefaultTask>:
  * @param  argument: Not used
