@@ -120,8 +120,9 @@ void StartTransmit(void const * argument);
 /* USER CODE BEGIN 0 */
 #define MATH_PI 3.14159
 
-uint8_t rxbuffer[10];
-uint8_t txbuffer[10];
+uint8_t rxbuffer[100];
+uint8_t rxbuffer2[100];
+uint8_t txbuffer[100];
 
 #define height_rackets 50
 #define width_rackets 8
@@ -1152,7 +1153,7 @@ static void MX_UART7_Init(void)
 
   /* USER CODE END UART7_Init 1 */
   huart7.Instance = UART7;
-  huart7.Init.BaudRate = 115200;
+  huart7.Init.BaudRate = 9600;
   huart7.Init.WordLength = UART_WORDLENGTH_8B;
   huart7.Init.StopBits = UART_STOPBITS_1;
   huart7.Init.Parity = UART_PARITY_NONE;
@@ -1480,17 +1481,27 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
+	/*
 	//Réception des coordonnées de la raquette droite
 	x_RRacket = (rxbuffer[0] << 8) | rxbuffer[1];
 	y_RRacket = (rxbuffer[2] << 8) | rxbuffer[3];
 
 	//Offset des coordonées de la raquette droite
 	x_RRacket += 480;
+	*/
+
 
 	//Attente d'une nouvelle réception sur interruption
-	HAL_UART_Receive_IT(&huart7,rxbuffer,4);
+	HAL_UART_Receive_IT(&huart1,rxbuffer2,1);
+	HAL_UART_Receive_IT(&huart7,rxbuffer,1);
+
+	if(huart==&huart7)
+		HAL_UART_Transmit_IT(&huart1,rxbuffer,1);
+	if(huart==&huart1)
+		HAL_UART_Transmit_IT(&huart7,rxbuffer2,1);
 }
 
 /* USER CODE END 4 */
@@ -1507,7 +1518,7 @@ void StartDefaultTask(void const * argument)
   /* USER CODE BEGIN 5 */
 	/* Infinite loop */
 	for (;;) {
-		osDelay(1000);
+		osDelay(100);
 	}
   /* USER CODE END 5 */
 }
@@ -1636,7 +1647,7 @@ void StartBall(void const * argument)
   /* USER CODE BEGIN StartBall */
 
 	//Initialisation de la régularité de lancement de la tache
-	TickType_t xFrequency=10;
+	TickType_t xFrequency=10; //remettre à 10
 	TickType_t xLastWakeTime=xTaskGetTickCount();
 
 	// Initialisation des coordonnées entières de la balle
@@ -1668,8 +1679,8 @@ void StartBall(void const * argument)
   for(;;)
   {
 	  //Mouvement de la balle
-	  x_balle_f += vitesse*sin(angle*MATH_PI*1.0/180)*(1+multiplicateur*1.0/10);
-	  y_balle_f -= vitesse*cos(angle*MATH_PI*1.0/180)*(1+multiplicateur*1.0/10);
+	  //x_balle_f += vitesse*sin(angle*MATH_PI*1.0/180)*(1+multiplicateur*1.0/10);
+	  //y_balle_f -= vitesse*cos(angle*MATH_PI*1.0/180)*(1+multiplicateur*1.0/10);
 
 	  x_balle=x_balle_f;
 	  y_balle=y_balle_f;
@@ -1801,7 +1812,7 @@ void StartBall(void const * argument)
 /* USER CODE END Header_StartBgChanger */
 void StartBgChanger(void const * argument)
 {
-	/* USER CODE BEGIN StartBgChanger */
+  /* USER CODE BEGIN StartBgChanger */
 	  //Initialisation de l'état de BP1 et de l'état
 	  uint8_t BP1=1;
 	  uint8_t state=0;
@@ -1855,7 +1866,7 @@ void StartBgChanger(void const * argument)
 		  }
 	  osDelay(400);
 	  }
-	  /* USER CODE END StartBgChanger */
+  /* USER CODE END StartBgChanger */
 }
 
 /* USER CODE BEGIN Header_StartTransmit */
@@ -1884,7 +1895,7 @@ void StartTransmit(void const * argument)
 	txbuffer[4] = (y_balle & 0x00FF);
 	txbuffer[5] = perdu;
 
-	  HAL_UART_Transmit_IT(&huart7,txbuffer,6);
+	  //HAL_UART_Transmit_IT(&huart7,txbuffer,6);
 	  osDelay(30);
   }
   /* USER CODE END StartTransmit */
