@@ -215,9 +215,8 @@ int main(void)
 	BSP_LCD_SetFont(&Font12);
 	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
 	BSP_LCD_SetBackColor(LCD_COLOR_BLACK);
-
+	HAL_UART_RxCpltCallback(&huart7);
 	BSP_TS_Init(BSP_LCD_GetXSize(), BSP_LCD_GetYSize());
-	HAL_UART_Receive_IT(&huart7,rxbuffer,4);
 	BSP_LCD_DisplayStringAtLine(9, (uint8_t*) "Appuyez sur BP2 pour commencer");
 	while(HAL_GPIO_ReadPin(BP2_GPIO_Port, BP2_Pin));
 	BSP_LCD_Clear(LCD_COLOR_BLACK);
