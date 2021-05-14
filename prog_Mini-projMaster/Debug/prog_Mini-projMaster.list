@@ -37,11 +37,11 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  16 .debug_macro  0002e4b6  00000000  00000000  00069728  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   0002a9fd  00000000  00000000  00097bde  2**0
+ 17 .debug_line   0002a9fc  00000000  00000000  00097bde  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    001154ac  00000000  00000000  000c25db  2**0
+ 18 .debug_str    001154ac  00000000  00000000  000c25da  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000053  00000000  00000000  001d7a87  2**0
+ 19 .comment      00000053  00000000  00000000  001d7a86  2**0
                   CONTENTS, READONLY
  20 .debug_frame  0000a8b0  00000000  00000000  001d7adc  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
@@ -5624,158 +5624,158 @@ void StartLRacket(void const * argument)
  8002880:	61fb      	str	r3, [r7, #28]
 
 		//Actualisation des coordonnées de la raquette gauche
-		x_LRacket -= (joystick_h - 2080)/500;
+		x_LRacket -= (joystick_h - 2080)/333;
  8002882:	69fb      	ldr	r3, [r7, #28]
  8002884:	f5a3 6302 	sub.w	r3, r3, #2080	; 0x820
  8002888:	4a48      	ldr	r2, [pc, #288]	; (80029ac <StartLRacket+0x1b8>)
  800288a:	fb82 1203 	smull	r1, r2, r2, r3
- 800288e:	1152      	asrs	r2, r2, #5
- 8002890:	17db      	asrs	r3, r3, #31
- 8002892:	1a9b      	subs	r3, r3, r2
- 8002894:	b29a      	uxth	r2, r3
- 8002896:	4b41      	ldr	r3, [pc, #260]	; (800299c <StartLRacket+0x1a8>)
- 8002898:	f9b3 3000 	ldrsh.w	r3, [r3]
- 800289c:	b29b      	uxth	r3, r3
- 800289e:	4413      	add	r3, r2
- 80028a0:	b29b      	uxth	r3, r3
- 80028a2:	b21a      	sxth	r2, r3
- 80028a4:	4b3d      	ldr	r3, [pc, #244]	; (800299c <StartLRacket+0x1a8>)
- 80028a6:	801a      	strh	r2, [r3, #0]
-		y_LRacket -= (joystick_v - 2080)/300;
- 80028a8:	69bb      	ldr	r3, [r7, #24]
- 80028aa:	f5a3 6302 	sub.w	r3, r3, #2080	; 0x820
- 80028ae:	4a40      	ldr	r2, [pc, #256]	; (80029b0 <StartLRacket+0x1bc>)
- 80028b0:	fb82 1203 	smull	r1, r2, r2, r3
- 80028b4:	1152      	asrs	r2, r2, #5
- 80028b6:	17db      	asrs	r3, r3, #31
- 80028b8:	1a9b      	subs	r3, r3, r2
- 80028ba:	b29a      	uxth	r2, r3
- 80028bc:	4b38      	ldr	r3, [pc, #224]	; (80029a0 <StartLRacket+0x1ac>)
- 80028be:	f9b3 3000 	ldrsh.w	r3, [r3]
- 80028c2:	b29b      	uxth	r3, r3
- 80028c4:	4413      	add	r3, r2
- 80028c6:	b29b      	uxth	r3, r3
- 80028c8:	b21a      	sxth	r2, r3
- 80028ca:	4b35      	ldr	r3, [pc, #212]	; (80029a0 <StartLRacket+0x1ac>)
- 80028cc:	801a      	strh	r2, [r3, #0]
+ 800288e:	441a      	add	r2, r3
+ 8002890:	1212      	asrs	r2, r2, #8
+ 8002892:	17db      	asrs	r3, r3, #31
+ 8002894:	1a9b      	subs	r3, r3, r2
+ 8002896:	b29a      	uxth	r2, r3
+ 8002898:	4b40      	ldr	r3, [pc, #256]	; (800299c <StartLRacket+0x1a8>)
+ 800289a:	f9b3 3000 	ldrsh.w	r3, [r3]
+ 800289e:	b29b      	uxth	r3, r3
+ 80028a0:	4413      	add	r3, r2
+ 80028a2:	b29b      	uxth	r3, r3
+ 80028a4:	b21a      	sxth	r2, r3
+ 80028a6:	4b3d      	ldr	r3, [pc, #244]	; (800299c <StartLRacket+0x1a8>)
+ 80028a8:	801a      	strh	r2, [r3, #0]
+		y_LRacket -= (joystick_v - 2080)/200;
+ 80028aa:	69bb      	ldr	r3, [r7, #24]
+ 80028ac:	f5a3 6302 	sub.w	r3, r3, #2080	; 0x820
+ 80028b0:	4a3f      	ldr	r2, [pc, #252]	; (80029b0 <StartLRacket+0x1bc>)
+ 80028b2:	fb82 1203 	smull	r1, r2, r2, r3
+ 80028b6:	1192      	asrs	r2, r2, #6
+ 80028b8:	17db      	asrs	r3, r3, #31
+ 80028ba:	1a9b      	subs	r3, r3, r2
+ 80028bc:	b29a      	uxth	r2, r3
+ 80028be:	4b38      	ldr	r3, [pc, #224]	; (80029a0 <StartLRacket+0x1ac>)
+ 80028c0:	f9b3 3000 	ldrsh.w	r3, [r3]
+ 80028c4:	b29b      	uxth	r3, r3
+ 80028c6:	4413      	add	r3, r2
+ 80028c8:	b29b      	uxth	r3, r3
+ 80028ca:	b21a      	sxth	r2, r3
+ 80028cc:	4b34      	ldr	r3, [pc, #208]	; (80029a0 <StartLRacket+0x1ac>)
+ 80028ce:	801a      	strh	r2, [r3, #0]
 
 		// Cadrage des coordonnées LRacket
 		if (x_LRacket >= 239 - width_rackets) x_LRacket = 239-width_rackets;
- 80028ce:	4b33      	ldr	r3, [pc, #204]	; (800299c <StartLRacket+0x1a8>)
- 80028d0:	f9b3 3000 	ldrsh.w	r3, [r3]
- 80028d4:	2be6      	cmp	r3, #230	; 0xe6
- 80028d6:	dd02      	ble.n	80028de <StartLRacket+0xea>
- 80028d8:	4b30      	ldr	r3, [pc, #192]	; (800299c <StartLRacket+0x1a8>)
- 80028da:	22e7      	movs	r2, #231	; 0xe7
- 80028dc:	801a      	strh	r2, [r3, #0]
+ 80028d0:	4b32      	ldr	r3, [pc, #200]	; (800299c <StartLRacket+0x1a8>)
+ 80028d2:	f9b3 3000 	ldrsh.w	r3, [r3]
+ 80028d6:	2be6      	cmp	r3, #230	; 0xe6
+ 80028d8:	dd02      	ble.n	80028e0 <StartLRacket+0xec>
+ 80028da:	4b30      	ldr	r3, [pc, #192]	; (800299c <StartLRacket+0x1a8>)
+ 80028dc:	22e7      	movs	r2, #231	; 0xe7
+ 80028de:	801a      	strh	r2, [r3, #0]
 		if (x_LRacket <= 0) x_LRacket = 0;
- 80028de:	4b2f      	ldr	r3, [pc, #188]	; (800299c <StartLRacket+0x1a8>)
- 80028e0:	f9b3 3000 	ldrsh.w	r3, [r3]
- 80028e4:	2b00      	cmp	r3, #0
- 80028e6:	dc02      	bgt.n	80028ee <StartLRacket+0xfa>
- 80028e8:	4b2c      	ldr	r3, [pc, #176]	; (800299c <StartLRacket+0x1a8>)
- 80028ea:	2200      	movs	r2, #0
- 80028ec:	801a      	strh	r2, [r3, #0]
+ 80028e0:	4b2e      	ldr	r3, [pc, #184]	; (800299c <StartLRacket+0x1a8>)
+ 80028e2:	f9b3 3000 	ldrsh.w	r3, [r3]
+ 80028e6:	2b00      	cmp	r3, #0
+ 80028e8:	dc02      	bgt.n	80028f0 <StartLRacket+0xfc>
+ 80028ea:	4b2c      	ldr	r3, [pc, #176]	; (800299c <StartLRacket+0x1a8>)
+ 80028ec:	2200      	movs	r2, #0
+ 80028ee:	801a      	strh	r2, [r3, #0]
 		if (y_LRacket <= 0) y_LRacket = 0;
- 80028ee:	4b2c      	ldr	r3, [pc, #176]	; (80029a0 <StartLRacket+0x1ac>)
- 80028f0:	f9b3 3000 	ldrsh.w	r3, [r3]
- 80028f4:	2b00      	cmp	r3, #0
- 80028f6:	dc02      	bgt.n	80028fe <StartLRacket+0x10a>
- 80028f8:	4b29      	ldr	r3, [pc, #164]	; (80029a0 <StartLRacket+0x1ac>)
- 80028fa:	2200      	movs	r2, #0
- 80028fc:	801a      	strh	r2, [r3, #0]
+ 80028f0:	4b2b      	ldr	r3, [pc, #172]	; (80029a0 <StartLRacket+0x1ac>)
+ 80028f2:	f9b3 3000 	ldrsh.w	r3, [r3]
+ 80028f6:	2b00      	cmp	r3, #0
+ 80028f8:	dc02      	bgt.n	8002900 <StartLRacket+0x10c>
+ 80028fa:	4b29      	ldr	r3, [pc, #164]	; (80029a0 <StartLRacket+0x1ac>)
+ 80028fc:	2200      	movs	r2, #0
+ 80028fe:	801a      	strh	r2, [r3, #0]
 		if (y_LRacket + height_rackets >= 272) y_LRacket = 272 - height_rackets;
- 80028fe:	4b28      	ldr	r3, [pc, #160]	; (80029a0 <StartLRacket+0x1ac>)
- 8002900:	f9b3 3000 	ldrsh.w	r3, [r3]
- 8002904:	2bdd      	cmp	r3, #221	; 0xdd
- 8002906:	dd02      	ble.n	800290e <StartLRacket+0x11a>
- 8002908:	4b25      	ldr	r3, [pc, #148]	; (80029a0 <StartLRacket+0x1ac>)
- 800290a:	22de      	movs	r2, #222	; 0xde
- 800290c:	801a      	strh	r2, [r3, #0]
+ 8002900:	4b27      	ldr	r3, [pc, #156]	; (80029a0 <StartLRacket+0x1ac>)
+ 8002902:	f9b3 3000 	ldrsh.w	r3, [r3]
+ 8002906:	2bdd      	cmp	r3, #221	; 0xdd
+ 8002908:	dd02      	ble.n	8002910 <StartLRacket+0x11c>
+ 800290a:	4b25      	ldr	r3, [pc, #148]	; (80029a0 <StartLRacket+0x1ac>)
+ 800290c:	22de      	movs	r2, #222	; 0xde
+ 800290e:	801a      	strh	r2, [r3, #0]
 
 		//Tracé de LRacket
 		//Accaparement de la ressource
 		xSemaphoreTake(myMutex_LCDHandle, portMAX_DELAY);
- 800290e:	4b29      	ldr	r3, [pc, #164]	; (80029b4 <StartLRacket+0x1c0>)
- 8002910:	681b      	ldr	r3, [r3, #0]
- 8002912:	f04f 31ff 	mov.w	r1, #4294967295
- 8002916:	4618      	mov	r0, r3
- 8002918:	f00a fc60 	bl	800d1dc <xQueueSemaphoreTake>
+ 8002910:	4b28      	ldr	r3, [pc, #160]	; (80029b4 <StartLRacket+0x1c0>)
+ 8002912:	681b      	ldr	r3, [r3, #0]
+ 8002914:	f04f 31ff 	mov.w	r1, #4294967295
+ 8002918:	4618      	mov	r0, r3
+ 800291a:	f00a fc5f 	bl	800d1dc <xQueueSemaphoreTake>
 
 		//Effaçage du précedent rectangle
 		BSP_LCD_SetTextColor(couleur==0?LCD_COLOR_WHITE:LCD_COLOR_BLACK);
- 800291c:	4b26      	ldr	r3, [pc, #152]	; (80029b8 <StartLRacket+0x1c4>)
- 800291e:	781b      	ldrb	r3, [r3, #0]
- 8002920:	2b00      	cmp	r3, #0
- 8002922:	d102      	bne.n	800292a <StartLRacket+0x136>
- 8002924:	f04f 33ff 	mov.w	r3, #4294967295
- 8002928:	e001      	b.n	800292e <StartLRacket+0x13a>
- 800292a:	f04f 437f 	mov.w	r3, #4278190080	; 0xff000000
- 800292e:	4618      	mov	r0, r3
- 8002930:	f000 ffea 	bl	8003908 <BSP_LCD_SetTextColor>
+ 800291e:	4b26      	ldr	r3, [pc, #152]	; (80029b8 <StartLRacket+0x1c4>)
+ 8002920:	781b      	ldrb	r3, [r3, #0]
+ 8002922:	2b00      	cmp	r3, #0
+ 8002924:	d102      	bne.n	800292c <StartLRacket+0x138>
+ 8002926:	f04f 33ff 	mov.w	r3, #4294967295
+ 800292a:	e001      	b.n	8002930 <StartLRacket+0x13c>
+ 800292c:	f04f 437f 	mov.w	r3, #4278190080	; 0xff000000
+ 8002930:	4618      	mov	r0, r3
+ 8002932:	f000 ffe9 	bl	8003908 <BSP_LCD_SetTextColor>
 		BSP_LCD_FillRect(x_LRacket_hold, y_LRacket_hold, width_rackets,
- 8002934:	6a7b      	ldr	r3, [r7, #36]	; 0x24
- 8002936:	b298      	uxth	r0, r3
- 8002938:	6a3b      	ldr	r3, [r7, #32]
- 800293a:	b299      	uxth	r1, r3
- 800293c:	2332      	movs	r3, #50	; 0x32
- 800293e:	2208      	movs	r2, #8
- 8002940:	f001 fbec 	bl	800411c <BSP_LCD_FillRect>
+ 8002936:	6a7b      	ldr	r3, [r7, #36]	; 0x24
+ 8002938:	b298      	uxth	r0, r3
+ 800293a:	6a3b      	ldr	r3, [r7, #32]
+ 800293c:	b299      	uxth	r1, r3
+ 800293e:	2332      	movs	r3, #50	; 0x32
+ 8002940:	2208      	movs	r2, #8
+ 8002942:	f001 fbeb 	bl	800411c <BSP_LCD_FillRect>
 				height_rackets);
 
 		//Création du nouveau rectangle
 		BSP_LCD_SetTextColor(couleur==0?LCD_COLOR_BLACK:LCD_COLOR_WHITE);
- 8002944:	4b1c      	ldr	r3, [pc, #112]	; (80029b8 <StartLRacket+0x1c4>)
- 8002946:	781b      	ldrb	r3, [r3, #0]
- 8002948:	2b00      	cmp	r3, #0
- 800294a:	d102      	bne.n	8002952 <StartLRacket+0x15e>
- 800294c:	f04f 437f 	mov.w	r3, #4278190080	; 0xff000000
- 8002950:	e001      	b.n	8002956 <StartLRacket+0x162>
- 8002952:	f04f 33ff 	mov.w	r3, #4294967295
- 8002956:	4618      	mov	r0, r3
- 8002958:	f000 ffd6 	bl	8003908 <BSP_LCD_SetTextColor>
+ 8002946:	4b1c      	ldr	r3, [pc, #112]	; (80029b8 <StartLRacket+0x1c4>)
+ 8002948:	781b      	ldrb	r3, [r3, #0]
+ 800294a:	2b00      	cmp	r3, #0
+ 800294c:	d102      	bne.n	8002954 <StartLRacket+0x160>
+ 800294e:	f04f 437f 	mov.w	r3, #4278190080	; 0xff000000
+ 8002952:	e001      	b.n	8002958 <StartLRacket+0x164>
+ 8002954:	f04f 33ff 	mov.w	r3, #4294967295
+ 8002958:	4618      	mov	r0, r3
+ 800295a:	f000 ffd5 	bl	8003908 <BSP_LCD_SetTextColor>
 		BSP_LCD_FillRect(x_LRacket, y_LRacket, width_rackets, height_rackets);
- 800295c:	4b0f      	ldr	r3, [pc, #60]	; (800299c <StartLRacket+0x1a8>)
- 800295e:	f9b3 3000 	ldrsh.w	r3, [r3]
- 8002962:	b298      	uxth	r0, r3
- 8002964:	4b0e      	ldr	r3, [pc, #56]	; (80029a0 <StartLRacket+0x1ac>)
- 8002966:	f9b3 3000 	ldrsh.w	r3, [r3]
- 800296a:	b299      	uxth	r1, r3
- 800296c:	2332      	movs	r3, #50	; 0x32
- 800296e:	2208      	movs	r2, #8
- 8002970:	f001 fbd4 	bl	800411c <BSP_LCD_FillRect>
+ 800295e:	4b0f      	ldr	r3, [pc, #60]	; (800299c <StartLRacket+0x1a8>)
+ 8002960:	f9b3 3000 	ldrsh.w	r3, [r3]
+ 8002964:	b298      	uxth	r0, r3
+ 8002966:	4b0e      	ldr	r3, [pc, #56]	; (80029a0 <StartLRacket+0x1ac>)
+ 8002968:	f9b3 3000 	ldrsh.w	r3, [r3]
+ 800296c:	b299      	uxth	r1, r3
+ 800296e:	2332      	movs	r3, #50	; 0x32
+ 8002970:	2208      	movs	r2, #8
+ 8002972:	f001 fbd3 	bl	800411c <BSP_LCD_FillRect>
 
 		//Libération de la ressource
 		xSemaphoreGive(myMutex_LCDHandle);
- 8002974:	4b0f      	ldr	r3, [pc, #60]	; (80029b4 <StartLRacket+0x1c0>)
- 8002976:	6818      	ldr	r0, [r3, #0]
- 8002978:	2300      	movs	r3, #0
- 800297a:	2200      	movs	r2, #0
- 800297c:	2100      	movs	r1, #0
- 800297e:	f00a fb27 	bl	800cfd0 <xQueueGenericSend>
+ 8002976:	4b0f      	ldr	r3, [pc, #60]	; (80029b4 <StartLRacket+0x1c0>)
+ 8002978:	6818      	ldr	r0, [r3, #0]
+ 800297a:	2300      	movs	r3, #0
+ 800297c:	2200      	movs	r2, #0
+ 800297e:	2100      	movs	r1, #0
+ 8002980:	f00a fb26 	bl	800cfd0 <xQueueGenericSend>
 
 		//Stockage des dernières coordonnées de la raquette gauche
 		x_LRacket_hold = x_LRacket;
- 8002982:	4b06      	ldr	r3, [pc, #24]	; (800299c <StartLRacket+0x1a8>)
- 8002984:	f9b3 3000 	ldrsh.w	r3, [r3]
- 8002988:	627b      	str	r3, [r7, #36]	; 0x24
+ 8002984:	4b05      	ldr	r3, [pc, #20]	; (800299c <StartLRacket+0x1a8>)
+ 8002986:	f9b3 3000 	ldrsh.w	r3, [r3]
+ 800298a:	627b      	str	r3, [r7, #36]	; 0x24
 		y_LRacket_hold = y_LRacket;
- 800298a:	4b05      	ldr	r3, [pc, #20]	; (80029a0 <StartLRacket+0x1ac>)
- 800298c:	f9b3 3000 	ldrsh.w	r3, [r3]
- 8002990:	623b      	str	r3, [r7, #32]
+ 800298c:	4b04      	ldr	r3, [pc, #16]	; (80029a0 <StartLRacket+0x1ac>)
+ 800298e:	f9b3 3000 	ldrsh.w	r3, [r3]
+ 8002992:	623b      	str	r3, [r7, #32]
 
-		osDelay(20);
- 8002992:	2014      	movs	r0, #20
- 8002994:	f00a f879 	bl	800ca8a <osDelay>
+		osDelay(30);
+ 8002994:	201e      	movs	r0, #30
+ 8002996:	f00a f878 	bl	800ca8a <osDelay>
 		sConfig.Channel = ADC_CHANNEL_8;
- 8002998:	e74b      	b.n	8002832 <StartLRacket+0x3e>
- 800299a:	bf00      	nop
+ 800299a:	e74a      	b.n	8002832 <StartLRacket+0x3e>
  800299c:	2000002a 	.word	0x2000002a
  80029a0:	2000002c 	.word	0x2000002c
  80029a4:	2000899c 	.word	0x2000899c
  80029a8:	20008950 	.word	0x20008950
- 80029ac:	10624dd3 	.word	0x10624dd3
- 80029b0:	1b4e81b5 	.word	0x1b4e81b5
+ 80029ac:	c4ce07b1 	.word	0xc4ce07b1
+ 80029b0:	51eb851f 	.word	0x51eb851f
  80029b4:	20008ca8 	.word	0x20008ca8
  80029b8:	2000003d 	.word	0x2000003d
  80029bc:	00000000 	.word	0x00000000

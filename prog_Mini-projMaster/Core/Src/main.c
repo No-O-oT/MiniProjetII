@@ -1583,8 +1583,8 @@ void StartLRacket(void const * argument)
 		joystick_h = HAL_ADC_GetValue(&hadc1);
 
 		//Actualisation des coordonnées de la raquette gauche
-		x_LRacket -= (joystick_h - 2080)/500;
-		y_LRacket -= (joystick_v - 2080)/300;
+		x_LRacket -= (joystick_h - 2080)/333;
+		y_LRacket -= (joystick_v - 2080)/200;
 
 		// Cadrage des coordonnées LRacket
 		if (x_LRacket >= 239 - width_rackets) x_LRacket = 239-width_rackets;
@@ -1612,7 +1612,7 @@ void StartLRacket(void const * argument)
 		x_LRacket_hold = x_LRacket;
 		y_LRacket_hold = y_LRacket;
 
-		osDelay(20);
+		osDelay(30);
 	}
   /* USER CODE END StartLRacket */
 }
