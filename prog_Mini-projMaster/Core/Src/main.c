@@ -215,16 +215,23 @@ int main(void)
 	BSP_LCD_SetFont(&Font12);
 	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
 	BSP_LCD_SetBackColor(LCD_COLOR_BLACK);
-
 	BSP_TS_Init(BSP_LCD_GetXSize(), BSP_LCD_GetYSize());
+	/*
+	// Connexion : $$$ = command mode, C=connect to saved address, --- = exit command mode
 	uint8_t start[9]={'$', '$', '$', 'C', '\n', '-', '-', '-', '\n'};
+	// Envoi des caractères au module bluetooth
 	for(int i=0; i<9; i++){
 		HAL_UART_Transmit_IT(&huart7,start+i,1);
 		HAL_Delay(10);
 	}
-	BSP_LCD_DisplayStringAtLine(9, (uint8_t*) "Appuyez sur BP2 pour commencer");
+	*/
+	HAL_Delay(200);
+	// Attente démarrage
+	BSP_LCD_DisplayStringAtLine(9, (uint8_t*) "Lorsque les modules bluetooth ne clignotent plus, appuyez sur BP2 pour commencer (ou reset)");
 	while(HAL_GPIO_ReadPin(BP2_GPIO_Port, BP2_Pin));
+
 	BSP_LCD_Clear(LCD_COLOR_BLACK);
+	HAL_UART_Receive_IT(&huart7,rxbuffer,4);
 
   /* USER CODE END 2 */
 
