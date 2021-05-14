@@ -1598,19 +1598,29 @@ void StartBall(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-	  if(lost == 1){
+	  if(lost != 0){
 		  //Si la balle touche le bord gauche de l'écran, on a perdu
 		  //Capture de la ressource
 		  xSemaphoreTake(myMutex_LCDHandle, portMAX_DELAY);
 
 		  //Affichage du message de perte sous le chronomètre
-		  BSP_LCD_DisplayStringAtLine(2, (uint8_t*) "Perdu");
+		  if(lost==1)
+			  BSP_LCD_DisplayStringAtLine(2, (uint8_t*) "Perdu");
+		  if(lost==2)
+			  BSP_LCD_DisplayStringAtLine(2, (uint8_t*) "Gagne");
 
 		  //Libération de la ressource
 		  xSemaphoreGive(myMutex_LCDHandle);
+	  }
+	  else {
+		  //Capture de la ressource
+		  xSemaphoreTake(myMutex_LCDHandle, portMAX_DELAY);
 
-		  //Mise en pause du déplacement de la balle
-		  vTaskSuspend(BallDisplayHandle);
+		  //Effaçage
+		  BSP_LCD_DisplayStringAtLine(2, (uint8_t*) "     ");
+
+		  //Libération de la ressource
+		  xSemaphoreGive(myMutex_LCDHandle);
 	  }
 
 	  //Capture de la ressource

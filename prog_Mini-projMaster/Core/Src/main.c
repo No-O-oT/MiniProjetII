@@ -16,6 +16,14 @@
  *
  ******************************************************************************
  */
+
+/** PROGRAMME MASTER
+ * Le module bluetooth associé doit être programmé en mode Auto-connect Master (Auto) : SM,3
+ * L'adresse du module bluetooth Slave doit être enregistrée, pour cela faire une découverte (IN5) et effecuter une première connexion sur cette adresse : C, [addr]
+ * Brancher les 2 cartes et effectuer un reset de la carte Master jusqu'à ce que les modules ne clignotent plus
+ */
+
+
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
@@ -78,6 +86,7 @@ osThreadId LRacketHandle;
 osThreadId BallHandle;
 osThreadId BgChangerHandle;
 osThreadId TransmitHandle;
+osThreadId LostHandle;
 osMessageQId myQueueU2HHandle;
 osMutexId myMutex_LCDHandle;
 /* USER CODE BEGIN PV */
@@ -111,6 +120,7 @@ void StartLRacket(void const * argument);
 void StartBall(void const * argument);
 void StartBgChanger(void const * argument);
 void StartTransmit(void const * argument);
+void StartLost(void const * argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -121,7 +131,6 @@ void StartTransmit(void const * argument);
 #define MATH_PI 3.14159
 
 uint8_t rxbuffer[100];
-uint8_t rxbuffer2[100];
 uint8_t txbuffer[100];
 
 #define height_rackets 50
@@ -145,7 +154,7 @@ float y_balle_f = 136;
 uint8_t radius_balle = 8;
 
 uint8_t couleur=1;
-uint8_t perdu=0;
+uint8_t perdu=0; // 0 si pas fini, 1 si le joueur gauche gagne, 2 si le joueur de droite gagne
 
 uint8_t FlagBgChanger = 0;
 
@@ -216,7 +225,8 @@ int main(void)
 	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
 	BSP_LCD_SetBackColor(LCD_COLOR_BLACK);
 	BSP_TS_Init(BSP_LCD_GetXSize(), BSP_LCD_GetYSize());
-	/*
+
+	/* Décommenter pour un module configuré en Master (et pas Auto-connect master)
 	// Connexion : $$$ = command mode, C=connect to saved address, --- = exit command mode
 	uint8_t start[9]={'$', '$', '$', 'C', '\n', '-', '-', '-', '\n'};
 	// Envoi des caractères au module bluetooth
@@ -225,9 +235,11 @@ int main(void)
 		HAL_Delay(10);
 	}
 	*/
+
 	HAL_Delay(200);
 	// Attente démarrage
-	BSP_LCD_DisplayStringAtLine(9, (uint8_t*) "Lorsque les modules bluetooth ne clignotent plus, appuyez sur BP2 pour commencer (ou reset)");
+	BSP_LCD_DisplayStringAtLine(9, (uint8_t*) "Lorsque les modules bluetooth ne clignotent plus, appuyez sur BP2");
+	BSP_LCD_DisplayStringAtLine(10, (uint8_t*) "Si les modules ne se connectent pas, revoir leur configuration");
 	while(HAL_GPIO_ReadPin(BP2_GPIO_Port, BP2_Pin));
 
 	BSP_LCD_Clear(LCD_COLOR_BLACK);
@@ -285,6 +297,10 @@ int main(void)
   /* definition and creation of Transmit */
   osThreadDef(Transmit, StartTransmit, osPriorityAboveNormal, 0, 128);
   TransmitHandle = osThreadCreate(osThread(Transmit), NULL);
+
+  /* definition and creation of Lost */
+  osThreadDef(Lost, StartLost, osPriorityNormal, 0, 128);
+  LostHandle = osThreadCreate(osThread(Lost), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
 	/* add threads, ... */
@@ -1482,7 +1498,7 @@ void StartDefaultTask(void const * argument)
   /* USER CODE BEGIN 5 */
 	/* Infinite loop */
 	for (;;) {
-		osDelay(100);
+		osDelay(10000);
 	}
   /* USER CODE END 5 */
 }
@@ -1534,6 +1550,8 @@ void StartLRacket(void const * argument)
 {
   /* USER CODE BEGIN StartLRacket */
 
+	x_LRacket = 50-width_rackets/2;
+	y_LRacket = 136-height_rackets/2;
 	//Initialisation des variables pour le joystick
 	int32_t joystick_h, joystick_v;
 	joystick_h = 0;
@@ -1616,6 +1634,8 @@ void StartBall(void const * argument)
 
 	// Initialisation des coordonnées entières de la balle
 
+	x_balle_f = 480;
+	y_balle_f = 136;
 	uint16_t x_balle = x_balle_f;
 	uint16_t y_balle = y_balle_f;
 
@@ -1677,16 +1697,18 @@ void StartBall(void const * argument)
 		  else if(x_balle<=radius_balle)
 		  {
 			  //Si la balle touche le bord gauche de l'écran, on a perdu
-			  perdu = 1;
+			  perdu = 2;
 
 			  //Capture de la ressource
 			  xSemaphoreTake(myMutex_LCDHandle, portMAX_DELAY);
 
 			  //Affichage du message de perte sous le chronomètre
-			  BSP_LCD_Clear(couleur==0?LCD_COLOR_BLACK:LCD_COLOR_WHITE);
-			  BSP_LCD_SetTextColor(couleur==0?LCD_COLOR_WHITE:LCD_COLOR_BLACK);
-			  BSP_LCD_DisplayStringAtLine(12, (uint8_t*) "Perdu ! Appuyez sur reset pour rejouer");
-			  while(1);
+			  BSP_LCD_Clear(couleur==0?LCD_COLOR_WHITE:LCD_COLOR_BLACK);
+			  BSP_LCD_SetTextColor(couleur==0?LCD_COLOR_BLACK:LCD_COLOR_WHITE);
+			  BSP_LCD_DisplayStringAtLine(12, (uint8_t*) "Le joueur de droite gagne ! Appuyez sur BP2 pour rejouer");
+			  xSemaphoreGive(myMutex_LCDHandle);
+			  vTaskDelete(LRacketHandle);
+			  vTaskDelete(NULL);
 		  }
 	  }
 	  else if(angle > 0){
@@ -1710,10 +1732,12 @@ void StartBall(void const * argument)
 			  xSemaphoreTake(myMutex_LCDHandle, portMAX_DELAY);
 
 			  //Affichage du message de perte sous le chronomètre
-			  BSP_LCD_Clear(couleur==0?LCD_COLOR_BLACK:LCD_COLOR_WHITE);
-			  BSP_LCD_SetTextColor(couleur==0?LCD_COLOR_WHITE:LCD_COLOR_BLACK);
-			  BSP_LCD_DisplayStringAtLine(12, (uint8_t*) "Perdu ! Appuyez sur reset pour rejouer");
-			  while(1);
+			  BSP_LCD_Clear(couleur==0?LCD_COLOR_WHITE:LCD_COLOR_BLACK);
+			  BSP_LCD_SetTextColor(couleur==0?LCD_COLOR_BLACK:LCD_COLOR_WHITE);
+			  BSP_LCD_DisplayStringAtLine(12, (uint8_t*) "Le joueur de gauche gagne ! Appuyez sur BP2 pour rejouer");
+			  xSemaphoreGive(myMutex_LCDHandle);
+			  vTaskDelete(LRacketHandle);
+			  vTaskDelete(NULL);
 		  }
 	  }
 
@@ -1862,6 +1886,33 @@ void StartTransmit(void const * argument)
 	  osDelay(20);
   }
   /* USER CODE END StartTransmit */
+}
+
+/* USER CODE BEGIN Header_StartLost */
+/**
+* @brief Function implementing the Lost thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartLost */
+void StartLost(void const * argument)
+{
+  /* USER CODE BEGIN StartLost */
+  /* Infinite loop */
+  for(;;)
+  {
+	  if(perdu!=0 && !HAL_GPIO_ReadPin(BP2_GPIO_Port, BP2_Pin)){
+		  taskENTER_CRITICAL();
+		  perdu=0;
+		  BSP_LCD_Clear(couleur==0?LCD_COLOR_WHITE:LCD_COLOR_BLACK);
+		  xTaskCreate(StartBall, "", 1024, NULL, osPriorityHigh,  &BallHandle);
+		  xTaskCreate(StartLRacket, "", 1024, NULL, osPriorityAboveNormal, &LRacketHandle);
+		  taskEXIT_CRITICAL();
+	  }
+
+    osDelay(100);
+  }
+  /* USER CODE END StartLost */
 }
 
  /**
