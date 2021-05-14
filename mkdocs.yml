@@ -1,6 +1,0 @@
-site_name: SiteWebMiniProjetII
-nav :
-  - Home : index.md
-theme: readthedocs
-site_url: https://github.com/No-O-oT/MiniProjetII
-dite_dir: public
