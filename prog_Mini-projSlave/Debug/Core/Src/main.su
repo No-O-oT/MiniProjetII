@@ -20,9 +20,9 @@ main.c:1187:13:MX_USART6_UART_Init	8	static
 main.c:1218:13:MX_FMC_Init	40	static
 main.c:1269:13:MX_GPIO_Init	72	static
 main.c:1457:6:HAL_UART_RxCpltCallback	24	static
-main.c:1484:6:StartDefaultTask	16	static
-main.c:1501:6:StartRRacket	48	static
-main.c:1587:6:StartBall	80	static
+main.c:1482:6:StartDefaultTask	16	static
+main.c:1499:6:StartRRacket	48	static
+main.c:1584:6:StartBall	80	static
 main.c:1683:6:StartBgChanger	24	static
 main.c:1750:6:HAL_TIM_PeriodElapsedCallback	16	static
 main.c:1767:6:Error_Handler	4	static,ignoring_inline_asm

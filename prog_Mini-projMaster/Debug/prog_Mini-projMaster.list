@@ -5624,12 +5624,12 @@ void StartLRacket(void const * argument)
  8002880:	61fb      	str	r3, [r7, #28]
 
 		//Actualisation des coordonnées de la raquette gauche
-		x_LRacket -= (joystick_h - 2080)/250;
+		x_LRacket -= (joystick_h - 2080)/500;
  8002882:	69fb      	ldr	r3, [r7, #28]
  8002884:	f5a3 6302 	sub.w	r3, r3, #2080	; 0x820
  8002888:	4a48      	ldr	r2, [pc, #288]	; (80029ac <StartLRacket+0x1b8>)
  800288a:	fb82 1203 	smull	r1, r2, r2, r3
- 800288e:	1112      	asrs	r2, r2, #4
+ 800288e:	1152      	asrs	r2, r2, #5
  8002890:	17db      	asrs	r3, r3, #31
  8002892:	1a9b      	subs	r3, r3, r2
  8002894:	b29a      	uxth	r2, r3
@@ -5641,12 +5641,12 @@ void StartLRacket(void const * argument)
  80028a2:	b21a      	sxth	r2, r3
  80028a4:	4b3d      	ldr	r3, [pc, #244]	; (800299c <StartLRacket+0x1a8>)
  80028a6:	801a      	strh	r2, [r3, #0]
-		y_LRacket -= (joystick_v - 2080)/150;
+		y_LRacket -= (joystick_v - 2080)/300;
  80028a8:	69bb      	ldr	r3, [r7, #24]
  80028aa:	f5a3 6302 	sub.w	r3, r3, #2080	; 0x820
  80028ae:	4a40      	ldr	r2, [pc, #256]	; (80029b0 <StartLRacket+0x1bc>)
  80028b0:	fb82 1203 	smull	r1, r2, r2, r3
- 80028b4:	1112      	asrs	r2, r2, #4
+ 80028b4:	1152      	asrs	r2, r2, #5
  80028b6:	17db      	asrs	r3, r3, #31
  80028b8:	1a9b      	subs	r3, r3, r2
  80028ba:	b29a      	uxth	r2, r3
@@ -5764,8 +5764,8 @@ void StartLRacket(void const * argument)
  800298c:	f9b3 3000 	ldrsh.w	r3, [r3]
  8002990:	623b      	str	r3, [r7, #32]
 
-		osDelay(40);
- 8002992:	2028      	movs	r0, #40	; 0x28
+		osDelay(20);
+ 8002992:	2014      	movs	r0, #20
  8002994:	f00a f879 	bl	800ca8a <osDelay>
 		sConfig.Channel = ADC_CHANNEL_8;
  8002998:	e74b      	b.n	8002832 <StartLRacket+0x3e>
@@ -6889,13 +6889,13 @@ void StartTransmit(void const * argument)
  80032b4:	4b08      	ldr	r3, [pc, #32]	; (80032d8 <StartTransmit+0xa0>)
  80032b6:	715a      	strb	r2, [r3, #5]
 
-	  HAL_UART_Transmit_IT(&huart7,txbuffer,6);
+	HAL_UART_Transmit_IT(&huart7,txbuffer,6);
  80032b8:	2206      	movs	r2, #6
  80032ba:	4907      	ldr	r1, [pc, #28]	; (80032d8 <StartTransmit+0xa0>)
  80032bc:	4808      	ldr	r0, [pc, #32]	; (80032e0 <StartTransmit+0xa8>)
  80032be:	f008 faad 	bl	800b81c <HAL_UART_Transmit_IT>
-	  osDelay(20);
- 80032c2:	2014      	movs	r0, #20
+	osDelay(15);
+ 80032c2:	200f      	movs	r0, #15
  80032c4:	f009 fbe1 	bl	800ca8a <osDelay>
 	x_balle= x_balle_f;
  80032c8:	e7ca      	b.n	8003260 <StartTransmit+0x28>

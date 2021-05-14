@@ -1465,11 +1465,9 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 
 	//Offset et cadrage des coordonées de la raquette droite
 	x_balle = x_ballemaster-480;
-	r_balle = 8; //Forçage temporaire
 
 	//Attente d'une nouvelle réception sur interruption
 	HAL_UART_Receive_IT(&huart7, rxbuffer, 6);
-
 }
 
 /* USER CODE END 4 */
@@ -1533,8 +1531,8 @@ void StartRRacket(void const * argument)
 
 		//Actualisation des coordonnées de la raquette droite, le joystick
 		//horizontal nécessite une corrcetion pour ne pas dériver
-		x_RRacket -= (joystick_h - 2018)/250;
-		y_RRacket -= (joystick_v - 2080)/150;
+		x_RRacket -= (joystick_h - 2018)/500;
+		y_RRacket -= (joystick_v - 2080)/300;
 
 		// Cadrage des coordonnées RRacket
 		if (x_RRacket <= 240) x_RRacket = 240;
@@ -1548,8 +1546,7 @@ void StartRRacket(void const * argument)
 
 		//Effaçage du précedent rectangle
 		BSP_LCD_SetTextColor(couleur==0?LCD_COLOR_WHITE:LCD_COLOR_BLACK);
-		BSP_LCD_FillRect(x_RRacket_hold, y_RRacket_hold, width_rackets,
-				height_rackets);
+		BSP_LCD_FillRect(x_RRacket_hold, y_RRacket_hold, width_rackets, height_rackets);
 
 		//Création du nouveau rectangle
 		BSP_LCD_SetTextColor(couleur==0?LCD_COLOR_BLACK:LCD_COLOR_WHITE);
@@ -1572,7 +1569,7 @@ void StartRRacket(void const * argument)
 		//Stockage des dernières coordonnées de la raquette droite
 		x_RRacket_hold = x_RRacket;
 		y_RRacket_hold = y_RRacket;
-		osDelay(40);
+		osDelay(20);
 	}
   /* USER CODE END StartRRacket */
 }
@@ -1644,6 +1641,7 @@ void StartBall(void const * argument)
 	  }
 
 	  //Affichage des nouveaux dessins
+	  taskENTER_CRITICAL();
 	  if(x_balle >= 0){
 		  //Affichage de la nouvelle balle
 		  BSP_LCD_SetTextColor(couleur==0?LCD_COLOR_BLACK:LCD_COLOR_WHITE);
@@ -1666,6 +1664,8 @@ void StartBall(void const * argument)
 	 //Stockage du dernier emplacement de dessin
 	 x_balle_hold=x_balle;
 	 y_balle_hold=y_balle;
+
+	 taskEXIT_CRITICAL();
 
 
 	 vTaskDelayUntil(&xLastWakeTime, xFrequency);
