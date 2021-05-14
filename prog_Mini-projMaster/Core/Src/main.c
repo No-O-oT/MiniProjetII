@@ -217,7 +217,11 @@ int main(void)
 	BSP_LCD_SetBackColor(LCD_COLOR_BLACK);
 
 	BSP_TS_Init(BSP_LCD_GetXSize(), BSP_LCD_GetYSize());
-	HAL_UART_Receive_IT(&huart7,rxbuffer,4);
+	uint8_t start[9]={'$', '$', '$', 'C', '\n', '-', '-', '-', '\n'};
+	for(int i=0; i<9; i++){
+		HAL_UART_Transmit_IT(&huart7,start+i,1);
+		HAL_Delay(10);
+	}
 	BSP_LCD_DisplayStringAtLine(9, (uint8_t*) "Appuyez sur BP2 pour commencer");
 	while(HAL_GPIO_ReadPin(BP2_GPIO_Port, BP2_Pin));
 	BSP_LCD_Clear(LCD_COLOR_BLACK);
@@ -286,47 +290,7 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 	while (1) {
-//		HAL_GPIO_WritePin(LED13_GPIO_Port, LED13_Pin,
-//				HAL_GPIO_ReadPin(BP1_GPIO_Port, BP1_Pin));
-//		HAL_GPIO_WritePin(LED14_GPIO_Port, LED14_Pin,
-//				HAL_GPIO_ReadPin(BP2_GPIO_Port, BP2_Pin));
-//		sprintf(text, "BP1 : %d", HAL_GPIO_ReadPin(BP1_GPIO_Port, BP1_Pin));
-//		BSP_LCD_DisplayStringAtLine(5, (uint8_t*) text);
-//
-//		sConfig.Channel = ADC_CHANNEL_6;
-//		HAL_ADC_ConfigChannel(&hadc3, &sConfig);
-//		HAL_ADC_Start(&hadc3);
-//		while (HAL_ADC_PollForConversion(&hadc3, 100) != HAL_OK)
-//			;
-//		potr = HAL_ADC_GetValue(&hadc3);
-//
-//		sConfig.Channel = ADC_CHANNEL_7;
-//		HAL_ADC_ConfigChannel(&hadc3, &sConfig);
-//		HAL_ADC_Start(&hadc3);
-//		while (HAL_ADC_PollForConversion(&hadc3, 100) != HAL_OK)
-//			;
-//		potl = HAL_ADC_GetValue(&hadc3);
-//
-//		sConfig.Channel = ADC_CHANNEL_8;
-//		HAL_ADC_ConfigChannel(&hadc3, &sConfig);
-//		HAL_ADC_Start(&hadc3);
-//		while (HAL_ADC_PollForConversion(&hadc3, 100) != HAL_OK)
-//			;
-//		joystick_v = HAL_ADC_GetValue(&hadc3);
-//
-//		HAL_ADC_Start(&hadc1);
-//		while (HAL_ADC_PollForConversion(&hadc1, 100) != HAL_OK)
-//			;
-//		joystick_h = HAL_ADC_GetValue(&hadc1);
-//
-//		sprintf(text, "POTL : %4u POTR : %4u joy_v : %4u joy_h : %4u",
-//				(uint) potl, (uint) potr, (uint) joystick_v, (uint) joystick_h);
-//		BSP_LCD_DisplayStringAtLine(9, (uint8_t*) text);
-//
-//		BSP_TS_GetState(&TS_State);
-//		if (TS_State.touchDetected) {
-//			BSP_LCD_FillCircle(TS_State.touchX[0], TS_State.touchY[0], 4);
-//		}
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -1484,24 +1448,17 @@ static void MX_GPIO_Init(void)
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
-	/*
+
 	//Réception des coordonnées de la raquette droite
 	x_RRacket = (rxbuffer[0] << 8) | rxbuffer[1];
 	y_RRacket = (rxbuffer[2] << 8) | rxbuffer[3];
 
 	//Offset des coordonées de la raquette droite
 	x_RRacket += 480;
-	*/
 
 
 	//Attente d'une nouvelle réception sur interruption
-	HAL_UART_Receive_IT(&huart1,rxbuffer2,1);
-	HAL_UART_Receive_IT(&huart7,rxbuffer,1);
-
-	if(huart==&huart7)
-		HAL_UART_Transmit_IT(&huart1,rxbuffer,1);
-	if(huart==&huart1)
-		HAL_UART_Transmit_IT(&huart7,rxbuffer2,1);
+	HAL_UART_Receive_IT(&huart7,rxbuffer,4);
 }
 
 /* USER CODE END 4 */
@@ -1679,8 +1636,8 @@ void StartBall(void const * argument)
   for(;;)
   {
 	  //Mouvement de la balle
-	  //x_balle_f += vitesse*sin(angle*MATH_PI*1.0/180)*(1+multiplicateur*1.0/10);
-	  //y_balle_f -= vitesse*cos(angle*MATH_PI*1.0/180)*(1+multiplicateur*1.0/10);
+	  x_balle_f += vitesse*sin(angle*MATH_PI*1.0/180)*(1+multiplicateur*1.0/8);
+	  y_balle_f -= vitesse*cos(angle*MATH_PI*1.0/180)*(1+multiplicateur*1.0/8);
 
 	  x_balle=x_balle_f;
 	  y_balle=y_balle_f;
@@ -1884,7 +1841,6 @@ void StartTransmit(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-
 	x_balle= x_balle_f;
 	y_balle = y_balle_f;
 	//Transmission du rayon de la balle et des coordonnées de la balle et du drapeau de perte
@@ -1895,8 +1851,8 @@ void StartTransmit(void const * argument)
 	txbuffer[4] = (y_balle & 0x00FF);
 	txbuffer[5] = perdu;
 
-	  //HAL_UART_Transmit_IT(&huart7,txbuffer,6);
-	  osDelay(30);
+	  HAL_UART_Transmit_IT(&huart7,txbuffer,6);
+	  osDelay(20);
   }
   /* USER CODE END StartTransmit */
 }

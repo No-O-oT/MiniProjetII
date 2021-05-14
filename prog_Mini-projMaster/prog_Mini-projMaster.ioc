@@ -931,4 +931,3 @@ ProjectManager.DeviceId=STM32F746NGHx
 ProjectManager.LibraryCopy=1
 PB1.GPIOParameters=GPIO_Label
 PJ12.Locked=true
-isbadioc=false
