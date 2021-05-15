@@ -1,6 +1,7 @@
 site_name: Pong2DBT
 repo_url: https://github.com/No-O-oT/MiniProjetII
 nav: 
-  - Projet: index.md
+  - Présentation : index.md
+  - Fonctionnement : prog.md
   - Bluetooth : bluetooth.md
 theme: readthedocs

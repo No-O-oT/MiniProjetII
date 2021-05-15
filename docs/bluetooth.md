@@ -1,4 +1,6 @@
-# Présentation des modules RN42
+# Présentation et utilisation des modules bluetooth RN42
+
+Les modules bluetooth RN42 sont faits pour faciliter l'utilisation du bluetooth, ceux-ci sont capables de prendre en entrée un format UART et de directement transmettre le contenu via bluetooth. Cependant, il faut tout de même leur spécifier quelques paramètres pour pouvoir les interconnecter.
 
 Pour accéder à la configuration d'un RN42, il faut lui envoyer `$$$` par UART. Le module est alors censé répondre par `CMD`. A partir de ce moment, on peut lui envoyer des instructions suivies d'un retour à la ligne. L'instruction `---` permet de sortir du mode commande.
 
@@ -6,31 +8,38 @@ L'instruction `X` demande au module d'afficher sa configuration actuelle, par ex
 
 ![Infos BT](infosBT.png)
 
-On remarque alors que ce module est configuré en 9600 Baud, qu'il est en mode Slave et que son adresse BT est `0006666C5B8F`.
+On remarque alors que ce module est configuré en 9600 Baud, qu'il est en mode Slave et que son adresse BT est `0006666C5B8F`. Voilà les seuls paramètres qui seront utiles dans notre cadre.
 
 Par défaut, les modules sont livrés avec la vitesse de 115200 Baud. Cette vitesse était trop elevée pour transmettre sans erreurs dans notre cas, il est donc important de **configurer le module en 9600 Baud**.
 
-Pour cela, il faut envoyer la commande `SU, 96`, sur les deux modules qui seront utilisés. (attention, à partir du prochain reboot du module, il faudra lui communiquer en 9600 Baud)
+Un résumé des paramètres à éditer pour pouvoir utiliser ces modules dans le cadre du Pong2DBT est fourni ci-dessous.
 
-Ensuite, il faut alors choisir un module qui sera connecté à la carte Slave, et un module à la carte Master.
+## Configuration initiale des RN42
 
-Après avoir initié le mode commande avec `$$$` (la LED clignote rapidement), il faut communiquer les configurations suivantes aux RN42 :
+Les modules doivent être configurés selon les critères suivants. Pour rappel, l'accès au mode configuration se fait en envoyant `$$$` (115200 Baud pour un module neuf, 9600 Baud après configuration), et les commandes sont ensuites validées avec un retour à la ligne. Pour sortir, la commande est `---`
 
-#### Pour la carte master, la configuration est
+En mode configuration, la LED intégrée clignote rapidement.
 
-`SU,96` (passage en 9600 Baud)
+Pour la configuration, il faudra avoir recours à un terminal série sur un PC (par ex TeraTerm, en 115200 Baud). Le branchement au RN42 peut se faire soit par dongle UART, soit en utilisant la branche `command-interface` est une version suspendue du programme qui fait l'interface avec un terminal série USB sur le PC et l'UART7 du STM32.
 
-`SM,3` (mode Auto-connect Master)
+##### Module pour la carte Master
+- 9600 Baud
+	- `SU,96`
+- Mode Auto (3)
+	- `SM,3`
+- Adresse du Slave pré-enregistrée (registre R)
+	- `IN5` (recherche des adresses environnantes)
+	- `C,<addresse>` (connexion et enregistrement à l'adresse)
+##### Module pour la carte Slave
+- 9600 Baud
+	- `SU,96`
+- Mode Slave (0)
+	- `SM,0`
 
-`IN5` (recherche des adresses des modules BT environnants)
+## Utilisation dans le cadre du Pong 2DBT
 
-`C,<addresse>` (connexion à l'adresse)
+Une fois la configuration initiale faite, les modules enregistrent celle-ci et le mode Auto permet d'initier la connexion automatiquement dès leur alimentation. Attention, il faut cependant veiller à brancher les bons modules sur la bonne carte.
 
+Un avantage de ce fonctionnement automatique est que les programmes faits peuvent à la fois communiquer via les modules bluetooth ou directement en UART via câbles, sans nécessiter la moindre modification.
 
-Si la connexion réussit, le module sort automatiquement du mode commande et sa LED ne doit plus clignoter. Tout ce qui est envoyé sur l'UART est alors transmis entre les modules.
-
-#### Pour la carte slave, la configuration est
-
-`SU,96` (passage en 9600 Baud)
-
-`SM,1` (mode Slave)
+En cas de difficultés avec les RN42, il est donc possible d'avoir recours au bon vieux mais fiable fil électrique.

@@ -2,9 +2,6 @@
 
 Ce projet a été réalisé par Timothé Corre et Nicolas Trosino, deux élèves du M1 E3A de l'ENS Paris-Saclay, dans le cadre de l'UE d'Informatique Industrielle. Le sujet est relativement libre et a vocation a refléter les notions vues dans l'années.
 
-
-**_Le projet (et cette présentation) ne sont pas finis et seront rendus complets après les examens_**
-
 *Les fonctionnalités prévues par la suite et celles effectivement implémentées sont dans l'onglets _Issues_*
 
 *Par soucis de compatibilité, le projet entier est sur le dépôt et pas seulement les sources, ce qui permet de le faire fonctionner directement avec copier-coller*
@@ -19,77 +16,22 @@ On trouvera sur ce dépôt :
 - Le dossier avec le programme Master, qui gère le jeu ;
 - Le dossier avec le programme Slave, qui est téléversé sur la carte de l'adversaire.
 
-## Programme Master
+## L'utilisation du Pong2DBT
 
-La carte qui se voit attribuer ce programme a pour responsabilité de gérer le déroulement du jeu, de transmettre les informations du jeu à la carte slave et de recevoir des informations de cette dernière. Elle est donc en charge de diriger la balle, et de gérer les rebonds sur les raquettes.
-Son écran affiche la partie gauche du terrain de jeu.
+Une petite vidéo démo montrant une partie est présentée ci-dessous.
 
-### Liste des tâches
+<div class="video-wrapper">
+  <iframe width="1280" height="720" src="https://www.youtube.com/embed/vZNyjuNLhIk" frameborder="0" allowfullscreen></iframe>
+</div>
 
-* LRacket
-* Ball 
-* BgChanger
-* Transmit
-* HAL_UART_RxCpltCallback
+Pour l'heure, les fonctionnalités implémentées sont les suivantes :
 
-#### LRacket
-
-* Lit les valeurs renvoyées par le joystick et prévoit le mouvement de la raquette gauche
-* Lecture du blackboard
-* Affiche la nouvelle position de la raquette et détruit l'ancienne (Mutex pour l'écran)
-
-#### Ball
-
-* Met à jour la position de la balle périodiquement
-* Affiche la nouvelle position et détruit la dernière
-* Si la balle est sur l'autre écran, affichage d'une flèche
-* Gère les collisions, les rebonds
-* Lecture du blackboard
-* Gère le game over
-
-#### BgChanger
-
-* Attend une impulsion sur le bouton pour changer la couleur
-
-#### Transmit
-
-* Envoie périodiquement les informations sur le jeu en UART/Bluetooth
-  * Coordonnées de la balle, rayon de la balle
-  * Etat du jeu
-
-#### HAL_UART_RxCpltCallback
-
-* Reçoit par interruption les valeurs reçues par l'UART7 et modifie le blackboard en conséquence
-
-## Programme Slave
-
-La carte qui se voit attribuer ce programme doit recevoir les données de jeu du Master pour afficher la partie relative à son écran, et doit envoyer au master la position de sa raquette.
-Son écran affiche la partie droite du terrain de jeu
-
-### Liste des tâches
-
-* RRacket
-* BallDisplay
-* BgChanger
-* HAL_UART_RxCpltCallback
-
-#### RRacket
-
-* Lit les valeurs renvoyées par le joystick et prévoit le mouvement de la raquette gauche
-* Lecture du blackboard
-* Envoie les informations sur la position de la raquette droite par UART à chaque déplacement de la raquette
-
-#### BallDisplay
-
-* Affiche la nouvelle position de la balle et détruit l'ancienne périodiquement
-* Lecture du blackboard
-* Si la balle est sur l'autre écran, affichage d'une flèche
-
-#### BgChanger
-
-* Attend une impulsion sur le bouton pour changer la couleur 
-
-
-#### HAL_UART_RxCpltCallback
-
-* Reçoit par interruption les valeurs reçues par l'UART7 et modifie le blackboard en conséquence
+- 2 Raquettes, une sur chaque carte, contrôlées en 2 dimensions grâce au joystick de la carte ENS.
+	- Contrôlent les rebonds
+	- L'angle de rebond de la balle sur la raquette est contrôlable en fonction de la position d'impact sur la raquette
+- Une balle faisant des allers-retours d'une carte à une autre jusqu'à sortir du terrain
+	- Vitesse de la balle incrémentée à chaque rebond pour limiter la durée des parties
+	- Relance possible de la balle lorsqu'elle sort du jeu, avec appui sur BP2
+- Communication d'une carte à l'autre
+	- Bluetooth avec modules RN42, voir page Bluetooth
+	- ou UART direct
