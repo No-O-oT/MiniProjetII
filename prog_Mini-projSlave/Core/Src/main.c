@@ -1531,8 +1531,8 @@ void StartRRacket(void const * argument)
 
 		//Actualisation des coordonnées de la raquette droite, le joystick
 		//horizontal nécessite une corrcetion pour ne pas dériver
-		x_RRacket -= (joystick_h - 2018)/500;
-		y_RRacket -= (joystick_v - 2080)/300;
+		x_RRacket -= (joystick_h - 2018)/300;
+		y_RRacket -= (joystick_v - 2080)/150;
 
 		// Cadrage des coordonnées RRacket
 		if (x_RRacket <= 240) x_RRacket = 240;
@@ -1569,7 +1569,7 @@ void StartRRacket(void const * argument)
 		//Stockage des dernières coordonnées de la raquette droite
 		x_RRacket_hold = x_RRacket;
 		y_RRacket_hold = y_RRacket;
-		osDelay(20);
+		osDelay(30);
 	}
   /* USER CODE END StartRRacket */
 }
