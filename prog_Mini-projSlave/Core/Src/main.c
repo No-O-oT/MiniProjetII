@@ -1453,7 +1453,7 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-
+// Fonction recevant les infos reçues sur l'UART7
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
 	uint16_t x_ballemaster;
@@ -1474,7 +1474,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 
 /* USER CODE BEGIN Header_StartDefaultTask */
 /**
- * @brief  Function implementing the defaultTask thread.
+ * @brief  Inutile
  * @param  argument: Not used
  * @retval None
  */
@@ -1484,7 +1484,7 @@ void StartDefaultTask(void const * argument)
   /* USER CODE BEGIN 5 */
 	/* Infinite loop */
 	for (;;) {
-		osDelay(200);
+		osDelay(1000);
 	}
   /* USER CODE END 5 */
 }
@@ -1555,8 +1555,8 @@ void StartRRacket(void const * argument)
 		//Libération de la ressource
 		xSemaphoreGive(myMutex_LCDHandle);
 
+		//Si la raquette a bougé, on envoie les nouvelles coordonnées par liaison série
 		if((x_RRacket!=x_RRacket_hold) || (y_RRacket!=y_RRacket_hold)){
-			//Si la raquette a bougé, on envoie les nouvelles coordonnées par liaison série
 			txbuffer[0]=(x_RRacket & 0xFF00) >> 8;
 			txbuffer[1]= x_RRacket & 0x00FF;
 			txbuffer[2]=(y_RRacket & 0xFF00) >> 8;
