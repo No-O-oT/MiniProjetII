@@ -1469,6 +1469,7 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 
+// Fonction pour récupérer les valeurs reçues sur l'UART7
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
 
@@ -1479,7 +1480,6 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	//Offset des coordonées de la raquette droite
 	x_RRacket += 480;
 
-
 	//Attente d'une nouvelle réception sur interruption
 	HAL_UART_Receive_IT(&huart7,rxbuffer,4);
 }
@@ -1488,7 +1488,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 
 /* USER CODE BEGIN Header_StartDefaultTask */
 /**
- * @brief  Function implementing the defaultTask thread.
+ * @brief  Inutile
  * @param  argument: Not used
  * @retval None
  */
@@ -1550,6 +1550,8 @@ void StartLRacket(void const * argument)
 {
   /* USER CODE BEGIN StartLRacket */
 
+	/// Initialisation des variables
+
 	x_LRacket = 50-width_rackets/2;
 	y_LRacket = 136-height_rackets/2;
 	//Initialisation des variables pour le joystick
@@ -1583,8 +1585,8 @@ void StartLRacket(void const * argument)
 		joystick_h = HAL_ADC_GetValue(&hadc1);
 
 		//Actualisation des coordonnées de la raquette gauche
-		x_LRacket -= (joystick_h - 2080)/333;
-		y_LRacket -= (joystick_v - 2080)/200;
+		x_LRacket -= (joystick_h - 2080)/300;
+		y_LRacket -= (joystick_v - 2080)/150;
 
 		// Cadrage des coordonnées LRacket
 		if (x_LRacket >= 239 - width_rackets) x_LRacket = 239-width_rackets;
@@ -1741,7 +1743,8 @@ void StartBall(void const * argument)
 		  }
 	  }
 
-	  //Affichage de la balle
+	  ///Affichage de la balle
+
 	  //Capture de la ressource
 	  xSemaphoreTake(myMutex_LCDHandle, portMAX_DELAY);
 
@@ -1872,6 +1875,8 @@ void StartTransmit(void const * argument)
   /* Infinite loop */
   for(;;)
   {
+	// Section critique pour ne pas mélanger différentes coordonnées
+	taskENTER_CRITICAL();
 	x_balle= x_balle_f;
 	y_balle = y_balle_f;
 	//Transmission du rayon de la balle et des coordonnées de la balle et du drapeau de perte
@@ -1881,9 +1886,11 @@ void StartTransmit(void const * argument)
 	txbuffer[3] = (y_balle & 0xFF00) >> 8;
 	txbuffer[4] = (y_balle & 0x00FF);
 	txbuffer[5] = perdu;
+	taskEXIT_CRITICAL();
 
+	// Transmission des infos au Slave
 	HAL_UART_Transmit_IT(&huart7,txbuffer,6);
-	osDelay(15);
+	osDelay(20);
   }
   /* USER CODE END StartTransmit */
 }
@@ -1901,10 +1908,13 @@ void StartLost(void const * argument)
   /* Infinite loop */
   for(;;)
   {
+	  // Si appui sur le bouton après avoir perdu, relance de la balle
 	  if(perdu!=0 && !HAL_GPIO_ReadPin(BP2_GPIO_Port, BP2_Pin)){
+		  // Section critique pour redémarrer les 2 tâches en même temps et éviter qu'une commence avant l'autre
 		  taskENTER_CRITICAL();
 		  perdu=0;
 		  BSP_LCD_Clear(couleur==0?LCD_COLOR_WHITE:LCD_COLOR_BLACK);
+		  // Création de nouvelles instances des tâches du jeu
 		  xTaskCreate(StartBall, "", 1024, NULL, osPriorityHigh,  &BallHandle);
 		  xTaskCreate(StartLRacket, "", 1024, NULL, osPriorityAboveNormal, &LRacketHandle);
 		  taskEXIT_CRITICAL();

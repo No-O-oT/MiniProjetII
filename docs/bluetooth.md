@@ -42,4 +42,8 @@ Une fois la configuration initiale faite, les modules enregistrent celle-ci et l
 
 Un avantage de ce fonctionnement automatique est que les programmes faits peuvent à la fois communiquer via les modules bluetooth ou directement en UART via câbles, sans nécessiter la moindre modification.
 
+Le schéma de câblage sur l'UART7 depuis la carte de l'ENS se fait comme suit
+
+![cablage](rn42.png)
+
 En cas de difficultés avec les RN42, il est donc possible d'avoir recours au bon vieux mais fiable fil électrique.
