@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="None">
+  
+  
+  <link rel="shortcut icon" href="img/favicon.ico">
+  <title>Pong2DBT</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="css/theme.css" />
+  <link rel="stylesheet" href="css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Pr\u00e9sentation";
+    var mkdocs_page_input_path = "index.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="js/jquery-2.1.1.min.js" defer></script>
+  <script src="js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="." class="icon icon-home"> Pong2DBT</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href=".">Présentation</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#lutilisation-du-pong2dbt">L'utilisation du Pong2DBT</a>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="prog/">Fonctionnement</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="bluetooth/">Bluetooth</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href=".">Pong2DBT</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Présentation</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/No-O-oT/MiniProjetII/edit/master/docs/index.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="mini-projet-microcontroleur-stm32-pong-2d-en-reseau">Mini-Projet microcontrôleur STM32 : <em>Pong 2D en réseau</em></h1>
+<p>Ce projet a été réalisé par Timothé Corre et Nicolas Trosino, deux élèves du M1 E3A de l'ENS Paris-Saclay, dans le cadre de l'UE d'Informatique Industrielle. Le sujet est relativement libre et a vocation a refléter les notions vues dans l'années.</p>
+<p><em>Les fonctionnalités prévues par la suite et celles effectivement implémentées sont dans l'onglets <em>Issues</em></em></p>
+<p><em>Par soucis de compatibilité, le projet entier est sur le dépôt et pas seulement les sources, ce qui permet de le faire fonctionner directement avec copier-coller</em></p>
+<p>Le but est de prendre en main l'utilisation d'un système d'exploitation temps réel (FreeRTOS) sur un microcontrôleur 32 bits (STM32).</p>
+<p>Nous avons choisi de revisiter l'un des jeux les plus symboliques et historique de l'informatique : le pong. Nous proposons une sorte de "air-hockey" numérique, un pong en 2D donc. Les joueurs s'affrontent chacun sur leur carte STM32 et ne voient que leur moitié de jeu : leur raquette et la balle ou une indication lorsqu'elle est hors de l'écran.</p>
+<p>La valeur ajoutée réside alors dans la communication entre 2 microcontrôleurs (UART ou Bluetooth), qui devront s'échanger les informations afin que chaque joueur puisse jouer sur sa propre carte et ait une vue différente du terrain.</p>
+<p>On trouvera sur ce dépôt :
+- Le dossier avec le programme Master, qui gère le jeu ;
+- Le dossier avec le programme Slave, qui est téléversé sur la carte de l'adversaire.</p>
+<h2 id="lutilisation-du-pong2dbt">L'utilisation du Pong2DBT</h2>
+<p>Une petite vidéo démo montrant une partie est présentée ci-dessous.</p>
+<div class="video-wrapper">
+  <iframe width="1280" height="720" src="https://www.youtube.com/embed/vZNyjuNLhIk" frameborder="0" allowfullscreen></iframe>
+</div>
+
+<p>Pour l'heure, les fonctionnalités implémentées sont les suivantes :</p>
+<ul>
+<li>2 Raquettes, une sur chaque carte, contrôlées en 2 dimensions grâce au joystick de la carte ENS.<ul>
+<li>Contrôlent les rebonds</li>
+<li>L'angle de rebond de la balle sur la raquette est contrôlable en fonction de la position d'impact sur la raquette</li>
+</ul>
+</li>
+<li>Une balle faisant des allers-retours d'une carte à une autre jusqu'à sortir du terrain<ul>
+<li>Vitesse de la balle incrémentée à chaque rebond pour limiter la durée des parties</li>
+<li>Relance possible de la balle lorsqu'elle sort du jeu, avec appui sur BP2</li>
+</ul>
+</li>
+<li>Communication d'une carte à l'autre<ul>
+<li>Bluetooth avec modules RN42, voir page Bluetooth</li>
+<li>ou UART direct</li>
+</ul>
+</li>
+</ul>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="prog/" class="btn btn-neutral float-right" title="Fonctionnement">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/No-O-oT/MiniProjetII/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+      
+        <span style="margin-left: 15px"><a href="prog/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '.';</script>
+    <script src="js/theme.js" defer></script>
+      <script src="search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
+
+<!--
+MkDocs version : 1.1.2
+Build Date UTC : 2021-05-16 14:50:10.839676+00:00
+-->

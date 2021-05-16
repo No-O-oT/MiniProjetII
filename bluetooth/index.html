@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Bluetooth - Pong2DBT</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Bluetooth";
+    var mkdocs_page_input_path = "bluetooth.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Pong2DBT</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Présentation</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../prog/">Fonctionnement</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Bluetooth</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#configuration-initiale-des-rn42">Configuration initiale des RN42</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#module-pour-la-carte-master">Module pour la carte Master</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#module-pour-la-carte-slave">Module pour la carte Slave</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#utilisation-dans-le-cadre-du-pong-2dbt">Utilisation dans le cadre du Pong 2DBT</a>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Pong2DBT</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Bluetooth</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/No-O-oT/MiniProjetII/edit/master/docs/bluetooth.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="presentation-et-utilisation-des-modules-bluetooth-rn42">Présentation et utilisation des modules bluetooth RN42</h1>
+<p>Les modules bluetooth RN42 sont faits pour faciliter l'utilisation du bluetooth, ceux-ci sont capables de prendre en entrée un format UART et de directement transmettre le contenu via bluetooth. Cependant, il faut tout de même leur spécifier quelques paramètres pour pouvoir les interconnecter.</p>
+<p>Pour accéder à la configuration d'un RN42, il faut lui envoyer <code>$$$</code> par UART. Le module est alors censé répondre par <code>CMD</code>. A partir de ce moment, on peut lui envoyer des instructions suivies d'un retour à la ligne. L'instruction <code>---</code> permet de sortir du mode commande.</p>
+<p>L'instruction <code>X</code> demande au module d'afficher sa configuration actuelle, par exemple :</p>
+<p><img alt="Infos BT" src="../infosBT.png" /></p>
+<p>On remarque alors que ce module est configuré en 9600 Baud, qu'il est en mode Slave et que son adresse BT est <code>0006666C5B8F</code>. Voilà les seuls paramètres qui seront utiles dans notre cadre.</p>
+<p>Par défaut, les modules sont livrés avec la vitesse de 115200 Baud. Cette vitesse était trop elevée pour transmettre sans erreurs dans notre cas, il est donc important de <strong>configurer le module en 9600 Baud</strong>.</p>
+<p>Un résumé des paramètres à éditer pour pouvoir utiliser ces modules dans le cadre du Pong2DBT est fourni ci-dessous.</p>
+<h2 id="configuration-initiale-des-rn42">Configuration initiale des RN42</h2>
+<p>Les modules doivent être configurés selon les critères suivants. Pour rappel, l'accès au mode configuration se fait en envoyant <code>$$$</code> (115200 Baud pour un module neuf, 9600 Baud après configuration), et les commandes sont ensuites validées avec un retour à la ligne. Pour sortir, la commande est <code>---</code></p>
+<p>En mode configuration, la LED intégrée clignote rapidement.</p>
+<p>Pour la configuration, il faudra avoir recours à un terminal série sur un PC (par ex TeraTerm, en 115200 Baud). Le branchement au RN42 peut se faire soit par dongle UART, soit en utilisant la branche <code>command-interface</code> est une version suspendue du programme qui fait l'interface avec un terminal série USB sur le PC et l'UART7 du STM32.</p>
+<h5 id="module-pour-la-carte-master">Module pour la carte Master</h5>
+<ul>
+<li>9600 Baud<ul>
+<li><code>SU,96</code></li>
+</ul>
+</li>
+<li>Mode Auto (3)<ul>
+<li><code>SM,3</code></li>
+</ul>
+</li>
+<li>Adresse du Slave pré-enregistrée (registre R)<ul>
+<li><code>IN5</code> (recherche des adresses environnantes)</li>
+<li><code>C,&lt;addresse&gt;</code> (connexion et enregistrement à l'adresse)</li>
+</ul>
+</li>
+</ul>
+<h5 id="module-pour-la-carte-slave">Module pour la carte Slave</h5>
+<ul>
+<li>9600 Baud<ul>
+<li><code>SU,96</code></li>
+</ul>
+</li>
+<li>Mode Slave (0)<ul>
+<li><code>SM,0</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="utilisation-dans-le-cadre-du-pong-2dbt">Utilisation dans le cadre du Pong 2DBT</h2>
+<p>Une fois la configuration initiale faite, les modules enregistrent celle-ci et le mode Auto permet d'initier la connexion automatiquement dès leur alimentation. Attention, il faut cependant veiller à brancher les bons modules sur la bonne carte.</p>
+<p>Un avantage de ce fonctionnement automatique est que les programmes faits peuvent à la fois communiquer via les modules bluetooth ou directement en UART via câbles, sans nécessiter la moindre modification.</p>
+<p>Le schéma de câblage sur l'UART7 depuis la carte de l'ENS se fait comme suit</p>
+<p><img alt="cablage" src="../rn42.png" /></p>
+<p>En cas de difficultés avec les RN42, il est donc possible d'avoir recours au bon vieux mais fiable fil électrique.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../prog/" class="btn btn-neutral" title="Fonctionnement"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/No-O-oT/MiniProjetII/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../prog/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
