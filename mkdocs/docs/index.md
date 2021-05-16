@@ -18,12 +18,6 @@ On trouvera sur ce dépôt :
 
 ## L'utilisation du Pong2DBT
 
-Une petite vidéo démo montrant une partie est présentée ci-dessous.
-
-<div class="video-wrapper">
-  <iframe width="1280" height="720" src="https://www.youtube.com/embed/vZNyjuNLhIk" frameborder="0" allowfullscreen></iframe>
-</div>
-
 Pour l'heure, les fonctionnalités implémentées sont les suivantes :
 
 - 2 Raquettes, une sur chaque carte, contrôlées en 2 dimensions grâce au joystick de la carte ENS.
@@ -34,4 +28,11 @@ Pour l'heure, les fonctionnalités implémentées sont les suivantes :
 	- Relance possible de la balle lorsqu'elle sort du jeu, avec appui sur BP2
 - Communication d'une carte à l'autre
 	- Bluetooth avec modules RN42, voir page Bluetooth
+		- Connexion automatique après configuration
 	- ou UART direct
+	
+Une petite vidéo démo montrant une partie, depuis le démarrage des cartes, est présentée ci-dessous. (https://youtu.be/ZiN9ByJ4qZM)
+
+<div class="video-wrapper">
+  <iframe width="1280" height="720" src="https://youtu.be/ZiN9ByJ4qZM" frameborder="0" allowfullscreen></iframe>
+</div>
