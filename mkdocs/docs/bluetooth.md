@@ -8,9 +8,9 @@ L'instruction `X` demande au module d'afficher sa configuration actuelle, par ex
 
 ![Infos BT](infosBT.png)
 
-On remarque alors que ce module est configuré en 9600 Baud, qu'il est en mode Slave et que son adresse BT est `0006666C5B8F`. Voilà les seuls paramètres qui seront utiles dans notre cadre.
+On remarque alors que ce module est configuré en 9600 Baud, qu'il est en mode Slave et que son adresse BT est `0006666C5B8F`. Voilà les seuls paramètres qui seront utiles dans notre cas.
 
-Par défaut, les modules sont livrés avec la vitesse de 115200 Baud. Cette vitesse était trop elevée pour transmettre sans erreurs dans notre cas, il est donc important de **configurer le module en 9600 Baud**.
+Par défaut, les modules sont livrés avec la vitesse de 115200 Baud. Cette vitesse étant trop elevée pour transmettre sans erreurs dans le cadre de notre projet, il est donc important de **configurer le module en 9600 Baud**.
 
 Un résumé des paramètres à éditer pour pouvoir utiliser ces modules dans le cadre du Pong2DBT est fourni ci-dessous.
 
@@ -40,10 +40,10 @@ Pour la configuration, il faudra avoir recours à un terminal série sur un PC (
 
 Une fois la configuration initiale faite, les modules enregistrent celle-ci et le mode Auto permet d'initier la connexion automatiquement dès leur alimentation. Attention, il faut cependant veiller à brancher les bons modules sur la bonne carte.
 
-Un avantage de ce fonctionnement automatique est que les programmes faits peuvent à la fois communiquer via les modules bluetooth ou directement en UART via câbles, sans nécessiter la moindre modification.
+Un avantage de ce fonctionnement automatique est que les programmes faits peuvent à la fois communiquer via les modules bluetooth ou directement en UART via câbles, sans nécessiter la moindre modification au niveau du code ou d'options bien cachées dans le jeu.
 
-Le schéma de câblage sur l'UART7 depuis la carte de l'ENS se fait comme suit
+Le schéma de câblage sur l'UART7 depuis la carte de l'ENS se fait comme suit :
 
 ![cablage](rn42.png)
 
-En cas de difficultés avec les RN42, il est donc possible d'avoir recours au bon vieux mais fiable fil électrique.
+En cas de difficultés avec le Bluetooth et/ou les modules RN42, il est donc possible d'avoir recours au bon vieux mais toujours fiable fil électrique (n'est ce pas dans les vieux pots que l'on fait les meilleurs soupes ?).
