@@ -1,5 +1,8 @@
-site_name: Pong2DBT
+site_name: Pong2D Bluetooth - MiniProjetII
 repo_url: https://github.com/No-O-oT/MiniProjetII
+site_description: Mini-projet d'Informatique Industrielle à l'ENS Paris-Saclay, réalisé par Timothé Corre et Nicolas Trosino
+site_author: Timothé Corre et Nicolas Trosino
+site_favicon: favicon.ico
 nav: 
   - Présentation : index.md
   - Fonctionnement : prog.md
