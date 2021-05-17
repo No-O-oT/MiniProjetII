@@ -111,8 +111,8 @@
 <p>Pour accéder à la configuration d'un RN42, il faut lui envoyer <code>$$$</code> par UART. Le module est alors censé répondre par <code>CMD</code>. A partir de ce moment, on peut lui envoyer des instructions suivies d'un retour à la ligne. L'instruction <code>---</code> permet de sortir du mode commande.</p>
 <p>L'instruction <code>X</code> demande au module d'afficher sa configuration actuelle, par exemple :</p>
 <p><img alt="Infos BT" src="../infosBT.png" /></p>
-<p>On remarque alors que ce module est configuré en 9600 Baud, qu'il est en mode Slave et que son adresse BT est <code>0006666C5B8F</code>. Voilà les seuls paramètres qui seront utiles dans notre cadre.</p>
-<p>Par défaut, les modules sont livrés avec la vitesse de 115200 Baud. Cette vitesse était trop elevée pour transmettre sans erreurs dans notre cas, il est donc important de <strong>configurer le module en 9600 Baud</strong>.</p>
+<p>On remarque alors que ce module est configuré en 9600 Baud, qu'il est en mode Slave et que son adresse BT est <code>0006666C5B8F</code>. Voilà les seuls paramètres qui seront utiles dans notre cas.</p>
+<p>Par défaut, les modules sont livrés avec la vitesse de 115200 Baud. Cette vitesse étant trop elevée pour transmettre sans erreurs dans le cadre de notre projet, il est donc important de <strong>configurer le module en 9600 Baud</strong>.</p>
 <p>Un résumé des paramètres à éditer pour pouvoir utiliser ces modules dans le cadre du Pong2DBT est fourni ci-dessous.</p>
 <h2 id="configuration-initiale-des-rn42">Configuration initiale des RN42</h2>
 <p>Les modules doivent être configurés selon les critères suivants. Pour rappel, l'accès au mode configuration se fait en envoyant <code>$$$</code> (115200 Baud pour un module neuf, 9600 Baud après configuration), et les commandes sont ensuites validées avec un retour à la ligne. Pour sortir, la commande est <code>---</code></p>
@@ -147,10 +147,10 @@
 </ul>
 <h2 id="utilisation-dans-le-cadre-du-pong-2dbt">Utilisation dans le cadre du Pong 2DBT</h2>
 <p>Une fois la configuration initiale faite, les modules enregistrent celle-ci et le mode Auto permet d'initier la connexion automatiquement dès leur alimentation. Attention, il faut cependant veiller à brancher les bons modules sur la bonne carte.</p>
-<p>Un avantage de ce fonctionnement automatique est que les programmes faits peuvent à la fois communiquer via les modules bluetooth ou directement en UART via câbles, sans nécessiter la moindre modification.</p>
-<p>Le schéma de câblage sur l'UART7 depuis la carte de l'ENS se fait comme suit</p>
+<p>Un avantage de ce fonctionnement automatique est que les programmes faits peuvent à la fois communiquer via les modules bluetooth ou directement en UART via câbles, sans nécessiter la moindre modification au niveau du code ou d'options bien cachées dans le jeu.</p>
+<p>Le schéma de câblage sur l'UART7 depuis la carte de l'ENS se fait comme suit :</p>
 <p><img alt="cablage" src="../rn42.png" /></p>
-<p>En cas de difficultés avec les RN42, il est donc possible d'avoir recours au bon vieux mais fiable fil électrique.</p>
+<p>En cas de difficultés avec le Bluetooth et/ou les modules RN42, il est donc possible d'avoir recours au bon vieux mais toujours fiable fil électrique (n'est ce pas dans les vieux pots que l'on fait les meilleurs soupes ?).</p>
               
             </div>
           </div>
