@@ -90,6 +90,14 @@
     </li>
         </ul>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#utilisation-de-sections-critiques-et-de-mutexes">Utilisation de sections critiques et de Mutexes</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#mutex-pour-le-lcd">Mutex pour le LCD</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#section-critique-pour-les-coordonnees">Section critique pour les coordonnées</a>
+    </li>
+        </ul>
+    </li>
     </ul>
                     </li>
                 </ul>
@@ -133,10 +141,10 @@
             <div class="section">
               
                 <h1 id="fonctionnement-des-programmes">Fonctionnement des programmes</h1>
-<p>Pour fonctionner sur deux cartes, nous avons choisi de développer deux versions d'un même programme : Master et Slave. Il conviendra de compiler l'un de chaque sur deux cartes différentes pour pouvoir utiliser le Pong.</p>
+<p>Pour fonctionner sur deux cartes, nous avons fait le choix de développer deux versions distinctes d'un même programme : la version Master et la version Slave, bien que ces désignations soient plus que jamais remises en causes. Il conviendra de compiler chacune des deux versions sur un des cartes utilisées pour jouer au Pong2BT.</p>
 <h2 id="programme-master">Programme Master</h2>
 <p>La carte qui se voit attribuer ce programme a pour responsabilité de gérer le déroulement du jeu, de transmettre les informations du jeu à la carte slave et de recevoir des informations de cette dernière. Elle est donc en charge de diriger la balle, et de gérer les rebonds sur les raquettes.
-Son écran affiche la partie gauche du terrain de jeu.</p>
+Son écran affiche toujours la partie gauche du terrain de jeu.</p>
 <h3 id="liste-des-taches">Liste des tâches</h3>
 <ul>
 <li>LRacket</li>
@@ -148,7 +156,7 @@ Son écran affiche la partie gauche du terrain de jeu.</p>
 </ul>
 <h4 id="lracket">LRacket</h4>
 <ul>
-<li>Lit les valeurs renvoyées par le joystick et prévoit le mouvement de la raquette gauche</li>
+<li>Lit les valeurs renvoyées par le joystick et fait afficher le mouvement de la raquette gauche</li>
 <li>Interaction Blackboard<ul>
 <li>Lit sa position actuelle</li>
 <li>Ecrit sa nouvelle position</li>
@@ -158,10 +166,11 @@ Son écran affiche la partie gauche du terrain de jeu.</p>
 </ul>
 <h4 id="ball">Ball</h4>
 <ul>
+<li>Initie le mouvement de la balle de manière aléatoire 2D dans une fenêtre rectangulaire de départ, et dans un sens aléatoire</li>
 <li>Met à jour la position de la balle périodiquement</li>
 <li>Affiche la nouvelle position et détruit la dernière</li>
 <li>Si la balle est sur l'autre écran, affichage d'une flèche</li>
-<li>Gère les collisions, les rebonds</li>
+<li>Gère les collisions, les rebonds sur les bords supérieur et inférieur de l'écran</li>
 <li>Interaction Blackboard<ul>
 <li>Lit la position actuelle de la balle</li>
 <li>Ecrit la nouvelle position</li>
@@ -169,7 +178,7 @@ Son écran affiche la partie gauche du terrain de jeu.</p>
 </ul>
 </li>
 <li>Lorsque la balle est perdue :<ul>
-<li>Affiche un message de perte</li>
+<li>Affiche un message de fin de partie</li>
 <li>Détruit la tâche LRacket</li>
 <li>S'autodétruit</li>
 </ul>
@@ -177,31 +186,31 @@ Son écran affiche la partie gauche du terrain de jeu.</p>
 </ul>
 <h4 id="bgchanger">BgChanger</h4>
 <ul>
-<li>Attend une impulsion sur le bouton pour changer la couleur</li>
+<li>Attend une impulsion sur le bouton pour changer la couleur. Cette fonction est un peu sensible compte tenu de sa faible priorité, il faut donc possiblement rester un peu plus longtemps que ce que l'on ferait normalement pour mener à bien l'inversion des couleurs.</li>
 </ul>
 <h4 id="transmit">Transmit</h4>
 <ul>
-<li>Envoie périodiquement les informations sur le jeu en UART/Bluetooth</li>
-<li>Coordonnées de la balle, rayon de la balle</li>
-<li>Etat du jeu (perdu)</li>
+<li>Envoie périodiquement les informations sur le jeu en UART. Que la transmission soit finalement UART ou sans-fil Bluetooth, rien ne change ici : seul le cablage sera modifié. Les données envoyées sont :</li>
+<li>Les coordonnées de la balle, le rayon de la balle</li>
+<li>L'état du jeu (perdu ou en cours)</li>
 </ul>
 <h4 id="hal_uart_rxcpltcallback">HAL_UART_RxCpltCallback</h4>
 <ul>
-<li>Reçoit par interruption les valeurs reçues par l'UART7 et modifie le blackboard en conséquence<ul>
+<li>Reçoit par interruption les valeurs reçues par l'UART7 et modifie le blackboard en conséquence. Données reçues (émises par la carte slave) :<ul>
 <li>Position de la raquette droite</li>
 </ul>
 </li>
 </ul>
 <h4 id="lost">Lost</h4>
 <ul>
-<li>Relance la balle sur appui du bouton après avoir perdu (à l'infini)<ul>
-<li>Recrée les tâches Ball et LRacket pour cela</li>
+<li>Relance la balle lors de l'appui du bouton BP2 après avoir perdu (permet de jouer à l'infini sans appui sur reset) :<ul>
+<li>Recrée les tâches Ball et LRacket qui se sont détruites à la fin de la partie précédente</li>
 </ul>
 </li>
 </ul>
 <h2 id="programme-slave">Programme Slave</h2>
-<p>La carte qui se voit attribuer ce programme doit recevoir les données de jeu du Master pour afficher la partie relative à son écran, et doit envoyer au master la position de sa raquette.
-Son écran affiche la partie droite du terrain de jeu</p>
+<p>La carte qui se voit attribuer ce programme doit recevoir les données de jeu émises par la première carte (programme Master) pour afficher la partie relative à son écran, et doit envoyer en retour la position de sa raquette.
+Son écran affiche toujours la partie droite du terrain de jeu.</p>
 <h3 id="liste-des-taches_1">Liste des tâches</h3>
 <ul>
 <li>RRacket</li>
@@ -211,7 +220,7 @@ Son écran affiche la partie droite du terrain de jeu</p>
 </ul>
 <h4 id="rracket">RRacket</h4>
 <ul>
-<li>Lit les valeurs renvoyées par le joystick et prévoit le mouvement de la raquette gauche</li>
+<li>Lit les valeurs renvoyées par le joystick et fait afficher le mouvement de la raquette gauche</li>
 <li>Lecture du blackboard</li>
 <li>Envoie les informations sur la position de la raquette droite par UART à chaque déplacement de la raquette</li>
 </ul>
@@ -229,11 +238,20 @@ Son écran affiche la partie droite du terrain de jeu</p>
 <ul>
 <li>Reçoit par interruption les valeurs reçues par l'UART7 et modifie le blackboard en conséquence<ul>
 <li>Position de la balle</li>
-<li>Etat perdu</li>
+<li>Etat de la variable perdu</li>
 <li>Rayon de la balle</li>
 </ul>
 </li>
 </ul>
+<h2 id="utilisation-de-sections-critiques-et-de-mutexes">Utilisation de sections critiques et de Mutexes</h2>
+<h3 id="mutex-pour-le-lcd">Mutex pour le LCD</h3>
+<p>Notre pong communique avec les joueurs <em>via</em> la seule interface qu'est l'écran, il faut donc le partager intelligemment entre des tâches qui se réalisent en même temps et qui peuvent s'interrompre les unes les autres. Pour éviter des soucis d'affichage particulièrement embêtants (notament ceux qui impliquent des couleurs donc bgchanger), on utilise un mutex pour l'écran (dénommé myMutex_LCD et déclaré en ligne 91, créé en lignes 252-253). Lorsqu'une tâche s'accapare le mutex, elle ne peut pas être interrompue par une tâche utilisant le même mutex avant la libération de la ressource. Par exemple, voici la liste des tâches du programme Master utilisant le mutex myMutex_LCD :
+* Horloge (lignes 1529 à 1535 de Starhorloge)
+* LRacket (lignes 1599 à 1611 de StartLRacket)
+* Ball (lignes 1705 à 1711 puis 1734 à 1740 et enfin 1749 à 1786 de StartBall)
+* BgChanger (lignes 1827 à 1835 puis 1839 à 1847 de StartBgChanger)</p>
+<h3 id="section-critique-pour-les-coordonnees">Section critique pour les coordonnées</h3>
+<p>On utilise également des sections critiques pour pouvoir réduire les risques de mauvaise lecture d'une ou plusieurs coordonnées (de la balle, d'une raquette ou bien des deux). En effet, si une tâche "auteur" est interrompue par une tâche "lecteur", la valeur lue par la tâche lecteur ne sera pas forcément celle que la tâche aurait dû lire. On peut voir un exemple de l'emploi d'une section critique entre les lignes 1879 et 1889 du programme main de la carte dotée du programme Master, dans StartTransmit. Entre les deux balises (début et fin de la tâche critique), le programme ne peut être interrompu par une tâche, même de priorité supérieure.</p>
               
             </div>
           </div>
