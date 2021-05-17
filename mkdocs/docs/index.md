@@ -2,8 +2,6 @@
 
 Ce projet a été réalisé par Timothé Corre et Nicolas Trosino, deux élèves du M1 E3A de l'ENS Paris-Saclay, dans le cadre de l'UE d'Informatique Industrielle. Le sujet est relativement libre et a vocation à refléter les notions d'Informatique vues dans l'année.
 
-*Les fonctionnalités prévues par la suite et celles effectivement implémentées sont dans l'onglets _Issues_*
-
 *Par soucis de compatibilité, le projet entier est sur le dépôt et pas seulement les sources, ce qui permet de le faire fonctionner directement après un simple copier-coller*
 
 Ce mini-projet a pour objectif de prendre en main un système d'exploitation temps réel (ici FreeRTOS) sur un microcontrôleur 32 bits (ici une carte STM32).

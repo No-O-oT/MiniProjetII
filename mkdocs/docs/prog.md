@@ -2,7 +2,6 @@
 
 Pour fonctionner sur deux cartes, nous avons fait le choix de développer deux versions distinctes d'un même programme : la version Master et la version Slave, bien que ces désignations soient plus que jamais remises en causes. Il conviendra de compiler chacune des deux versions sur un des cartes utilisées pour jouer au Pong2BT.
 
-
 ## Programme Master
 
 
@@ -109,4 +108,4 @@ Notre pong communique avec les joueurs *via* la seule interface qu'est l'écran,
 * BgChanger (lignes 1827 à 1835 puis 1839 à 1847 de StartBgChanger)
 
 ### Section critique pour les coordonnées
-On utilise également des sections critiques pour pouvoir réduire les risques de mauvaise lecture d'une ou plusieurs coordonnées (de la balle, d'une raquette ou bien des deux). En effet, si une tâche "auteur" est interrompue par une tâche "lecteur", la valeur lue par la tâche lecteur ne sera pas forcément celle que la tâche aurait dû lire. On peut voir un exemple de l'emploi d'une section critique entre les lignes 1879 et 1889 du programme main de la carte dotée du programme Master, dans StartTransmit. Entre les deux balises (début et fin de la tâche critique), le programme ne peut être interrompu par une tâche, même de priorité supérieure.
+On utilise également des sections critiques pour pouvoir réduire les risques de mauvaise lecture d'une ou plusieurs coordonnées (de la balle, d'une raquette ou bien des deux). En effet, lors de la réception des coordonnées, si une tâche "auteur" est interrompue par une tâche "lecteur", les valeurs lues par la tâche lecteur ne seront pas forcément celles que la tâche aurait dû lire. On peut voir un exemple de l'emploi d'une section critique entre les lignes 1879 et 1889 du programme main de la carte dotée du programme Master, dans StartTransmit. Entre les deux balises (début et fin de la tâche critique), le programme ne peut être interrompu par une autre tâche, même de priorité supérieure.
